@@ -170,9 +170,12 @@ h2.sechead {
 
 .portrait {
   flex: 0 0 auto; display: block;
-  width: 128px; height: 128px; object-fit: cover;
-  border: 1px solid var(--line); border-radius: 4px;
-  margin-top: 0.3rem;
+  width: 132px; height: 132px;
+  object-fit: cover; object-position: 50% 40%;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  box-shadow: 0 0 0 5px var(--bg-2);
+  margin-top: 0.4rem;
   animation: rise 0.5s ease-out 0.1s both;
 }
 
@@ -396,7 +399,7 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
   .page-intro { padding: 2.5rem 0 2.5rem; }
   .cols { grid-template-columns: 1fr; gap: 2.5rem; }
   .intro-row { flex-direction: row-reverse; gap: 1.25rem; padding: 2.5rem 0; }
-  .portrait { width: 84px; height: 84px; margin-top: 0.2rem; }
+  .portrait { width: 88px; height: 88px; margin-top: 0.2rem; box-shadow: 0 0 0 4px var(--bg-2); }
   .plate a { padding: 0.5rem; }
   .skillgrid { grid-template-columns: 1fr; }
   .readout { grid-template-columns: 1fr; }
