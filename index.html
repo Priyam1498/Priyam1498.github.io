@@ -1,46 +1,452 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Priyam Srivastava - Personal Website">
-    <title>Priyam Srivastava</title>
-    <link rel="stylesheet" href="styles.css"> <!-- Linking the CSS file -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Priyam Srivastava — Quantum Machine Learning</title>
+<meta name="description" content="Priyam Srivastava is a PhD candidate at the University of Pittsburgh working on variational quantum algorithms and reinforcement learning for quantum sensing, metrology, and networks.">
+<meta name="author" content="Priyam Srivastava">
+
+<meta property="og:type" content="website">
+<meta property="og:title" content="Priyam Srivastava — Quantum Machine Learning">
+<meta property="og:description" content="Variational quantum algorithms for sensing and metrology, reinforcement learning for quantum network control. PhD candidate, University of Pittsburgh.">
+<meta property="og:url" content="https://priyam1498.github.io/">
+<meta property="og:image" content="https://priyam1498.github.io/assets/og-card.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;450;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
 
-<header>
-    <h1>Priyam Srivastava</h1>
-    <p>Quantum Researcher | PhD Candidate at the University of Pittsburgh</p>
+<a class="skip" href="#about">Skip to content</a>
+
+<header class="topbar">
+  <div class="wrap bar">
+    <a class="mark" href="#top">
+      <span class="mark-glyph" aria-hidden="true"></span>
+      <span class="mark-name">P. Srivastava</span>
+    </a>
+    <nav class="navlinks" aria-label="Sections">
+      <a href="#about">about</a>
+      <a href="#research">research</a>
+      <a href="#papers">papers</a>
+      <a href="#skills">skills</a>
+      <a href="#activity">activity</a>
+      <a href="#contact">contact</a>
+    </nav>
+    <button id="theme-toggle" class="theme-btn" type="button" aria-pressed="true">
+      <span class="theme-label">dark</span>
+    </button>
+  </div>
 </header>
 
-<div class="sidenav">
-    <a href="index.html">About Me</a>
-    <a href="research.html">Research Projects</a>
-    <a href="hobbies.html">Hobbies</a>
-</div>
+<main id="top">
 
-<div class="main">
-    <section id="about">
-    <h2>About Me</h2>
-    <p>Hello! I'm Priyam Srivastava, currently pursuing my <strong>PhD</strong> in Information Sciences at <strong>the University of Pittsburgh</strong>. My academic journey has led me to the intersection of <strong>Quantum Machine Learning</strong> and <strong>Quantum Technologies</strong>, where I am deeply passionate about developing cutting-edge solutions for quantum sensing and network technologies.</p>
-    
-    <p>I have a solid foundation in Physics, having completed my Master's degree at the <strong>Indian Institute of Science Education and Research (IISER)</strong>, Bhopal, where I developed skills in both experimental and theoretical quantum technologies. My current research focuses on <strong>Variational Quantum Algorithms</strong> and their applications in Quantum Sensing and Quantum Networks.</p>
-    
-    <p>Beyond academia, I love to read and immerse myself in different worlds through books. I'm also an avid anime fan and enjoy watching shows that explore complex themes and characters. Whenever I get the chance, I like to go out on treks, exploring the natural beauty of new places, which refreshes and inspires me.</p>
-    </section>
+<!-- ============================ HERO ============================ -->
+<section class="hero wrap">
+  <div class="hero-copy">
+    <p class="eyebrow">Quantum machine learning · Quantum metrology</p>
+    <h1>I train quantum circuits to<br><span class="hl">measure better</span> and networks<br>to <span class="hl alt">route entanglement</span>.</h1>
+    <p class="lede">
+      PhD student in Information Sciences at the University of Pittsburgh, in the
+      Department of Informatics and Networked Systems, advised by Kaushik P.
+      Seshadreesan. I design probe states and measurements for multiparameter estimation on dipolar
+      spin platforms, and reinforcement-learning controllers for entanglement
+      distribution, both under the hardware constraints real devices actually have.
+    </p>
+    <div class="hero-links">
+      <a class="btn primary" href="assets/CV_Priyam_Srivastava.pdf">CV (pdf)</a>
+      <a class="btn" href="https://scholar.google.com/citations?user=X4i_SsYAAAAJ" target="_blank" rel="noopener">Scholar</a>
+      <a class="btn" href="https://github.com/Priyam1498" target="_blank" rel="noopener">GitHub</a>
+      <a class="btn" href="https://www.linkedin.com/in/priyam-srivastava-0104/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="btn" href="mailto:PRS216@pitt.edu">Email</a>
+    </div>
+  </div>
 
-    <section id="contact">
-        <h2>Contact</h2>
-        <p>Email: <a href="mailto:PRS216@pitt.edu">PRS216@pitt.edu</a></p>
-        <p>GitHub: <a href="https://github.com/Priyam1498" target="_blank">Priyam1498</a></p>
-        <p>LinkedIn: <a href="https://www.linkedin.com/in/priyam-srivastava-0104/" target="_blank">Priyam Srivastava</a></p>
-    </section>
-</div>
+  <!-- SIGNATURE FIGURE: precision scaling. Redraw or swap for a real paper figure. -->
+  <figure class="hero-fig">
+    <svg viewBox="0 0 300 260" role="img" aria-labelledby="figtitle figdesc">
+      <title id="figtitle">Precision scaling of learned probes</title>
+      <desc id="figdesc">Estimation variance against qubit number, showing a learned protocol tracking the Heisenberg limit below the standard quantum limit.</desc>
 
-<footer>
-    <p>© 2024 Priyam Srivastava. All rights reserved.</p>
+      <g class="chain">
+        <line x1="30" y1="34" x2="270" y2="34"></line>
+        <circle cx="30"  cy="34" r="5"></circle>
+        <circle cx="70"  cy="34" r="5"></circle>
+        <circle cx="110" cy="34" r="5"></circle>
+        <circle cx="150" cy="34" r="5"></circle>
+        <circle cx="190" cy="34" r="5"></circle>
+        <circle cx="230" cy="34" r="5"></circle>
+        <circle cx="270" cy="34" r="5"></circle>
+      </g>
+      <text class="axis" x="30" y="18">dipolar spin chain</text>
+
+      <g class="grid">
+        <line x1="42" y1="80"  x2="285" y2="80"></line>
+        <line x1="42" y1="130" x2="285" y2="130"></line>
+        <line x1="42" y1="180" x2="285" y2="180"></line>
+        <line x1="42" y1="225" x2="285" y2="225"></line>
+      </g>
+
+      <path class="curve sql" d="M50 95 C 110 130, 170 160, 280 196"></path>
+      <path class="curve hl"  d="M50 108 C 110 165, 170 200, 280 222"></path>
+
+      <circle class="dot" cx="50"  cy="108" r="3.2"></circle>
+      <circle class="dot" cx="111" cy="158" r="3.2"></circle>
+      <circle class="dot" cx="183" cy="195" r="3.2"></circle>
+      <circle class="dot" cx="234" cy="211" r="3.2"></circle>
+
+      <text class="axis" x="204" y="150">1/&#8730;N</text>
+      <text class="axis hlt" x="140" y="214">1/N</text>
+      <text class="axis vert" x="14" y="160" transform="rotate(-90 14 160)">estimation variance</text>
+      <text class="axis" x="150" y="256">qubits</text>
+    </svg>
+    <figcaption>Learned probes and measurements pushing from standard-quantum-limited to Heisenberg-limited scaling.</figcaption>
+  </figure>
+</section>
+
+<!-- ============================ NEWS STRIP ============================ -->
+<section class="strip wrap" aria-label="Recent updates">
+  <ul class="news">
+    <li><span class="when">2026 · 09</span><span class="what">Oral presentation, IEEE Quantum Week (QCE) 2026, QTEM track, Toronto. Also serving as student volunteer.</span></li>
+    <li><span class="when">2026 · 07</span><span class="what">Review on AI and quantum information submitted to <em>Progress in Quantum Electronics</em>.</span></li>
+    <li><span class="when">2026 · 06</span><span class="what">Attended QNumerics 2026, Numerical Methods in Quantum Information Science, UMass Amherst.</span></li>
+    <li><span class="when">2026 · 05</span><span class="what">Two preprints out: joint magnetometry and gradiometry, and RL for entanglement swapping.</span></li>
+    <li><span class="when">2026 · 03</span><span class="what">Contributed talk at FQIT 2026, IIIT Allahabad.</span></li>
+  </ul>
+</section>
+
+<!-- ============================ ABOUT ============================ -->
+<section id="about" class="wrap">
+  <div class="sechead">
+    <h2>About</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="cols">
+    <div class="prose">
+      <p>
+        I work on the same question from two directions: when a quantum device is
+        noisy, finite, and only partly controllable, what is the best thing you can
+        still do with it? For sensing, the answer takes the form of a probe state and
+        a measurement that you optimize rather than derive. For networks, it takes the
+        form of a control policy that decides when to swap and when to wait.
+      </p>
+      <p>
+        Before Pittsburgh I did an integrated BS-MS in physics at IISER Bhopal. My
+        thesis with Rohan Singh was on two-dimensional coherent spectroscopy with
+        chirped and unchirped pulses, solving the optical Bloch equations numerically
+        and spending real time at an ultrafast bench. Alongside it I built an encoder
+        circuit for a surface code in the measurement-based model with Ankur Raina.
+        That mix of stabilizer formalism and optics is why I care whether a protocol
+        survives contact with hardware.
+      </p>
+    </div>
+    <aside class="facts">
+      <dl>
+        <dt>Position</dt><dd>PhD student, 3rd year</dd>
+        <dt>Program</dt><dd>Information Sciences (Telecom)</dd>
+        <dt>Department</dt><dd>Informatics and Networked Systems</dd>
+        <dt>Group</dt><dd>Quantum Information and Networking</dd>
+        <dt>Advisor</dt><dd>Kaushik P. Seshadreesan</dd>
+        <dt>Prior</dt><dd>BS-MS Physics, IISER Bhopal</dd>
+        <dt>Funding</dt><dd>PQI Community Collaboration Awards, 2024 and 2026</dd>
+        <dt>Based in</dt><dd>Pittsburgh, PA</dd>
+      </dl>
+    </aside>
+  </div>
+</section>
+
+<!-- ============================ RESEARCH ============================ -->
+<section id="research" class="wrap">
+  <div class="sechead">
+    <h2>Research</h2>
+    <span class="rule"></span>
+  </div>
+
+  <article class="thrust t-metro">
+    <div class="thrust-fig">
+      <!-- FIGURE SLOT 1 → replace this div with:
+           <img src="assets/fig-metrology.png" alt="Fisher information landscape over probe parameters"> -->
+      <div class="figslot">assets/fig-metrology.png</div>
+    </div>
+    <div class="thrust-body">
+      <p class="tag">variational quantum sensing</p>
+      <h3>Probes and measurements you optimize instead of derive</h3>
+      <p>
+        Textbook metrology hands you GHZ states and parity measurements. Real dipolar
+        spin platforms hand you a fixed interaction and limited control. I set up the
+        probe state, the encoding, and the readout as a parameterized circuit, then
+        optimize the Fisher information directly with CMA-ES over PennyLane and JAX
+        simulations. Learned probes approach entanglement-enhanced precision bounds and
+        reach the Heisenberg limit for uniform phase encoding. The multiparameter case
+        is harder than it looks: the quantum Fisher information of a GHZ state is rank
+        deficient, so joint magnetometry and gradiometry needs a different objective,
+        and optimizing det(F) gets there.
+      </p>
+      <p class="refs">
+        <a href="https://arxiv.org/abs/2507.22043">arXiv:2507.22043</a>
+        <a href="https://arxiv.org/abs/2605.03906">arXiv:2605.03906</a>
+        <a href="https://ieeexplore.ieee.org/abstract/document/11250086">QCE 2025</a>
+      </p>
+    </div>
+  </article>
+
+  <article class="thrust t-net">
+    <div class="thrust-fig">
+      <!-- FIGURE SLOT 2 → replace this div with:
+           <img src="assets/fig-rl.png" alt="Entanglement distribution rate against coherence time"> -->
+      <div class="figslot">assets/fig-rl.png</div>
+    </div>
+    <div class="thrust-body">
+      <p class="tag">reinforcement learning for network control</p>
+      <h3>Deciding when to swap and when to wait</h3>
+      <p>
+        Entanglement distribution is a scheduling problem under decoherence: hold a
+        link too long and it decays, swap too early and you waste it. I built a
+        two-layer simulator in PyTorch and Gymnasium where per-link REINFORCE agents
+        handle generation and a network-layer controller compares sequential swapping
+        against SWAP-ASAP. Sweeping coherence time as SLURM array jobs on the Pitt CRC
+        cluster exposes a regime structure in the ratio of external coherence time to
+        link generation time, which governs the penalty for connection-less operation.
+      </p>
+      <p class="refs">
+        <a href="https://arxiv.org/abs/2605.04047">arXiv:2605.04047</a>
+      </p>
+    </div>
+  </article>
+</section>
+
+<!-- ============================ PAPERS ============================ -->
+<section id="papers" class="wrap">
+  <div class="sechead">
+    <h2>Papers</h2>
+    <span class="rule"></span>
+    <p class="sechint">Author order as published. <sup>*</sup> equal contribution. Ordered by venue status, not date.</p>
+  </div>
+
+  <ol class="pubs">
+    <li>
+      <p class="ptitle">Variational Joint Magnetometry and Gradiometry on Dipolar Spin Chains</p>
+      <p class="pauth"><span class="me">P. Srivastava</span>, X. Jin, J. Liu, G. Dutt, T. Purdy, K. Kim, K. P. Seshadreesan</p>
+      <p class="pmeta"><span class="badge ok">accepted</span> IEEE Quantum Week (QCE) 2026, QTEM track, oral presentation</p>
+      <p class="plinks"><a href="https://arxiv.org/abs/2605.03906">arXiv:2605.03906</a></p>
+    </li>
+    <li>
+      <p class="ptitle">Variational Quantum Sensing for Structured Linear Estimation Function</p>
+      <p class="pauth"><span class="me">P. Srivastava</span>, V. Kumar, G. Dutt, K. P. Seshadreesan</p>
+      <p class="pmeta"><span class="badge ok">published</span> IEEE Quantum Week (QCE) 2025, poster track</p>
+      <p class="plinks"><a href="https://ieeexplore.ieee.org/abstract/document/11250086">IEEE Xplore 11250086</a></p>
+    </li>
+    <li>
+      <p class="ptitle">Four Generations of Quantum Biomedical Sensors</p>
+      <p class="pauth">X. Jin<sup>*</sup>, <span class="me">P. Srivastava</span><sup>*</sup>, R. Wang, et al., incl. K. P. Seshadreesan, J. Liu</p>
+      <p class="pmeta"><span class="badge">submitted</span> Nature Biomedical Engineering, 2026</p>
+      <p class="plinks"><a href="https://arxiv.org/abs/2603.29944">arXiv:2603.29944</a></p>
+    </li>
+    <li>
+      <p class="ptitle">When AI Meets Quantum Information: A Comprehensive Review</p>
+      <p class="pauth">M. Chen, Y. Gan, X. Jin, et al., incl. <span class="me">P. Srivastava</span>, K. P. Seshadreesan, J. Liu</p>
+      <p class="pmeta"><span class="badge">submitted</span> Progress in Quantum Electronics, 2026</p>
+      <p class="plinks"><a href="https://arxiv.org/abs/2607.00365">arXiv:2607.00365</a></p>
+    </li>
+    <li>
+      <p class="ptitle">Variational Probe and Measurement Optimization for Structured Phase Estimation</p>
+      <p class="pauth"><span class="me">P. Srivastava</span>, V. Kumar, G. Dutt, K. P. Seshadreesan</p>
+      <p class="pmeta"><span class="badge wip">in preparation</span> for Quantum Science and Technology</p>
+      <p class="plinks"><a href="https://arxiv.org/abs/2507.22043">arXiv:2507.22043</a></p>
+    </li>
+    <li>
+      <p class="ptitle">Sequential vs. Simultaneous Entanglement Swapping under Optimal Link-Layer Control</p>
+      <p class="pauth"><span class="me">P. Srivastava</span>, A. R. Sabavat, S. Jain, et al., incl. K. P. Seshadreesan</p>
+      <p class="pmeta"><span class="badge wip">in preparation</span> for ACM PQQS 2026</p>
+      <p class="plinks"><a href="https://arxiv.org/abs/2605.04047">arXiv:2605.04047</a></p>
+    </li>
+    <li>
+      <p class="ptitle">Encoder Circuit for a Surface Code using a Measurement-Based Quantum Computing Model</p>
+      <p class="pauth"><span class="me">P. Srivastava</span>, V. Katyal, A. Raina</p>
+      <p class="pmeta"><span class="badge">preprint</span> 2023</p>
+      <p class="plinks"><a href="https://arxiv.org/abs/2306.10267">arXiv:2306.10267</a></p>
+    </li>
+  </ol>
+</section>
+
+<!-- ============================ SKILLS ============================ -->
+<section id="skills" class="wrap">
+  <div class="sechead">
+    <h2>Skills</h2>
+    <span class="rule"></span>
+    <p class="sechint">What I actually use, not everything I have heard of.</p>
+  </div>
+
+  <div class="skillgrid">
+    <div class="skillcard">
+      <p class="sklabel">Quantum</p>
+      <p class="skitems">PennyLane · Qiskit · AWS Braket · variational quantum algorithms · parameterized circuits · quantum and classical Fisher information · multiparameter estimation · stabilizer formalism · surface codes · MBQC</p>
+    </div>
+    <div class="skillcard">
+      <p class="sklabel">Machine learning</p>
+      <p class="skitems">PyTorch · JAX · Gymnasium · REINFORCE and policy gradients · CMA-ES · gradient-free optimization</p>
+    </div>
+    <div class="skillcard">
+      <p class="sklabel">Languages</p>
+      <p class="skitems">Python · C · MATLAB · Mathematica</p>
+    </div>
+    <div class="skillcard">
+      <p class="sklabel">Compute</p>
+      <p class="skitems">SLURM array jobs on Pitt CRC · Linux and bash · Git · local GPU workflows</p>
+    </div>
+    <div class="skillcard">
+      <p class="sklabel">Hardware contexts</p>
+      <p class="skitems">NV centers in diamond · dipolar spin chains · ultrafast and nonlinear optics</p>
+    </div>
+    <div class="skillcard">
+      <p class="sklabel">Spoken</p>
+      <p class="skitems">English (fluent) · Hindi (native)</p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ ACTIVITY ============================ -->
+<section id="activity" class="wrap">
+  <div class="sechead">
+    <h2>Activity</h2>
+    <span class="rule"></span>
+  </div>
+
+  <div class="cols">
+    <div>
+      <p class="sublabel">Grants and collaborations</p>
+      <ul class="plain">
+        <li><span class="when">2026</span>PQI Community Collaboration Award, Dynamic Programming and Reinforcement Learning for Quantum Network Control (DyReQNet-Ctrl). Significant contributor; PI K. P. Seshadreesan.</li>
+        <li><span class="when">2024</span>PQI Community Collaboration Award, NV-Center-Based Quantum Sensing for Biomedical Ultrasound Imaging. Contributor; PI J. Liu.</li>
+      </ul>
+
+      <p class="sublabel">Talks and presentations</p>
+      <ul class="plain">
+        <li><span class="when">2026</span>Oral presentation, IEEE Quantum Week (QCE), QTEM track, Toronto, September 2026.</li>
+        <li><span class="when">2026</span>Contributed talk, Variational Probe and Measurement Optimization for Structured Phase Estimation. FQIT 2026, IIIT Allahabad, March 2026.</li>
+        <li><span class="when">2025</span>Poster, Variational Quantum Sensing for Structured Linear Estimation Function. IEEE Quantum Week (QCE) 2025.</li>
+      </ul>
+
+      <p class="sublabel">Service</p>
+      <ul class="plain">
+        <li><span class="when">2025</span>Reviewer, <em>npj Quantum Information</em> (Nature Portfolio).</li>
+        <li><span class="when">2025</span>Student volunteer, IEEE Quantum Week (QCE). Volunteering again in 2026.</li>
+      </ul>
+    </div>
+    <div>
+      <p class="sublabel">Teaching</p>
+      <ul class="plain">
+        <li><span class="when">2026</span>Recitation instructor and grader, CS 1613 Modern Quantum Computing.</li>
+        <li><span class="when">2026</span>Lab teaching assistant, CS 0011 Introduction to Computing for Scientists.</li>
+        <li><span class="when">2025-26</span>Teaching assistant, CS 1900 Internship and CS 1980 Team Project.</li>
+      </ul>
+
+      <p class="sublabel">Earlier research</p>
+      <ul class="plain">
+        <li><span class="when">2022-23</span>Surface code encoder in the MBQC model, IISER Bhopal. Advisor Ankur Raina.</li>
+        <li><span class="when">2021-22</span>MS thesis, 2D coherent spectroscopy with chirped and unchirped pulses. Advisor Rohan Singh.</li>
+        <li><span class="when">2019</span>Entanglement entropy in coupled harmonic oscillators, IIIT Allahabad. Advisor Srijit Bhattacharjee.</li>
+      </ul>
+
+      <p class="sublabel">Training</p>
+      <ul class="plain">
+        <li><span class="when">2026</span>QNumerics, Numerical Methods in QIS, UMass Amherst.</li>
+        <li><span class="when">2024</span>STAQ Summer School, Duke University.</li>
+      </ul>
+
+      <p class="sublabel">Away from the terminal</p>
+      <p class="prose small">
+        Fiction and non-fiction in roughly equal measure, anime that takes its
+        premises seriously, and treks whenever the calendar allows.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ CONTACT ============================ -->
+<section id="contact" class="wrap">
+  <div class="sechead">
+    <h2>Contact</h2>
+    <span class="rule"></span>
+  </div>
+  <div class="contact">
+    <p class="prose">
+      Happy to talk about variational sensing, quantum network control, or internships
+      in quantum algorithms and quantum ML. Email is the fastest route.
+    </p>
+    <ul class="contact-list">
+      <li><span class="ckey">email</span><a href="mailto:PRS216@pitt.edu">PRS216@pitt.edu</a></li>
+      <li><span class="ckey">scholar</span><a href="https://scholar.google.com/citations?user=X4i_SsYAAAAJ" target="_blank" rel="noopener">Google Scholar</a></li>
+      <li><span class="ckey">github</span><a href="https://github.com/Priyam1498" target="_blank" rel="noopener">Priyam1498</a></li>
+      <li><span class="ckey">linkedin</span><a href="https://www.linkedin.com/in/priyam-srivastava-0104/" target="_blank" rel="noopener">priyam-srivastava-0104</a></li>
+      <li><span class="ckey">cv</span><a href="assets/CV_Priyam_Srivastava.pdf">download pdf</a></li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<footer class="sitefoot">
+  <div class="wrap footrow">
+    <span>Priyam Srivastava · Pittsburgh, PA</span>
+    <span>Last updated August 2026</span>
+  </div>
 </footer>
+
+<script>
+(function () {
+  var root = document.documentElement;
+  var btn = document.getElementById('theme-toggle');
+  var label = btn.querySelector('.theme-label');
+
+  function read() {
+    try { return localStorage.getItem('theme'); } catch (e) { return null; }
+  }
+  function write(v) {
+    try { localStorage.setItem('theme', v); } catch (e) {}
+  }
+  function apply(mode) {
+    root.setAttribute('data-theme', mode);
+    label.textContent = mode;
+    btn.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+  }
+
+  var saved = read();
+  if (saved === 'light' || saved === 'dark') {
+    apply(saved);
+  } else if (window.matchMedia && window.matchMedia('(prefers-color-scheme: light)').matches) {
+    apply('light');
+  } else {
+    apply('dark');
+  }
+
+  btn.addEventListener('click', function () {
+    var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+    apply(next);
+    write(next);
+  });
+
+  var links = Array.prototype.slice.call(document.querySelectorAll('.navlinks a'));
+  var targets = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+  if ('IntersectionObserver' in window) {
+    var obs = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        var i = targets.indexOf(en.target);
+        if (i < 0) return;
+        links.forEach(function (a) { a.classList.remove('on'); });
+        links[i].classList.add('on');
+      });
+    }, { rootMargin: '-45% 0px -50% 0px' });
+    targets.forEach(function (t) { if (t) obs.observe(t); });
+  }
+})();
+</script>
 
 </body>
 </html>
