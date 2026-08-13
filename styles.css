@@ -192,12 +192,26 @@ ul.news li {
 ul.news .what { font-size: 0.94rem; color: var(--fg-2); min-width: 0; }
 
 /* ---------------------------------------------------------------- thrusts */
-.thrust { display: grid; grid-template-columns: 260px 1fr; gap: 2.5rem; }
 .thrust > * { min-width: 0; }
+.thrust-body { max-width: 46em; }
 
-.thrust-fig img {
-  width: 100%; height: auto; display: block;
-  border: 1px solid var(--line); border-radius: 3px;
+/* Figure plate: the diagrams are drawn on white, so give them a deliberate
+   white card rather than letting them glow against the dark page. */
+.plate { margin-top: 2rem; }
+
+.plate a {
+  display: block; background: #ffffff;
+  border: 1px solid var(--line); border-radius: 4px;
+  padding: 1rem; transition: border-color 0.15s ease;
+}
+.plate a:hover { border-color: var(--metro-fg); }
+.t-net .plate a:hover { border-color: var(--net-fg); }
+
+.plate img { width: 100%; height: auto; display: block; }
+
+.plate figcaption {
+  font-family: var(--mono); font-size: 0.72rem; line-height: 1.65;
+  color: var(--fg-3); margin-top: 0.8rem; max-width: 52em;
 }
 
 .figslot {
@@ -364,8 +378,7 @@ ul.news .what { font-size: 0.94rem; color: var(--fg-2); min-width: 0; }
   .theme-btn { margin-left: auto; }
   .page-intro { padding: 2.5rem 0 2.5rem; }
   .cols { grid-template-columns: 1fr; gap: 2.5rem; }
-  .thrust { grid-template-columns: 1fr; gap: 1.5rem; }
-  .thrust-fig { max-width: 300px; }
+  .plate a { padding: 0.5rem; }
   .skillgrid { grid-template-columns: 1fr; }
   .readout { grid-template-columns: 1fr; }
   .explorer { padding: 1.25rem; }
