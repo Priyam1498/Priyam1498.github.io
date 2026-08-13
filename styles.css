@@ -223,7 +223,7 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
 /* prose flows across two columns so it fills the width without the lines
    getting too long to read comfortably */
 .thrust-text {
-  -webkit-column-count: 2; column-count: 2;
+  columns: 18em 2;
   -webkit-column-gap: 3.5rem; column-gap: 3.5rem;
   orphans: 2; widows: 2;
   margin-bottom: 0.4rem;
@@ -424,7 +424,7 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
   .portrait { width: 132px !important; }
   .lede, .prose p, .thrust p, ul.news .what { text-align: left; }
   .plate a { padding: 0.5rem; }
-  .thrust-text { -webkit-column-count: 1; column-count: 1; }
+  .thrust-text { columns: 1 !important; }
   .skillgrid { grid-template-columns: 1fr; }
   .readout { grid-template-columns: 1fr; }
   .explorer { padding: 1.25rem; }
