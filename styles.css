@@ -162,10 +162,18 @@ h2.sechead {
 }
 .side .sublabel:first-child { margin-top: 0; }
 
+.intro-row {
+  display: flex; align-items: flex-start; gap: 3rem;
+  padding: 4.5rem 0 3.5rem;
+}
+.intro-row .page-intro { padding: 0; flex: 1 1 auto; min-width: 0; }
+
 .portrait {
-  display: block; width: 100%; max-width: 190px; height: auto;
+  flex: 0 0 auto; display: block;
+  width: 128px; height: 128px; object-fit: cover;
   border: 1px solid var(--line); border-radius: 4px;
-  margin-bottom: 1.75rem;
+  margin-top: 0.3rem;
+  animation: rise 0.5s ease-out 0.1s both;
 }
 
 /* ---------------------------------------------------------------- data lists */
@@ -387,7 +395,8 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
   .theme-btn { margin-left: auto; }
   .page-intro { padding: 2.5rem 0 2.5rem; }
   .cols { grid-template-columns: 1fr; gap: 2.5rem; }
-  .portrait { max-width: 140px; }
+  .intro-row { flex-direction: row-reverse; gap: 1.25rem; padding: 2.5rem 0; }
+  .portrait { width: 84px; height: 84px; margin-top: 0.2rem; }
   .plate a { padding: 0.5rem; }
   .skillgrid { grid-template-columns: 1fr; }
   .readout { grid-template-columns: 1fr; }
