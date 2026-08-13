@@ -79,7 +79,7 @@
         <img src="assets/fig-metrology.png"
              alt="A sensing task of N coupled spins with local phases feeds a variational design loop in which a gradient-free optimizer alternately updates encoder parameters and measurement parameters against a classical Fisher information objective, and the optimized settings are handed to an experimental platform.">
       </a>
-      <figcaption>
+      <figcaption style="max-width:none;">
         The design loop. Encoder and measurement parameters are updated in
         alternating groups against a classical Fisher information objective, and
         what leaves the loop is a set of settings an experiment can actually apply.
@@ -89,7 +89,7 @@
 
   <section class="explorer">
     <h2 class="sechead">Why hardware constraints change the answer</h2>
-    <p class="prose">
+    <p class="prose" style="max-width:none;">
       A GHZ probe beats a product probe by a factor of the square root of N in the
       noiseless case. Add local dephasing and that advantage disappears. Move the
       sliders.
@@ -124,7 +124,7 @@
       <text id="tGhz" class="lbl hlt">GHZ</text>
       <text x="340" y="262" class="lbl" text-anchor="middle">number of qubits</text>
     </svg>
-    <p class="fignote">
+    <p class="fignote" style="max-width:none;">
       Toy model for intuition, not paper data. Product probe scales as one over root N,
       GHZ as one over N, each degraded by local dephasing at rate gamma.
     </p>
@@ -158,7 +158,7 @@
         <img src="assets/fig-rl.png"
              alt="A four-hop chain from A to B where an identical reinforcement-learning agent runs on every link and writes Werner pairs into per-link buffers, and a network layer then either swaps hop by hop in sequence or holds until all buffers are valid and swaps them together.">
       </a>
-      <figcaption>
+      <figcaption style="max-width:none;">
         The two-layer architecture. Identical link-layer agents fill per-link
         buffers that age at the external coherence time, and the network layer
         either swaps hop by hop or holds until every buffer is valid.
