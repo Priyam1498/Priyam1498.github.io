@@ -49,9 +49,6 @@
   </div>
 
   <article class="thrust t-metro">
-    <div class="thrust-fig">
-      <div class="figslot">assets/fig-metrology.png</div>
-    </div>
     <div class="thrust-body">
       <p class="tag">variational quantum sensing</p>
       <h2>Probes and measurements you optimize instead of derive</h2>
@@ -74,6 +71,18 @@
         <a href="https://ieeexplore.ieee.org/abstract/document/11250086">QCE 2025</a>
       </p>
     </div>
+
+    <figure class="plate">
+      <a href="assets/fig-metrology.png" target="_blank" rel="noopener">
+        <img src="assets/fig-metrology.png"
+             alt="A sensing task of N coupled spins with local phases feeds a variational design loop in which a gradient-free optimizer alternately updates encoder parameters and measurement parameters against a classical Fisher information objective, and the optimized settings are handed to an experimental platform.">
+      </a>
+      <figcaption>
+        The design loop. Encoder and measurement parameters are updated in
+        alternating groups against a classical Fisher information objective, and
+        what leaves the loop is a set of settings an experiment can actually apply.
+      </figcaption>
+    </figure>
   </article>
 
   <section class="explorer">
@@ -120,25 +129,37 @@
   </section>
 
   <article class="thrust t-net">
-    <div class="thrust-fig">
-      <div class="figslot">assets/fig-rl.png</div>
-    </div>
     <div class="thrust-body">
       <p class="tag">reinforcement learning for network control</p>
       <h2>Deciding when to swap and when to wait</h2>
       <p>
         Entanglement distribution is a scheduling problem under decoherence: hold a
         link too long and it decays, swap too early and you waste it. I built a
-        two-layer simulator in PyTorch and Gymnasium where per-link REINFORCE agents
-        handle generation and a network-layer controller compares sequential swapping
-        against SWAP-ASAP. Sweeping coherence time as SLURM array jobs on the Pitt CRC
-        cluster exposes a regime structure in the ratio of external coherence time to
-        link generation time, which governs the penalty for connection-less operation.
+        two-layer simulator in PyTorch and Gymnasium. An identical utility-maximizing
+        agent runs on every link, delivering Werner pairs into per-link buffers, and a
+        network-layer controller then chooses between swapping hop by hop, which leaves
+        partial chains ageing in storage, and holding until every buffer is valid and
+        swapping them together. Sweeping coherence time as SLURM array jobs on the Pitt
+        CRC cluster exposes a regime structure in the ratio of external coherence time
+        to link generation time, which governs the penalty for connection-less
+        operation.
       </p>
       <p class="refs">
         <a href="https://arxiv.org/abs/2605.04047">arXiv:2605.04047</a>
       </p>
     </div>
+
+    <figure class="plate">
+      <a href="assets/fig-rl.png" target="_blank" rel="noopener">
+        <img src="assets/fig-rl.png"
+             alt="A four-hop chain from A to B where an identical reinforcement-learning agent runs on every link and writes Werner pairs into per-link buffers, and a network layer then either swaps hop by hop in sequence or holds until all buffers are valid and swaps them together.">
+      </a>
+      <figcaption>
+        The two-layer architecture. Identical link-layer agents fill per-link
+        buffers that age at the external coherence time, and the network layer
+        either swaps hop by hop or holds until every buffer is valid.
+      </figcaption>
+    </figure>
   </article>
 
   <section>
