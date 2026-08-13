@@ -218,7 +218,20 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
 
 /* ---------------------------------------------------------------- thrusts */
 .thrust > * { min-width: 0; }
-.thrust-body { max-width: 34em; }
+.thrust-body { max-width: none; }
+
+/* prose flows across two columns so it fills the width without the lines
+   getting too long to read comfortably */
+.thrust-text {
+  -webkit-column-count: 2; column-count: 2;
+  -webkit-column-gap: 3.5rem; column-gap: 3.5rem;
+  orphans: 2; widows: 2;
+  margin-bottom: 0.4rem;
+}
+.thrust-text p { margin-bottom: 1rem; }
+.thrust-text p:last-child { margin-bottom: 0; }
+
+.explorer .prose { max-width: 44em; }
 
 /* Figure plate: the diagrams are drawn on white, so give them a deliberate
    white card rather than letting them glow against the dark page. */
@@ -411,6 +424,7 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
   .portrait { width: 132px !important; }
   .lede, .prose p, .thrust p, ul.news .what { text-align: left; }
   .plate a { padding: 0.5rem; }
+  .thrust-text { -webkit-column-count: 1; column-count: 1; }
   .skillgrid { grid-template-columns: 1fr; }
   .readout { grid-template-columns: 1fr; }
   .explorer { padding: 1.25rem; }
