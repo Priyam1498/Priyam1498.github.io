@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
+
 /* ==========================================================================
    Priyam Srivastava — personal site
    Type:  IBM Plex Mono for display, labels, and data. IBM Plex Sans for prose.
@@ -6,7 +8,7 @@
 
 :root {
   --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --sans: 'Inter', 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --wrap: 1080px;
   --gutter: 2rem;
 }
@@ -45,8 +47,8 @@ body {
   background: var(--bg);
   color: var(--fg);
   font-family: var(--sans);
-  font-size: 17px;
-  line-height: 1.72;
+  font-size: 18px;
+  line-height: 1.78;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -87,7 +89,7 @@ a { color: inherit; }
 
 .navlinks {
   display: flex; gap: 1.4rem; margin-left: auto;
-  font-family: var(--mono); font-size: 0.8rem;
+  font-family: var(--mono); font-size: 0.84rem;
 }
 
 .navlinks a {
@@ -128,12 +130,11 @@ main { padding-bottom: 4rem; }
   margin-bottom: 1.2rem;
 }
 
-.lede { color: var(--prose); font-size: 1.06rem; max-width: 34em; }
+.lede { color: var(--prose); font-size: 1.1rem; max-width: 34em; }
 
 .lede, .prose p, .thrust p, ul.news .what {
-  text-align: justify;
-  text-justify: inter-word;
-  -webkit-hyphens: auto; hyphens: auto;
+  text-align: left;
+  -webkit-hyphens: none; hyphens: none;
 }
 
 /* ---------------------------------------------------------------- sections */
@@ -150,7 +151,7 @@ h2.sechead {
 .prose h2.sechead { margin-top: 3rem; }
 .prose h2.sechead:first-child { margin-top: 0; }
 
-.sechint { font-family: var(--mono); font-size: 0.79rem; color: var(--fg-3); }
+.sechint { font-family: var(--mono); font-size: 0.83rem; color: var(--fg-3); }
 
 .cols { display: grid; grid-template-columns: 1.55fr 1fr; gap: 3.5rem; }
 .cols > * { min-width: 0; }
@@ -185,7 +186,7 @@ h2.sechead {
 }
 
 /* ---------------------------------------------------------------- data lists */
-.facts { font-family: var(--mono); font-size: 0.82rem; border-top: 1px solid var(--line-soft); }
+.facts { font-family: var(--mono); font-size: 0.86rem; border-top: 1px solid var(--line-soft); }
 .facts dt { color: var(--fg-3); padding-top: 0.7rem; }
 .facts dd { color: var(--fg); padding-bottom: 0.7rem; border-bottom: 1px solid var(--line-soft); }
 
@@ -194,17 +195,17 @@ ul.plain, ul.linklist, ul.news { list-style: none; }
 ul.plain li {
   display: grid; grid-template-columns: 78px 1fr; gap: 1.1rem;
   padding: 0.8rem 0; border-bottom: 1px solid var(--line-soft);
-  font-size: 0.96rem; color: var(--prose); align-items: baseline;
+  font-size: 1rem; color: var(--prose); align-items: baseline;
 }
 
 .when {
-  font-family: var(--mono); font-size: 0.78rem; color: var(--fg-3);
+  font-family: var(--mono); font-size: 0.82rem; color: var(--fg-3);
   font-variant-numeric: tabular-nums;
 }
 
 ul.linklist li {
   padding: 0.6rem 0; border-bottom: 1px solid var(--line-soft);
-  font-family: var(--mono); font-size: 0.84rem;
+  font-family: var(--mono); font-size: 0.88rem;
 }
 ul.linklist a { color: var(--fg); text-decoration-color: var(--metro-fg); }
 
@@ -214,7 +215,7 @@ ul.news li {
   padding: 0.95rem 0; border-bottom: 1px solid var(--line-soft);
   align-items: baseline;
 }
-ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width: 46em; }
+ul.news .what { font-size: 1rem; color: var(--prose); min-width: 0; max-width: 46em; }
 
 /* ---------------------------------------------------------------- thrusts */
 .thrust > * { min-width: 0; }
@@ -248,7 +249,7 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
 .plate img { width: 100%; height: auto; display: block; }
 
 .plate figcaption {
-  font-family: var(--mono); font-size: 0.76rem; line-height: 1.7;
+  font-family: var(--mono); font-size: 0.8rem; line-height: 1.7;
   color: var(--fg-2); margin-top: 0.8rem; max-width: 52em;
 }
 
@@ -272,11 +273,11 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
   letter-spacing: -0.02em; margin-bottom: 0.9rem;
 }
 
-.thrust p { color: var(--prose); font-size: 1rem; margin-bottom: 1rem; }
+.thrust p { color: var(--prose); font-size: 1.02rem; margin-bottom: 1rem; }
 
 .refs { display: flex; flex-wrap: wrap; gap: 1rem; }
 .refs a, .plinks a {
-  font-family: var(--mono); font-size: 0.74rem; color: var(--fg-3);
+  font-family: var(--mono); font-size: 0.78rem; color: var(--fg-3);
   text-decoration: none; border-bottom: 1px solid var(--line);
 }
 .refs a:hover, .plinks a:hover { color: var(--fg); border-bottom-color: var(--fg-3); }
@@ -311,13 +312,13 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
 #plot .lbl.hlt { fill: var(--metro-fg); }
 #plot .gl { stroke: var(--line-soft); stroke-width: 1; }
 
-.fignote { font-family: var(--mono); font-size: 0.75rem; line-height: 1.7; color: var(--fg-3); margin-top: 1.1rem; max-width: 44em; }
+.fignote { font-family: var(--mono); font-size: 0.79rem; line-height: 1.7; color: var(--fg-3); margin-top: 1.1rem; max-width: 44em; }
 
 /* ---------------------------------------------------------------- filters */
 .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
 
 .chip {
-  font-family: var(--mono); font-size: 0.76rem; color: var(--fg-3);
+  font-family: var(--mono); font-size: 0.8rem; color: var(--fg-3);
   background: transparent; border: 1px solid var(--line); border-radius: 4px;
   padding: 0.35rem 0.75rem; cursor: pointer;
   transition: color 0.15s ease, border-color 0.15s ease;
@@ -343,15 +344,15 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
 }
 
 .ptitle {
-  font-family: var(--mono); font-size: 1.02rem; font-weight: 500;
+  font-family: var(--mono); font-size: 1.05rem; font-weight: 500;
   line-height: 1.45; letter-spacing: -0.015em; margin-bottom: 0.35rem;
 }
 
-.pauth { font-size: 0.94rem; color: var(--prose); margin-bottom: 0.4rem; }
+.pauth { font-size: 0.98rem; color: var(--prose); margin-bottom: 0.4rem; }
 .pauth .me { color: var(--fg); font-weight: 500; box-shadow: inset 0 -2px 0 var(--metro-fg); }
 
 .pmeta {
-  font-family: var(--mono); font-size: 0.78rem; color: var(--fg-3);
+  font-family: var(--mono); font-size: 0.82rem; color: var(--fg-3);
   display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem;
   margin-bottom: 0.5rem;
 }
@@ -375,7 +376,7 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
   letter-spacing: 0.12em; text-transform: uppercase;
   color: var(--net-fg); margin-bottom: 0.6rem;
 }
-.skitems { font-size: 0.98rem; line-height: 1.8; color: var(--prose); }
+.skitems { font-size: 1.02rem; line-height: 1.85; color: var(--prose); }
 
 /* ---------------------------------------------------------------- buttons */
 .btn {
@@ -394,7 +395,7 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
 /* ---------------------------------------------------------------- footer */
 .sitefoot {
   border-top: 1px solid var(--line); padding: 1.6rem 0 3rem;
-  font-family: var(--mono); font-size: 0.74rem; color: var(--fg-3);
+  font-family: var(--mono); font-size: 0.78rem; color: var(--fg-3);
 }
 .footrow { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
 .footrow a { color: var(--fg-3); }
@@ -422,7 +423,6 @@ ul.news .what { font-size: 0.96rem; color: var(--prose); min-width: 0; max-width
     padding: 2.5rem 0 !important;
   }
   .portrait { width: 132px !important; }
-  .lede, .prose p, .thrust p, ul.news .what { text-align: left; }
   .plate a { padding: 0.5rem; }
   .thrust-text { columns: 1 !important; }
   .skillgrid { grid-template-columns: 1fr; }
