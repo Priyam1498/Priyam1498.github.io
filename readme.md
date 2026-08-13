@@ -2,6 +2,9 @@
 
 Static multi-page site. No build step, no dependencies.
 
+ALL FILENAMES ARE LOWERCASE. GitHub Pages is case-sensitive, so Index.html and
+Styles.css will not answer requests for index.html and styles.css.
+
 ## Files to put in the repo root
 
     index.html          About: interests, background, education, recent news
@@ -16,24 +19,20 @@ Static multi-page site. No build step, no dependencies.
 
     hobbies.html        Content moved into index.html
 
-## Add to assets/
+## assets/
 
-    CV_Priyam_Srivastava.pdf    Linked from index.html and cv.html
-    fig-metrology.png           Research figure, roughly 4:3
-    fig-rl.png                  Research figure, roughly 4:3
+    favicon.svg
+    fig-metrology.png           In place: variational design loop
+    fig-rl.png                  In place: two-layer network architecture
+    CV_Priyam_Srivastava.pdf    STILL NEEDED, linked from index.html and cv.html
     og-card.png                 1200x630 link preview image, optional
 
-## Swapping in the research figures
+Both figures are flattened onto white and shown full width inside a white plate,
+since they are drawn on a light background and would otherwise glow against the
+dark theme. Clicking one opens the full-resolution file.
 
-Each thread in research.html has a placeholder:
-
-    <div class="figslot">assets/fig-metrology.png</div>
-
-Replace it with:
-
-    <img src="assets/fig-metrology.png" alt="short description of the figure">
-
-Export at about 720x540 so it stays sharp on retina screens, under 200 KB.
+To swap a figure later, replace the file in assets/ keeping the same name, and
+update the alt text and caption in research.html.
 
 ## Editing
 
