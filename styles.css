@@ -215,7 +215,7 @@ ul.news li {
   padding: 0.95rem 0; border-bottom: 1px solid var(--line-soft);
   align-items: baseline;
 }
-ul.news .what { font-size: 1rem; color: var(--prose); min-width: 0; max-width: 46em; }
+ul.news .what { font-size: 1rem; color: var(--prose); min-width: 0; }
 
 /* ---------------------------------------------------------------- thrusts */
 .thrust > * { min-width: 0; }
@@ -232,7 +232,7 @@ ul.news .what { font-size: 1rem; color: var(--prose); min-width: 0; max-width: 4
 .thrust-text p { margin-bottom: 1rem; }
 .thrust-text p:last-child { margin-bottom: 0; }
 
-.explorer .prose { max-width: 44em; }
+.explorer .prose { max-width: none; }
 
 /* Figure plate: the diagrams are drawn on white, so give them a deliberate
    white card rather than letting them glow against the dark page. */
@@ -250,7 +250,7 @@ ul.news .what { font-size: 1rem; color: var(--prose); min-width: 0; max-width: 4
 
 .plate figcaption {
   font-family: var(--mono); font-size: 0.8rem; line-height: 1.7;
-  color: var(--fg-2); margin-top: 0.8rem; max-width: 52em;
+  color: var(--fg-2); margin-top: 0.9rem; max-width: none;
 }
 
 .figslot {
@@ -312,7 +312,7 @@ ul.news .what { font-size: 1rem; color: var(--prose); min-width: 0; max-width: 4
 #plot .lbl.hlt { fill: var(--metro-fg); }
 #plot .gl { stroke: var(--line-soft); stroke-width: 1; }
 
-.fignote { font-family: var(--mono); font-size: 0.79rem; line-height: 1.7; color: var(--fg-3); margin-top: 1.1rem; max-width: 44em; }
+.fignote { font-family: var(--mono); font-size: 0.79rem; line-height: 1.7; color: var(--fg-3); margin-top: 1.1rem; max-width: none; }
 
 /* ---------------------------------------------------------------- filters */
 .filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
