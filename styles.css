@@ -192,6 +192,8 @@ h2.sechead {
 
 ul.plain, ul.linklist, ul.news { list-style: none; }
 
+ul.plain .what { min-width: 0; }
+
 ul.plain li {
   display: grid; grid-template-columns: 78px 1fr; gap: 1.1rem;
   padding: 0.8rem 0; border-bottom: 1px solid var(--line-soft);
