@@ -2,9 +2,6 @@
 
 Static multi-page site. No build step, no dependencies.
 
-ALL FILENAMES ARE LOWERCASE. GitHub Pages is case-sensitive, so Index.html and
-Styles.css will not answer requests for index.html and styles.css.
-
 ## Files to put in the repo root
 
     index.html          About: interests, background, education, recent news
@@ -14,10 +11,6 @@ Styles.css will not answer requests for index.html and styles.css.
     styles.css          All styling. REPLACE the old file completely.
     site.js             Theme toggle, publication filters, explorer plot
     assets/favicon.svg
-
-## Delete from the repo
-
-    hobbies.html        Content moved into index.html
 
 ## assets/
 
