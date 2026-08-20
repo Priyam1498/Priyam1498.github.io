@@ -132,6 +132,9 @@ main { padding-bottom: 4rem; }
 
 .lede { color: var(--prose); font-size: 1.1rem; max-width: 34em; }
 
+/* pages with no sidebar element beside the intro run it full width */
+.page-intro.intro-wide, .page-intro.intro-wide .lede { max-width: none; }
+
 .lede, .prose p, .thrust p, ul.news .what {
   text-align: left;
   -webkit-hyphens: none; hyphens: none;
