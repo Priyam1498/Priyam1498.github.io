@@ -17,6 +17,23 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
+
+<style>
+  /* Square portrait with softly rounded corners. */
+  .portrait {
+    display: block;
+    margin: 0;
+    width: 200px;
+    max-width: 100%;
+    aspect-ratio: 1;
+    height: auto;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 12px;
+    border: 1px solid var(--line);
+    animation: rise 0.5s ease-out 0.1s both;
+  }
+</style>
 </head>
 <body>
 
@@ -29,7 +46,7 @@
       <span class="mark-name">Priyam Srivastava</span>
     </a>
     <nav class="navlinks" aria-label="Pages">
-      <a href="index.html" class="on">about</a>
+      <a href="index.html" class="on" aria-current="page">about</a>
       <a href="research.html">research</a>
       <a href="publications.html">publications</a>
       <a href="cv.html">cv</a>
@@ -42,8 +59,8 @@
 
 <main id="main" class="wrap">
 
-  <div class="intro-row" style="display:grid;grid-template-columns:1.55fr 1fr;gap:3.5rem;align-items:start;padding:4.5rem 0 3.5rem;">
-    <div class="page-intro" style="min-width:0;padding:0;">
+  <div class="intro-row">
+    <div class="page-intro">
       <p class="eyebrow">About</p>
       <h1>Quantum algorithms for sensing and network control</h1>
       <p class="lede">
@@ -54,11 +71,13 @@
         reinforcement-learning policies for link-layer control in quantum networks.
       </p>
     </div>
-    <img class="portrait" src="assets/portrait.jpg"
-         style="width:200px;max-width:100%;aspect-ratio:200/270;height:auto;
-                border-radius:50%;object-fit:cover;object-position:50% 34%;
-                border:1px solid var(--line);display:block;margin:0;"
-         alt="Priyam Srivastava">
+    <img
+      class="portrait"
+      src="assets/portrait.jpg"
+      width="200"
+      height="200"
+      alt="Priyam Srivastava"
+    >
   </div>
 
   <section class="cols">
