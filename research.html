@@ -44,29 +44,41 @@
 
   <div class="page-intro intro-wide" style="max-width:none;">
     <p class="eyebrow">Research</p>
-    <h1>Two threads, one question</h1>
-    <p class="lede" style="max-width:none;">Variational optimization for design problems, reinforcement learning for control problems. Both ask what a noisy, finite, partly controllable quantum device can actually deliver.</p>
+    <h1>Quantum sensing and quantum-network control</h1>
+    <p class="lede" style="max-width:none;">
+      I use variational optimization to design quantum sensing circuits and
+      classical reinforcement learning to control entanglement generation.
+      Numerical simulation connects these methods to limited control and finite
+      memory coherence.
+    </p>
   </div>
 
   <article class="thrust t-metro">
     <div class="thrust-body" style="max-width:none;">
       <p class="tag">variational quantum sensing</p>
-      <h2>Probes and measurements you optimize instead of derive</h2>
+      <h2>Variational probe and readout design</h2>
+
       <div class="thrust-text" style="columns:18em 2;column-gap:3.5rem;orphans:2;widows:2;">
-      <p>
-        Textbook metrology hands you GHZ states and parity measurements. Real dipolar
-        spin platforms hand you a fixed interaction and limited control. I set up the
-        probe state, the encoding, and the readout as a parameterized circuit, then
-        optimize the Fisher information directly with CMA-ES over PennyLane and JAX
-        simulations. Learned probes approach entanglement-enhanced precision bounds and
-        reach the Heisenberg limit for uniform phase encoding.
-      </p>
-      <p>
-        The multiparameter case is harder than it looks. The quantum Fisher information
-        of a GHZ state is rank deficient, so joint magnetometry and gradiometry needs a
-        different objective, and optimizing det(F) gets there.
-      </p>
+        <p>
+          I model dipolar-interacting spin systems in PennyLane and JAX and use
+          CMA-ES to optimize probe-preparation and readout circuits. For structured
+          single-parameter phase estimation, I compare sequential and joint
+          optimization using the same finite-depth encoder and shared two-angle
+          product readout. Quantum and classical Fisher information distinguish
+          the information in the probe from the information extracted by the
+          measurement.
+        </p>
+        <p>
+          For joint magnetic-field and gradient estimation on dipolar spin chains,
+          I optimize the determinant of the classical Fisher-information matrix.
+          In this model, a GHZ probe has a rank-one quantum Fisher-information
+          matrix and cannot identify both parameters independently. At five spins
+          and three circuit layers, variational performance reaches 92% of the
+          best-found quantum Fisher-information determinant benchmark and
+          4.2 times the standard-quantum-limit determinant.
+        </p>
       </div>
+
       <p class="refs">
         <a href="https://arxiv.org/abs/2507.22043">arXiv:2507.22043</a>
         <a href="https://arxiv.org/abs/2605.03906">arXiv:2605.03906</a>
@@ -75,24 +87,33 @@
     </div>
 
     <figure class="plate">
-      <a href="assets/fig-metrology.png" target="_blank" rel="noopener">
-        <img src="assets/fig-metrology.png"
-             alt="A sensing task of N coupled spins with local phases feeds a variational design loop in which a gradient-free optimizer alternately updates encoder parameters and measurement parameters against a classical Fisher information objective, and the optimized settings are handed to an experimental platform.">
-      </a>
+      <div class="prose" style="max-width:none;">
+        <h3>Two training protocols</h3>
+        <p>
+          <strong>Sequential:</strong> select the probe using a fixed Ramsey
+          readout, then freeze the probe and optimize the readout.
+        </p>
+        <p>
+          <strong>Joint:</strong> optimize probe-preparation and readout parameters
+          together.
+        </p>
+      </div>
       <figcaption style="max-width:none;">
-        The design loop. Encoder and measurement parameters are updated in
-        alternating groups against a classical Fisher information objective, and
-        what leaves the loop is a set of settings an experiment can actually apply.
+        The deployed encoder and readout resources are matched. The comparison
+        tests how including the readout during probe selection affects sensing
+        performance. These are numerical studies; the optimized settings have not
+        been demonstrated here on a physical device.
       </figcaption>
     </figure>
   </article>
 
   <section class="explorer">
-    <h2 class="sechead">Why hardware constraints change the answer</h2>
+    <h2 class="sechead">Illustration: GHZ sensitivity under dephasing</h2>
     <p class="prose" style="max-width:none;">
-      A GHZ probe beats a product probe by a factor of the square root of N in the
-      noiseless case. Add local dephasing and that advantage disappears. Move the
-      sliders.
+      At fixed interrogation time, independent dephasing suppresses GHZ coherence
+      more strongly as the number of qubits increases. This idealized comparison
+      shows when that loss outweighs the noiseless sensitivity advantage. It is
+      separate from the variational sensing results above.
     </p>
 
     <div class="ctrls">
@@ -102,19 +123,29 @@
         <output id="nqOut">8</output>
       </div>
       <div class="ctrl">
-        <label for="gm">dephasing &gamma;</label>
+        <label for="gm">integrated dephasing d = &Gamma;t</label>
         <input type="range" id="gm" min="0" max="0.3" step="0.01" value="0">
         <output id="gmOut">0.00</output>
       </div>
     </div>
 
     <div class="readout">
-      <div class="stat"><p class="skey">product probe</p><p class="sval" id="mProd">0.354</p></div>
-      <div class="stat"><p class="skey">GHZ probe</p><p class="sval" id="mGhz">0.125</p></div>
-      <div class="stat"><p class="skey">advantage</p><p class="sval" id="mAdv">2.83x</p></div>
+      <div class="stat">
+        <p class="skey">product uncertainty</p>
+        <p class="sval" id="mProd">0.354</p>
+      </div>
+      <div class="stat">
+        <p class="skey">GHZ uncertainty</p>
+        <p class="sval" id="mGhz">0.125</p>
+      </div>
+      <div class="stat">
+        <p class="skey">product / GHZ uncertainty</p>
+        <p class="sval" id="mAdv">2.83x</p>
+      </div>
     </div>
 
-    <svg id="plot" viewBox="0 0 660 270" role="img" aria-label="Phase uncertainty against qubit number for a product probe and a GHZ probe">
+    <svg id="plot" viewBox="0 0 660 270" role="img"
+         aria-label="Phase uncertainty against qubit number for a product probe and a GHZ probe">
       <g id="grid"></g>
       <polyline id="lProd" class="cv-prod" points=""></polyline>
       <polyline id="lGhz" class="cv-ghz" points=""></polyline>
@@ -124,30 +155,45 @@
       <text id="tGhz" class="lbl hlt">GHZ</text>
       <text x="340" y="262" class="lbl" text-anchor="middle">number of qubits</text>
     </svg>
+
     <p class="fignote" style="max-width:none;">
-      Toy model for intuition, not paper data. Product probe scales as one over root N,
-      GHZ as one over N, each degraded by local dephasing at rate gamma.
+      Model: each qubit retains coherence e<sup>&minus;d</sup>, with dimensionless
+      d = &Gamma;t. The locally optimal phase-uncertainty bounds are
+      e<sup>d</sup>/&radic;N for a product probe and e<sup>Nd</sup>/N for a GHZ probe,
+      normalized to one repetition. Interrogation time and repetition count are
+      fixed; preparation and readout are ideal. A ratio above 1 favors GHZ, and
+      below 1 favors the product probe. This does not compare protocols after
+      optimizing interrogation time or include error correction. Lines connect
+      integer qubit counts. These are model predictions, not experimental data or
+      results from my papers.
     </p>
   </section>
 
   <article class="thrust t-net">
     <div class="thrust-body" style="max-width:none;">
       <p class="tag">reinforcement learning for network control</p>
-      <h2>Deciding when to swap and when to wait</h2>
+      <h2>Link-layer learning and entanglement-swapping protocols</h2>
+
       <div class="thrust-text" style="columns:18em 2;column-gap:3.5rem;orphans:2;widows:2;">
-      <p>
-        Entanglement distribution is a scheduling problem under decoherence: hold a
-        link too long and it decays, swap too early and you waste it. I built a
-        two-layer simulator in PyTorch and Gymnasium. An identical utility-maximizing
-        agent runs on every link, delivering Werner pairs into per-link buffers, and a
-        network-layer controller then chooses between swapping hop by hop, which leaves
-        partial chains ageing in storage, and holding until every buffer is valid and
-        swapping them together. Sweeping coherence time as SLURM array jobs on the Pitt
-        CRC cluster exposes a regime structure in the ratio of external coherence time
-        to link generation time, which governs the penalty for connection-less
-        operation.
-      </p>
+        <p>
+          I built a two-layer simulator in PyTorch and Gymnasium. Classical
+          REINFORCE policies control the elementary links, optimizing secret-key
+          rates and supplying entangled Werner pairs to link buffers. I then hold
+          those policies fixed and compare two prescribed network-layer protocols:
+          sequential entanglement swapping and simultaneous SWAP-ASAP. The
+          network-layer protocol is the comparison variable, rather than a learned
+          choice between the two protocols.
+        </p>
+        <p>
+          SLURM sweeps on Pitt CRC vary external memory coherence over four orders
+          of magnitude. In the fixed-size chain studied, sequential swapping is
+          strongly suppressed at short coherence times and approaches
+          simultaneous-swapping performance at long coherence times. The ratio of
+          external memory coherence time to per-link heralding latency organizes
+          these regimes.
+        </p>
       </div>
+
       <p class="refs">
         <a href="https://arxiv.org/abs/2605.04047">arXiv:2605.04047</a>
       </p>
@@ -156,25 +202,56 @@
     <figure class="plate">
       <a href="assets/fig-rl.png" target="_blank" rel="noopener">
         <img src="assets/fig-rl.png"
-             alt="A four-hop chain from A to B where an identical reinforcement-learning agent runs on every link and writes Werner pairs into per-link buffers, and a network layer then either swaps hop by hop in sequence or holds until all buffers are valid and swaps them together.">
+             alt="Two-layer quantum-network simulation: fixed link-layer learning policies supply entangled pairs, and sequential and simultaneous entanglement-swapping protocols are compared.">
       </a>
       <figcaption style="max-width:none;">
-        The two-layer architecture. Identical link-layer agents fill per-link
-        buffers that age at the external coherence time, and the network layer
-        either swaps hop by hop or holds until every buffer is valid.
+        Fixed link-layer policies supply entangled pairs to buffers. Separate
+        simulations compare sequential and simultaneous swapping, isolating the
+        effect of network-layer protocol and memory coherence.
       </figcaption>
     </figure>
   </article>
 
   <section>
-    <h2 class="sechead">Earlier projects</h2>
-    <ul class="plain">
-      <li><span class="when">2022-23</span><span class="what">Encoder circuit for a surface code in the MBQC model, with Qiskit simulations on AWS Braket. IISER Bhopal, advisor <a href="https://sites.google.com/view/ankurraina/" target="_blank" rel="noopener">Dr. Ankur Raina</a>.</span></li>
-      <li><span class="when">2021-22</span><span class="what">MS thesis on 2D coherent spectroscopy with chirped and unchirped pulses, solving the optical Bloch equations for two- and three-level systems. Advisor <a href="https://sites.google.com/iiserb.ac.in/rslab/people/rohan-singh" target="_blank" rel="noopener">Dr. Rohan Singh</a>.</span></li>
-      <li><span class="when">2019</span><span class="what">Entanglement entropy in coupled harmonic oscillator systems. IIIT Allahabad, advisor <a href="https://profile.iiita.ac.in/srijit/" target="_blank" rel="noopener">Dr. Srijit Bhattacharjee</a>.</span></li>
-    </ul>
+    <h2 class="sechead">AI for quantum networking</h2>
+    <p class="prose" style="max-width:none;">
+      I authored the AI for quantum networking section of
+      <a href="https://arxiv.org/abs/2607.00365">When AI Meets Quantum Information: A Comprehensive Review</a>,
+      submitted to <em>Progress in Quantum Electronics</em>. I am a contributing
+      coauthor of the full review.
+    </p>
   </section>
 
+  <section>
+    <h2 class="sechead">Earlier projects</h2>
+    <ul class="plain">
+      <li>
+        <span class="when">2022-23</span>
+        <span class="what">
+          Encoder circuit for a surface code in the MBQC model, with Qiskit
+          simulations on AWS Braket. IISER Bhopal, advisor
+          <a href="https://sites.google.com/view/ankurraina/" target="_blank" rel="noopener">Dr. Ankur Raina</a>.
+        </span>
+      </li>
+      <li>
+        <span class="when">2021-22</span>
+        <span class="what">
+          MS thesis on 2D coherent spectroscopy with chirped and unchirped pulses,
+          solving the optical Bloch equations for two- and three-level systems.
+          Advisor
+          <a href="https://sites.google.com/iiserb.ac.in/rslab/people/rohan-singh" target="_blank" rel="noopener">Dr. Rohan Singh</a>.
+        </span>
+      </li>
+      <li>
+        <span class="when">2019</span>
+        <span class="what">
+          Entanglement entropy in coupled harmonic oscillator systems.
+          IIIT Allahabad, advisor
+          <a href="https://profile.iiita.ac.in/srijit/" target="_blank" rel="noopener">Dr. Srijit Bhattacharjee</a>.
+        </span>
+      </li>
+    </ul>
+  </section>
 
 </main>
 
@@ -182,7 +259,7 @@
   <div class="wrap footrow">
     <span>Priyam Srivastava &middot; Pittsburgh, PA</span>
     <span><a href="mailto:PRS216@pitt.edu">PRS216@pitt.edu</a></span>
-    <span>Updated August 2026</span>
+    <span>Updated September 2026</span>
   </div>
 </footer>
 
