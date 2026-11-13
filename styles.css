@@ -1,439 +1,2264 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap');
 
 /* ==========================================================================
-   Priyam Srivastava — personal site
-   Type:  IBM Plex Mono for display, labels, and data. IBM Plex Sans for prose.
-   Color: teal = sensing and metrology, plum = networks and control.
+   PRIYAM SRIVASTAVA — ACADEMIC WEBSITE
+   Shared stylesheet | November 2026
+
+   Typography:
+     IBM Plex Sans  — body text and research prose
+     IBM Plex Mono  — headings, labels, navigation, technical data
+
+   Research accents:
+     Teal — quantum sensing and metrology
+     Plum — quantum networking and control
+
+   Pages:
+     index.html
+     research.html
+     publications.html
+     cv.html
+
+   Theme switching is handled by site.js.
+   ========================================================================== */
+
+
+/* ==========================================================================
+   1. DESIGN TOKENS
    ========================================================================== */
 
 :root {
-  --mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, monospace;
-  --sans: 'Inter', 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mono:
+    'IBM Plex Mono',
+    ui-monospace,
+    SFMono-Regular,
+    Menlo,
+    Consolas,
+    monospace;
+
+  --sans:
+    'IBM Plex Sans',
+    system-ui,
+    -apple-system,
+    'Segoe UI',
+    sans-serif;
+
   --wrap: 1080px;
   --gutter: 2rem;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  --transition-fast: 150ms ease;
 }
 
+
+/* --------------------------------------------------------------------------
+   Dark theme
+   -------------------------------------------------------------------------- */
+
 html[data-theme='dark'] {
+  color-scheme: dark;
+
   --bg: #0F1216;
   --bg-2: #181C23;
+  --bg-3: #202631;
+
   --line: #2A313D;
-  --line-soft: #1F242D;
+  --line-soft: #202630;
+
   --fg: #F3F5F8;
   --prose: #DDE3EB;
   --fg-2: #C2C9D4;
-  --fg-3: #8B94A2;
+  --fg-3: #9AA4B2;
+
   --metro-fg: #3FDCC7;
   --net-fg: #F096C2;
+
+  --metro-soft: rgba(63, 220, 199, 0.07);
+  --net-soft: rgba(240, 150, 194, 0.07);
 }
 
+
+/* --------------------------------------------------------------------------
+   Light theme
+   -------------------------------------------------------------------------- */
+
 html[data-theme='light'] {
+  color-scheme: light;
+
   --bg: #FCFCFD;
   --bg-2: #F1F3F6;
+  --bg-3: #E9EDF2;
+
   --line: #D8DCE3;
   --line-soft: #E6E9EE;
+
   --fg: #0F1319;
   --prose: #262C35;
   --fg-2: #3F4753;
-  --fg-3: #6B7481;
+  --fg-3: #626C79;
+
   --metro-fg: #0C7266;
   --net-fg: #98356C;
+
+  --metro-soft: rgba(12, 114, 102, 0.055);
+  --net-soft: rgba(152, 53, 108, 0.055);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { scroll-behavior: smooth; }
+/* ==========================================================================
+   2. RESET AND GLOBAL ELEMENTS
+   ========================================================================== */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+}
 
 body {
+  min-height: 100vh;
+
   background: var(--bg);
   color: var(--fg);
+
   font-family: var(--sans);
-  font-size: 18px;
-  line-height: 1.78;
+  font-size: 17px;
+  font-weight: 400;
+  line-height: 1.75;
+
   -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
-.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gutter); }
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
 
-a { color: inherit; }
+button {
+  cursor: pointer;
+}
 
-:focus-visible { outline: 2px solid var(--metro-fg); outline-offset: 3px; }
+img,
+svg {
+  max-width: 100%;
+}
 
-.skip { position: absolute; left: -9999px; }
+img {
+  height: auto;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 3px;
+  text-decoration-thickness: 1px;
+}
+
+a:hover {
+  text-decoration-color: var(--metro-fg);
+}
+
+strong,
+b {
+  font-weight: 600;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+::selection {
+  background: var(--metro-fg);
+  color: var(--bg);
+}
+
+
+/* ==========================================================================
+   3. ACCESSIBILITY
+   ========================================================================== */
+
+:focus-visible {
+  outline: 2px solid var(--metro-fg);
+  outline-offset: 3px;
+}
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+}
+
 .skip:focus {
-  left: 1rem; top: 1rem; z-index: 50;
-  background: var(--bg-2); padding: 0.6rem 1rem;
-  font-family: var(--mono); font-size: 0.8rem;
+  position: fixed;
+
+  left: 1rem;
+  top: 1rem;
+  z-index: 100;
+
+  padding: 0.65rem 1rem;
+
+  background: var(--bg-2);
+  color: var(--fg);
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  text-decoration: none;
 }
 
-/* ---------------------------------------------------------------- top bar */
+#main {
+  scroll-margin-top: 6rem;
+}
+
+
+/* ==========================================================================
+   4. CONTAINERS AND LAYOUT
+   ========================================================================== */
+
+.wrap {
+  width: 100%;
+  max-width: var(--wrap);
+
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+main {
+  padding-bottom: 5rem;
+}
+
+section,
+article {
+  margin-bottom: 4.5rem;
+}
+
+section:last-child,
+article:last-child {
+  margin-bottom: 0;
+}
+
+.cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 3.5rem;
+  align-items: start;
+}
+
+.cols > *,
+.intro-row > *,
+.skillgrid > *,
+.research-grid > * {
+  min-width: 0;
+}
+
+
+/* ==========================================================================
+   5. NAVIGATION
+   ========================================================================== */
+
 .topbar {
-  position: sticky; top: 0; z-index: 30;
+  position: sticky;
+  top: 0;
+  z-index: 30;
+
   background: var(--bg);
   border-bottom: 1px solid var(--line-soft);
 }
 
-.bar { display: flex; align-items: center; gap: 1.5rem; height: 64px; }
+.bar {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+
+  min-height: 64px;
+}
 
 .mark {
-  display: flex; align-items: center; gap: 0.6rem;
-  font-family: var(--mono); font-size: 0.88rem; font-weight: 500;
-  text-decoration: none; letter-spacing: -0.01em;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+
+  flex-shrink: 0;
+
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+
+  text-decoration: none;
+}
+
+.mark:hover {
+  color: var(--metro-fg);
 }
 
 .mark-glyph {
-  width: 10px; height: 10px; flex: none;
-  border: 1.5px solid var(--metro-fg); border-radius: 50%;
+  width: 10px;
+  height: 10px;
+
+  flex: none;
+
+  border: 1.5px solid var(--metro-fg);
+  border-radius: 50%;
 }
 
-.mark-name { white-space: nowrap; }
+.mark-name {
+  white-space: nowrap;
+}
 
 .navlinks {
-  display: flex; gap: 1.4rem; margin-left: auto;
-  font-family: var(--mono); font-size: 0.84rem;
+  display: flex;
+  align-items: center;
+  gap: 1.45rem;
+
+  margin-left: auto;
+
+  font-family: var(--mono);
+  font-size: 0.8rem;
 }
 
 .navlinks a {
-  color: var(--fg-3); text-decoration: none;
-  padding-bottom: 3px; border-bottom: 1px solid transparent;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  display: inline-block;
+
+  padding: 0.25rem 0;
+
+  color: var(--fg-3);
+
+  text-decoration: none;
+
+  border-bottom: 1px solid transparent;
+
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 }
-.navlinks a:hover { color: var(--fg); }
-.navlinks a.on { color: var(--fg); border-bottom-color: var(--metro-fg); }
+
+.navlinks a:hover {
+  color: var(--fg);
+}
+
+.navlinks a.on,
+.navlinks a[aria-current='page'] {
+  color: var(--fg);
+  border-bottom-color: var(--metro-fg);
+}
 
 .theme-btn {
-  font-family: var(--mono); font-size: 0.75rem;
-  color: var(--fg-3); background: transparent;
-  border: 1px solid var(--line); border-radius: 4px;
-  padding: 0.3rem 0.6rem; cursor: pointer;
-}
-.theme-btn:hover { color: var(--fg); border-color: var(--fg-3); }
+  flex-shrink: 0;
 
-/* ---------------------------------------------------------------- page intro */
-main { padding-bottom: 4rem; }
+  padding: 0.32rem 0.65rem;
+
+  font-family: var(--mono);
+  font-size: 0.74rem;
+
+  color: var(--fg-2);
+  background: transparent;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.theme-btn:hover {
+  color: var(--fg);
+  background: var(--bg-2);
+  border-color: var(--fg-3);
+}
+
+
+/* ==========================================================================
+   6. PAGE INTRODUCTIONS
+   ========================================================================== */
 
 .page-intro {
-  padding: 4.5rem 0 3.5rem;
-  max-width: 34em;
-  animation: rise 0.5s ease-out both;
+  max-width: 39em;
+
+  padding: 4rem 0 3.1rem;
+
+  animation: rise 500ms ease-out both;
 }
 
 .eyebrow {
-  font-family: var(--mono); font-size: 0.74rem;
-  letter-spacing: 0.16em; text-transform: uppercase;
-  color: var(--fg-3); margin-bottom: 1.1rem;
+  margin-bottom: 1rem;
+
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+
+  color: var(--fg-3);
 }
 
 .page-intro h1 {
+  margin-bottom: 1.3rem;
+
   font-family: var(--mono);
-  font-size: clamp(1.6rem, 3.2vw, 2.35rem);
-  font-weight: 500; line-height: 1.25; letter-spacing: -0.035em;
-  margin-bottom: 1.2rem;
+  font-size: clamp(1.7rem, 3.2vw, 2.35rem);
+  font-weight: 500;
+
+  line-height: 1.32;
+  letter-spacing: -0.035em;
+
+  color: var(--fg);
 }
 
-.lede { color: var(--prose); font-size: 1.1rem; max-width: 34em; }
+.lede {
+  max-width: 38em;
 
-/* pages with no sidebar element beside the intro run it full width */
-.page-intro.intro-wide, .page-intro.intro-wide .lede { max-width: none; }
+  font-size: 1.08rem;
+  line-height: 1.8;
 
-.lede, .prose p, .thrust p, ul.news .what {
+  color: var(--prose);
+}
+
+.lede + .lede {
+  margin-top: 1rem;
+}
+
+.lede a,
+.prose a,
+.project-content a {
+  text-decoration-color: var(--metro-fg);
+}
+
+.page-intro.intro-wide,
+.page-intro.intro-wide .lede {
+  max-width: none;
+}
+
+.lede,
+.prose p,
+.thrust p,
+.news .what {
   text-align: left;
-  -webkit-hyphens: none; hyphens: none;
+  hyphens: none;
+  -webkit-hyphens: none;
 }
 
-/* ---------------------------------------------------------------- sections */
-section, article { margin-bottom: 4.75rem; }
-section:last-child, article:last-child { margin-bottom: 0; }
 
-h2.sechead {
-  font-family: var(--mono); font-size: 0.88rem; font-weight: 500;
-  letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--fg); margin-bottom: 1.3rem;
-  padding-bottom: 0.7rem; border-bottom: 1px solid var(--line);
-}
-
-.prose h2.sechead { margin-top: 3rem; }
-.prose h2.sechead:first-child { margin-top: 0; }
-
-.sechint { font-family: var(--mono); font-size: 0.83rem; color: var(--fg-3); }
-
-.cols { display: grid; grid-template-columns: 1.55fr 1fr; gap: 3.5rem; }
-.cols > * { min-width: 0; }
-
-.prose { max-width: 34em; }
-.prose p { color: var(--prose); margin-bottom: 1.2rem; }
-.prose p:last-child { margin-bottom: 0; }
-.prose.small { font-size: 0.9rem; }
-.prose a, .lede a { text-decoration-color: var(--metro-fg); }
-
-.sublabel {
-  font-family: var(--mono); font-size: 0.72rem;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--fg-3); margin: 2rem 0 0.7rem;
-}
-.side .sublabel:first-child { margin-top: 0; }
+/* ==========================================================================
+   7. HOMEPAGE INTRODUCTION AND PORTRAIT
+   ========================================================================== */
 
 .intro-row {
-  display: grid; grid-template-columns: 1.55fr 1fr;
-  gap: 3.5rem; align-items: start;
-  padding: 4.5rem 0 3.5rem;
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+
+  gap: 3.5rem;
+  align-items: start;
+
+  padding: 4rem 0 3rem;
 }
-.intro-row .page-intro { padding: 0; min-width: 0; }
+
+.intro-row .page-intro {
+  min-width: 0;
+  padding: 0;
+}
 
 .portrait {
-  display: block; margin: 0;
-  width: 200px; max-width: 100%; aspect-ratio: 200 / 270; height: auto;
-  object-fit: cover; object-position: 50% 34%;
-  border-radius: 50%;
+  display: block;
+
+  width: 200px;
+  max-width: 100%;
+  height: auto;
+
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  object-position: center;
+
   border: 1px solid var(--line);
-  animation: rise 0.5s ease-out 0.1s both;
+  border-radius: var(--radius-lg);
+
+  animation: rise 500ms ease-out 100ms both;
 }
 
-/* ---------------------------------------------------------------- data lists */
-.facts { font-family: var(--mono); font-size: 0.86rem; border-top: 1px solid var(--line-soft); }
-.facts dt { color: var(--fg-3); padding-top: 0.7rem; }
-.facts dd { color: var(--fg); padding-bottom: 0.7rem; border-bottom: 1px solid var(--line-soft); }
 
-ul.plain, ul.linklist, ul.news { list-style: none; }
+/* ==========================================================================
+   8. SECTION HEADINGS AND PROSE
+   ========================================================================== */
 
-ul.plain .what { min-width: 0; }
+h2.sechead {
+  margin-bottom: 1.35rem;
+  padding-bottom: 0.75rem;
+
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  font-weight: 500;
+
+  line-height: 1.5;
+  letter-spacing: 0.085em;
+  text-transform: uppercase;
+
+  color: var(--fg);
+
+  border-bottom: 1px solid var(--line);
+}
+
+.prose {
+  max-width: 39em;
+}
+
+.prose p {
+  margin-bottom: 1.2rem;
+
+  color: var(--prose);
+  line-height: 1.8;
+}
+
+.prose p:last-child {
+  margin-bottom: 0;
+}
+
+.prose h2.sechead {
+  margin-top: 2.8rem;
+}
+
+.prose h2.sechead:first-child {
+  margin-top: 0;
+}
+
+.prose.small {
+  font-size: 0.88rem;
+}
+
+.sechint {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+
+  color: var(--fg-3);
+}
+
+.sublabel {
+  margin: 2.1rem 0 0.75rem;
+
+  font-family: var(--mono);
+  font-size: 0.71rem;
+  font-weight: 500;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+
+  color: var(--fg-3);
+}
+
+.side .sublabel:first-child {
+  margin-top: 0;
+}
+
+
+/* ==========================================================================
+   9. SIDEBAR FACTS AND LINK LISTS
+   ========================================================================== */
+
+.facts {
+  border-top: 1px solid var(--line-soft);
+
+  font-family: var(--mono);
+  font-size: 0.8rem;
+}
+
+.facts dt {
+  padding-top: 0.75rem;
+
+  color: var(--fg-3);
+}
+
+.facts dd {
+  padding-bottom: 0.75rem;
+
+  color: var(--fg);
+  line-height: 1.65;
+
+  border-bottom: 1px solid var(--line-soft);
+
+  overflow-wrap: anywhere;
+}
+
+.facts a {
+  text-decoration-color: var(--metro-fg);
+}
+
+ul.plain,
+ul.linklist,
+ul.news {
+  list-style: none;
+}
 
 ul.plain li {
-  display: grid; grid-template-columns: 78px 1fr; gap: 1.1rem;
-  padding: 0.8rem 0; border-bottom: 1px solid var(--line-soft);
-  font-size: 1rem; color: var(--prose); align-items: baseline;
+  display: grid;
+  grid-template-columns: 82px minmax(0, 1fr);
+
+  gap: 1rem;
+  align-items: start;
+
+  padding: 0.85rem 0;
+
+  border-bottom: 1px solid var(--line-soft);
+
+  font-size: 0.96rem;
+  line-height: 1.7;
+
+  color: var(--prose);
+}
+
+ul.plain .what {
+  min-width: 0;
+  overflow-wrap: break-word;
 }
 
 .when {
-  font-family: var(--mono); font-size: 0.82rem; color: var(--fg-3);
+  font-family: var(--mono);
+  font-size: 0.77rem;
+
+  color: var(--fg-3);
+
   font-variant-numeric: tabular-nums;
 }
 
 ul.linklist li {
-  padding: 0.6rem 0; border-bottom: 1px solid var(--line-soft);
-  font-family: var(--mono); font-size: 0.88rem;
-}
-ul.linklist a { color: var(--fg); text-decoration-color: var(--metro-fg); }
+  padding: 0.65rem 0;
 
-ul.news { border-top: 1px solid var(--line-soft); }
+  border-bottom: 1px solid var(--line-soft);
+
+  font-family: var(--mono);
+  font-size: 0.82rem;
+}
+
+ul.linklist a {
+  color: var(--fg);
+  text-decoration-color: var(--metro-fg);
+}
+
+
+/* ==========================================================================
+   10. HOMEPAGE NEWS
+   ========================================================================== */
+
+ul.news {
+  border-top: 1px solid var(--line-soft);
+}
+
 ul.news li {
-  display: grid; grid-template-columns: 100px 1fr; gap: 1.5rem;
-  padding: 0.95rem 0; border-bottom: 1px solid var(--line-soft);
-  align-items: baseline;
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+
+  gap: 1.6rem;
+  align-items: start;
+
+  padding: 1rem 0;
+
+  border-bottom: 1px solid var(--line-soft);
 }
-ul.news .what { font-size: 1rem; color: var(--prose); min-width: 0; }
 
-/* ---------------------------------------------------------------- thrusts */
-.thrust > * { min-width: 0; }
-.thrust-body { max-width: none; }
+ul.news .what {
+  min-width: 0;
 
-/* prose flows across two columns so it fills the width without the lines
-   getting too long to read comfortably */
+  font-size: 0.96rem;
+  line-height: 1.75;
+
+  color: var(--prose);
+}
+
+ul.news a {
+  text-decoration-color: var(--metro-fg);
+}
+
+
+/* ==========================================================================
+   11. FEATURED RESEARCH — HOMEPAGE
+   ========================================================================== */
+
+.featured-research {
+  margin-top: 2.1rem;
+  margin-bottom: 3.8rem;
+}
+
+.research-intro {
+  max-width: 78ch;
+
+  margin-bottom: 1.4rem;
+
+  color: var(--prose);
+  line-height: 1.75;
+}
+
+.research-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+
+  gap: 1rem;
+}
+
+.research-card {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  padding: 1.3rem;
+
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+
+  transition:
+    border-color var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.research-card:hover {
+  border-color: var(--fg-3);
+  background: var(--bg-2);
+}
+
+.research-card .card-label {
+  margin-bottom: 0.85rem;
+
+  font-family: var(--mono);
+  font-size: 0.69rem;
+
+  letter-spacing: 0.04em;
+
+  color: var(--fg-3);
+}
+
+.research-card h3 {
+  margin-bottom: 0.8rem;
+
+  font-family: var(--sans);
+  font-size: 1.03rem;
+  font-weight: 600;
+
+  line-height: 1.45;
+
+  color: var(--fg);
+}
+
+.research-card .card-description {
+  margin-bottom: 0.9rem;
+
+  font-size: 0.9rem;
+  line-height: 1.7;
+
+  color: var(--prose);
+}
+
+.research-card .card-result {
+  margin-bottom: 1.1rem;
+
+  font-size: 0.88rem;
+  line-height: 1.7;
+
+  color: var(--fg-2);
+}
+
+.research-card .card-links {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.5rem 1rem;
+
+  margin-top: auto;
+  padding-top: 0.85rem;
+
+  border-top: 1px solid var(--line-soft);
+
+  font-family: var(--mono);
+  font-size: 0.73rem;
+}
+
+.research-card .card-links a {
+  color: var(--fg-2);
+  text-decoration-color: var(--metro-fg);
+}
+
+.research-card .card-links a:hover {
+  color: var(--fg);
+}
+
+.research-card:nth-child(3) .card-links a {
+  text-decoration-color: var(--net-fg);
+}
+
+.research-more {
+  margin-top: 1.2rem;
+
+  font-family: var(--mono);
+  font-size: 0.78rem;
+}
+
+.research-more a {
+  text-decoration-color: var(--metro-fg);
+}
+
+
+/* ==========================================================================
+   12. RESEARCH PAGE — PROJECTS
+   ========================================================================== */
+
+.research-overview {
+  max-width: 82ch;
+
+  margin-top: 0.5rem;
+  margin-bottom: 2.7rem;
+
+  color: var(--prose);
+}
+
+.research-overview p {
+  margin-bottom: 1rem;
+  line-height: 1.8;
+}
+
+.research-nav {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.65rem;
+  margin-top: 1.6rem;
+}
+
+.research-nav a {
+  display: inline-block;
+
+  padding: 0.5rem 0.75rem;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+
+  font-family: var(--mono);
+  font-size: 0.75rem;
+
+  color: var(--fg-2);
+  text-decoration: none;
+
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
+}
+
+.research-nav a:hover {
+  color: var(--fg);
+  border-color: var(--metro-fg);
+}
+
+.thrust {
+  min-width: 0;
+}
+
+.thrust > * {
+  min-width: 0;
+}
+
+.thrust-body {
+  max-width: none;
+}
+
+.thrust .tag {
+  margin-bottom: 0.65rem;
+
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  font-weight: 500;
+
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.t-metro .tag {
+  color: var(--metro-fg);
+}
+
+.t-net .tag {
+  color: var(--net-fg);
+}
+
+.thrust h2 {
+  max-width: 50ch;
+
+  margin-bottom: 1rem;
+
+  font-family: var(--mono);
+  font-size: clamp(1.08rem, 2.1vw, 1.3rem);
+  font-weight: 500;
+
+  letter-spacing: -0.02em;
+  line-height: 1.5;
+}
+
+.thrust p {
+  font-size: 1rem;
+  line-height: 1.8;
+
+  color: var(--prose);
+}
+
+.research-project {
+  margin-top: 2.2rem;
+  margin-bottom: 3.8rem;
+  scroll-margin-top: 7rem;
+}
+
+.research-project .project-lead {
+  max-width: 82ch;
+
+  margin-bottom: 1.4rem;
+
+  font-size: 1.05rem;
+  line-height: 1.8;
+}
+
+.project-content {
+  max-width: 82ch;
+
+  color: var(--prose);
+  line-height: 1.8;
+}
+
+.project-content h3,
+.research-project h3 {
+  margin-top: 1.6rem;
+  margin-bottom: 0.75rem;
+
+  font-family: var(--sans);
+  font-size: 1.03rem;
+  font-weight: 600;
+
+  color: var(--fg);
+}
+
+.project-content p {
+  margin-bottom: 1.1rem;
+}
+
+.project-content ul {
+  padding-left: 1.4rem;
+
+  margin-top: 0.8rem;
+  margin-bottom: 1.25rem;
+}
+
+.project-content li {
+  padding-left: 0.15rem;
+  margin-bottom: 0.7rem;
+}
+
+.project-content li::marker {
+  color: var(--fg-3);
+}
+
+.project-finding {
+  max-width: 82ch;
+
+  margin: 1.6rem 0;
+  padding: 0.15rem 0 0.15rem 1.2rem;
+
+  border-left: 2px solid var(--metro-fg);
+}
+
+.t-net .project-finding {
+  border-left-color: var(--net-fg);
+}
+
+.project-finding .finding-label {
+  margin-bottom: 0.45rem;
+
+  font-family: var(--mono);
+  font-size: 0.71rem;
+
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+
+  color: var(--fg-3);
+}
+
+.project-finding p {
+  margin-bottom: 0.6rem;
+  line-height: 1.75;
+}
+
+.research-note {
+  max-width: 82ch;
+
+  margin-top: 1rem;
+
+  font-size: 0.87rem !important;
+  line-height: 1.7 !important;
+
+  color: var(--fg-2) !important;
+}
+
+
+/* --------------------------------------------------------------------------
+   Legacy thrust-text support
+   -------------------------------------------------------------------------- */
+
 .thrust-text {
-  columns: 18em 2;
-  -webkit-column-gap: 3.5rem; column-gap: 3.5rem;
-  orphans: 2; widows: 2;
-  margin-bottom: 0.4rem;
+  max-width: 82ch;
+
+  columns: 1;
+  column-gap: 0;
+
+  margin-bottom: 0.5rem;
 }
-.thrust-text p { margin-bottom: 1rem; }
-.thrust-text p:last-child { margin-bottom: 0; }
 
-.explorer .prose { max-width: none; }
-
-/* Figure plate: the diagrams are drawn on white, so give them a deliberate
-   white card rather than letting them glow against the dark page. */
-.plate { margin-top: 2rem; }
-
-.plate a {
-  display: block; background: #ffffff;
-  border: 1px solid var(--line); border-radius: 4px;
-  padding: 1rem; transition: border-color 0.15s ease;
+.thrust-text p {
+  margin-bottom: 1rem;
 }
-.plate a:hover { border-color: var(--metro-fg); }
-.t-net .plate a:hover { border-color: var(--net-fg); }
 
-.plate img { width: 100%; height: auto; display: block; }
+
+/* ==========================================================================
+   13. RESEARCH FIGURES AND METHOD PLATES
+   ========================================================================== */
+
+.plate {
+  margin-top: 1.8rem;
+}
+
+.method-plate {
+  padding: 1.3rem 1.5rem;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+
+  background: var(--bg-2);
+}
+
+.method-plate .prose {
+  max-width: none;
+}
+
+.method-plate h3 {
+  margin-top: 0;
+  margin-bottom: 1rem;
+
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.protocol-comparison {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 1.6rem;
+}
+
+.protocol-comparison h4 {
+  margin-bottom: 0.5rem;
+
+  font-size: 0.94rem;
+  font-weight: 600;
+
+  color: var(--fg);
+}
+
+.protocol-comparison p {
+  margin-bottom: 0;
+
+  font-size: 0.89rem;
+  line-height: 1.7;
+}
 
 .plate figcaption {
-  font-family: var(--mono); font-size: 0.8rem; line-height: 1.7;
-  color: var(--fg-2); margin-top: 0.9rem; max-width: none;
+  max-width: 82ch;
+
+  margin-top: 0.95rem;
+
+  font-family: var(--mono);
+  font-size: 0.75rem;
+  line-height: 1.75;
+
+  color: var(--fg-2);
+}
+
+.research-figure {
+  margin-top: 1.8rem;
+}
+
+.research-figure > a {
+  display: block;
+
+  padding: 1rem;
+
+  background: #ffffff;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+
+  transition: border-color var(--transition-fast);
+}
+
+.research-figure > a:hover {
+  border-color: var(--metro-fg);
+}
+
+.t-net .research-figure > a:hover {
+  border-color: var(--net-fg);
+}
+
+.research-figure img {
+  display: block;
+
+  width: 100%;
+  height: auto;
 }
 
 .figslot {
-  aspect-ratio: 4 / 3; min-height: 150px;
-  display: flex; align-items: center; justify-content: center;
-  text-align: center; padding: 0.5rem;
-  border: 1px dashed var(--line); border-radius: 3px; background: var(--bg-2);
-  font-family: var(--mono); font-size: 0.7rem; color: var(--fg-3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 150px;
+  aspect-ratio: 4 / 3;
+
+  padding: 0.75rem;
+
+  background: var(--bg-2);
+
+  border: 1px dashed var(--line);
+  border-radius: var(--radius-sm);
+
+  text-align: center;
+
+  font-family: var(--mono);
+  font-size: 0.73rem;
+
+  color: var(--fg-3);
 }
 
-.tag {
-  font-family: var(--mono); font-size: 0.72rem;
-  letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 0.5rem;
+
+/* --------------------------------------------------------------------------
+   Research references
+   -------------------------------------------------------------------------- */
+
+.refs,
+.research-project .refs {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.55rem 1.3rem;
+
+  margin-top: 1.5rem;
 }
-.t-metro .tag { color: var(--metro-fg); }
-.t-net .tag { color: var(--net-fg); }
 
-.thrust h2 {
-  font-family: var(--mono); font-size: 1.15rem; font-weight: 500;
-  letter-spacing: -0.02em; margin-bottom: 0.9rem;
+.refs a,
+.plinks a {
+  font-family: var(--mono);
+  font-size: 0.77rem;
+
+  color: var(--fg-2);
+
+  text-decoration: none;
+
+  border-bottom: 1px solid var(--line);
+
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast);
 }
 
-.thrust p { color: var(--prose); font-size: 1.02rem; margin-bottom: 1rem; }
-
-.refs { display: flex; flex-wrap: wrap; gap: 1rem; }
-.refs a, .plinks a {
-  font-family: var(--mono); font-size: 0.78rem; color: var(--fg-3);
-  text-decoration: none; border-bottom: 1px solid var(--line);
+.refs a:hover,
+.plinks a:hover {
+  color: var(--fg);
+  border-bottom-color: var(--fg-3);
 }
-.refs a:hover, .plinks a:hover { color: var(--fg); border-bottom-color: var(--fg-3); }
 
-/* ---------------------------------------------------------------- explorer */
-.explorer { border: 1px solid var(--line); border-radius: 4px; padding: 1.75rem; }
+
+/* ==========================================================================
+   14. INTERACTIVE GHZ-DEPHASING EXPLORER
+   ========================================================================== */
+
+.explorer {
+  padding: 1.8rem;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+
+  scroll-margin-top: 7rem;
+}
+
+.explorer .prose {
+  max-width: none;
+}
+
+.explorer-intro {
+  max-width: 82ch;
+
+  margin-bottom: 1rem;
+
+  color: var(--prose);
+  line-height: 1.75;
+}
 
 .ctrls {
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1.5rem; margin: 1.5rem 0 1.25rem;
+  display: grid;
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 1.5rem;
+
+  margin: 1.8rem 0 1.4rem;
 }
 
-.ctrl { display: flex; align-items: center; gap: 0.75rem; }
-.ctrl label { font-family: var(--mono); font-size: 0.76rem; color: var(--fg-3); white-space: nowrap; }
-.ctrl input[type='range'] { flex: 1; accent-color: var(--metro-fg); min-width: 0; }
+.ctrl {
+  display: flex;
+  align-items: center;
+
+  gap: 0.8rem;
+  min-width: 0;
+}
+
+.ctrl label {
+  flex-shrink: 0;
+
+  font-family: var(--mono);
+  font-size: 0.73rem;
+
+  color: var(--fg-2);
+}
+
+.ctrl input[type='range'] {
+  flex: 1;
+  min-width: 0;
+
+  accent-color: var(--metro-fg);
+}
+
 .ctrl output {
-  font-family: var(--mono); font-size: 0.78rem; color: var(--fg);
-  min-width: 2.6em; text-align: right; font-variant-numeric: tabular-nums;
+  min-width: 2.7em;
+
+  text-align: right;
+
+  font-family: var(--mono);
+  font-size: 0.78rem;
+
+  color: var(--fg);
+
+  font-variant-numeric: tabular-nums;
 }
 
-.readout { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1px; background: var(--line-soft); }
-.stat { background: var(--bg); padding: 0.8rem 1rem; }
-.skey { font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-3); }
-.sval { font-family: var(--mono); font-size: 1.25rem; font-variant-numeric: tabular-nums; }
+.readout {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 
-#plot { width: 100%; height: auto; margin-top: 1.5rem; }
-#plot .cv-prod { fill: none; stroke: var(--fg-3); stroke-width: 2; stroke-dasharray: 5 4; }
-#plot .cv-ghz { fill: none; stroke: var(--metro-fg); stroke-width: 2.4; }
-#plot .pt-prod { fill: var(--fg-3); }
-#plot .pt-ghz { fill: var(--metro-fg); }
-#plot .lbl { font-family: var(--mono); font-size: 11px; fill: var(--fg-3); }
-#plot .lbl.hlt { fill: var(--metro-fg); }
-#plot .gl { stroke: var(--line-soft); stroke-width: 1; }
+  gap: 1px;
 
-.fignote { font-family: var(--mono); font-size: 0.79rem; line-height: 1.7; color: var(--fg-3); margin-top: 1.1rem; max-width: none; }
+  overflow: hidden;
 
-/* ---------------------------------------------------------------- filters */
-.filters { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
+  background: var(--line);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+}
+
+.stat {
+  min-width: 0;
+  padding: 0.95rem 1rem;
+
+  background: var(--bg);
+}
+
+.skey {
+  margin-bottom: 0.4rem;
+
+  font-family: var(--mono);
+  font-size: 0.65rem;
+
+  line-height: 1.55;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+
+  color: var(--fg-3);
+}
+
+.sval {
+  font-family: var(--mono);
+  font-size: 1.2rem;
+
+  font-variant-numeric: tabular-nums;
+
+  color: var(--fg);
+}
+
+#plot {
+  display: block;
+
+  width: 100%;
+  height: auto;
+
+  margin-top: 1.6rem;
+
+  overflow: visible;
+}
+
+#plot .cv-prod {
+  fill: none;
+
+  stroke: var(--fg-3);
+  stroke-width: 2;
+  stroke-dasharray: 5 4;
+}
+
+#plot .cv-ghz {
+  fill: none;
+
+  stroke: var(--metro-fg);
+  stroke-width: 2.4;
+}
+
+#plot .pt-prod {
+  fill: var(--fg-3);
+}
+
+#plot .pt-ghz {
+  fill: var(--metro-fg);
+}
+
+#plot .lbl {
+  font-family: var(--mono);
+  font-size: 11px;
+
+  fill: var(--fg-3);
+}
+
+#plot .lbl.hlt {
+  fill: var(--metro-fg);
+}
+
+#plot .gl {
+  stroke: var(--line-soft);
+  stroke-width: 1;
+}
+
+.fignote {
+  max-width: 82ch;
+
+  margin-top: 1.25rem;
+
+  font-family: var(--mono);
+  font-size: 0.75rem;
+
+  line-height: 1.8;
+
+  color: var(--fg-3);
+}
+
+
+/* ==========================================================================
+   15. PUBLICATION FILTERS
+   ========================================================================== */
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.55rem;
+
+  margin-bottom: 0.8rem;
+}
 
 .chip {
-  font-family: var(--mono); font-size: 0.8rem; color: var(--fg-3);
-  background: transparent; border: 1px solid var(--line); border-radius: 4px;
-  padding: 0.35rem 0.75rem; cursor: pointer;
-  transition: color 0.15s ease, border-color 0.15s ease;
+  display: inline-block;
+
+  padding: 0.38rem 0.75rem;
+
+  font-family: var(--mono);
+  font-size: 0.76rem;
+
+  color: var(--fg-2);
+  background: transparent;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+
+  cursor: pointer;
+
+  transition:
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    background var(--transition-fast);
 }
-.chip:hover { color: var(--fg); border-color: var(--fg-3); }
-.chip.on { color: var(--bg); background: var(--metro-fg); border-color: var(--metro-fg); }
 
-/* ---------------------------------------------------------------- pubs */
-.pubs { list-style: none; counter-reset: pub; border-top: 1px solid var(--line); margin-bottom: 1.5rem; }
+.chip:hover {
+  color: var(--fg);
+  border-color: var(--fg-3);
+}
 
-.pubs li {
-  counter-increment: pub; position: relative;
-  padding: 1.6rem 0 1.6rem 3.4rem;
+.chip.on,
+.chip[aria-pressed='true'] {
+  color: var(--bg);
+  background: var(--metro-fg);
+  border-color: var(--metro-fg);
+}
+
+.chip:focus-visible {
+  outline: 2px solid var(--metro-fg);
+  outline-offset: 3px;
+}
+
+.filter-help {
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+
+  font-family: var(--mono);
+  font-size: 0.77rem;
+
+  color: var(--fg-3);
+}
+
+
+/* ==========================================================================
+   16. PUBLICATION LIST
+   ========================================================================== */
+
+.pubs {
+  list-style: none;
+
+  counter-reset: publication;
+
+  margin-bottom: 1.6rem;
+
+  border-top: 1px solid var(--line);
+}
+
+.pubs > li {
+  position: relative;
+
+  counter-increment: publication;
+
+  padding: 1.55rem 0 1.55rem 3.5rem;
+
   border-bottom: 1px solid var(--line-soft);
 }
-.pubs li[hidden] { display: none; }
 
-.pubs li::before {
-  content: counter(pub, decimal-leading-zero);
-  position: absolute; left: 0; top: 1.75rem;
-  font-family: var(--mono); font-size: 0.78rem; color: var(--fg-3);
+.pubs > li[hidden] {
+  display: none !important;
+  counter-increment: none;
+}
+
+.pubs > li::before {
+  content: counter(publication, decimal-leading-zero);
+
+  position: absolute;
+  left: 0;
+  top: 1.7rem;
+
+  font-family: var(--mono);
+  font-size: 0.77rem;
+
+  color: var(--fg-3);
+
   font-variant-numeric: tabular-nums;
 }
 
 .ptitle {
-  font-family: var(--mono); font-size: 1.05rem; font-weight: 500;
-  line-height: 1.45; letter-spacing: -0.015em; margin-bottom: 0.35rem;
+  margin-bottom: 0.45rem;
+
+  font-family: var(--mono);
+  font-size: 1.01rem;
+  font-weight: 500;
+
+  line-height: 1.55;
+  letter-spacing: -0.015em;
+
+  color: var(--fg);
 }
 
-.pauth { font-size: 0.98rem; color: var(--prose); margin-bottom: 0.4rem; }
-.pauth .me { color: var(--fg); font-weight: 500; box-shadow: inset 0 -2px 0 var(--metro-fg); }
+.pauth {
+  margin-bottom: 0.45rem;
+
+  font-size: 0.94rem;
+  line-height: 1.7;
+
+  color: var(--prose);
+}
+
+.pauth .me {
+  font-weight: 600;
+
+  color: var(--fg);
+
+  box-shadow: inset 0 -2px 0 var(--metro-fg);
+}
 
 .pmeta {
-  font-family: var(--mono); font-size: 0.82rem; color: var(--fg-3);
-  display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem;
-  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 0.6rem;
+
+  margin-bottom: 0.55rem;
+
+  font-family: var(--mono);
+  font-size: 0.77rem;
+
+  line-height: 1.65;
+
+  color: var(--fg-3);
 }
 
 .badge {
-  font-size: 0.68rem; letter-spacing: 0.06em; text-transform: uppercase;
-  padding: 0.12rem 0.45rem; border-radius: 3px;
-  border: 1px solid var(--line); color: var(--fg-2); background: var(--bg-2);
-}
-.badge.ok { color: var(--metro-fg); border-color: var(--metro-fg); background: transparent; }
-.badge.wip { color: var(--net-fg); border-color: var(--net-fg); background: transparent; }
+  display: inline-block;
 
-/* ---------------------------------------------------------------- skills */
+  padding: 0.12rem 0.45rem;
+
+  font-family: var(--mono);
+  font-size: 0.66rem;
+
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+
+  color: var(--fg-2);
+  background: var(--bg-2);
+
+  border: 1px solid var(--line);
+  border-radius: 3px;
+}
+
+.badge.ok {
+  color: var(--metro-fg);
+  background: transparent;
+
+  border-color: var(--metro-fg);
+}
+
+.badge.wip {
+  color: var(--net-fg);
+  background: transparent;
+
+  border-color: var(--net-fg);
+}
+
+.pub-description {
+  max-width: 80ch;
+
+  margin: 0.6rem 0 0.8rem;
+
+  font-size: 0.89rem;
+  line-height: 1.7;
+
+  color: var(--fg-2);
+}
+
+.plinks {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 0.5rem 1.2rem;
+
+  line-height: 1.7;
+}
+
+.plinks a {
+  overflow-wrap: anywhere;
+}
+
+.pub-note,
+.pub-legend {
+  max-width: 82ch;
+
+  font-size: 0.86rem;
+  line-height: 1.8;
+
+  color: var(--fg-2);
+}
+
+.pub-note {
+  margin: 0.2rem 0 1.6rem;
+}
+
+.pub-legend {
+  margin-top: 1.8rem;
+}
+
+.pub-legend p {
+  margin-bottom: 0.85rem;
+}
+
+.pub-legend a {
+  text-decoration-color: var(--metro-fg);
+}
+
+
+/* ==========================================================================
+   17. SKILLS AND ACADEMIC EXPERTISE
+   ========================================================================== */
+
 .skillgrid {
-  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 1px; background: var(--line-soft); border: 1px solid var(--line-soft);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+
+  gap: 1px;
+
+  overflow: hidden;
+
+  background: var(--line-soft);
+  border: 1px solid var(--line-soft);
+  border-radius: var(--radius-md);
 }
-.skillcard { background: var(--bg); padding: 1.5rem 1.6rem; }
+
+.skillcard {
+  min-width: 0;
+
+  padding: 1.35rem 1.5rem;
+
+  background: var(--bg);
+}
+
 .sklabel {
-  font-family: var(--mono); font-size: 0.72rem;
-  letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--net-fg); margin-bottom: 0.6rem;
-}
-.skitems { font-size: 1.02rem; line-height: 1.85; color: var(--prose); }
+  margin-bottom: 0.7rem;
 
-/* ---------------------------------------------------------------- buttons */
+  font-family: var(--mono);
+  font-size: 0.71rem;
+  font-weight: 500;
+
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+
+  color: var(--net-fg);
+}
+
+.skitems {
+  font-size: 0.94rem;
+  line-height: 1.85;
+
+  color: var(--prose);
+}
+
+
+/* ==========================================================================
+   18. CV PAGE
+   ========================================================================== */
+
+.cv-intro {
+  max-width: 80ch;
+}
+
+.cv-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+
+  gap: 0.9rem 1.5rem;
+
+  margin-top: 1.6rem;
+}
+
+.cv-actions .secondary-link {
+  font-family: var(--mono);
+  font-size: 0.78rem;
+
+  color: var(--fg-2);
+  text-decoration-color: var(--metro-fg);
+}
+
+.expertise-intro {
+  max-width: 82ch;
+
+  margin-bottom: 1.3rem;
+
+  line-height: 1.8;
+  color: var(--prose);
+}
+
+/* Equal-width academic-record columns, desktop only */
+.cv-columns {
+  grid-template-columns:
+    minmax(0, 1fr) minmax(0, 1fr);
+
+  gap: 3rem;
+  align-items: start;
+}
+
+.cv-columns .plain {
+  margin-bottom: 1.7rem;
+}
+
+.cv-columns .plain li {
+  grid-template-columns: 88px minmax(0, 1fr);
+
+  gap: 0.9rem;
+  margin-bottom: 0;
+}
+
+.cv-columns .what {
+  min-width: 0;
+
+  line-height: 1.7;
+}
+
+.cv-columns .when {
+  white-space: normal;
+}
+
+.cv-columns .sechead:not(:first-child) {
+  margin-top: 2rem;
+}
+
+.cv-entry-title {
+  display: block;
+
+  font-weight: 600;
+  color: var(--fg);
+}
+
+.cv-entry-detail {
+  display: block;
+
+  margin-top: 0.3rem;
+
+  color: var(--prose);
+}
+
+.cv-download {
+  margin-top: 2.5rem;
+}
+
+.cv-download .prose {
+  max-width: 76ch;
+}
+
+.cv-note {
+  margin-top: 0.9rem;
+
+  font-size: 0.84rem;
+  line-height: 1.7;
+
+  color: var(--fg-2);
+}
+
+
+/* ==========================================================================
+   19. BUTTONS AND DOWNLOAD LINKS
+   ========================================================================== */
+
 .btn {
-  display: inline-block; font-family: var(--mono); font-size: 0.8rem;
-  text-decoration: none; color: var(--fg-2);
-  border: 1px solid var(--line); border-radius: 4px; padding: 0.5rem 0.9rem;
-  transition: all 0.15s ease;
+  display: inline-block;
+
+  padding: 0.6rem 0.95rem;
+
+  font-family: var(--mono);
+  font-size: 0.78rem;
+  font-weight: 500;
+
+  line-height: 1.5;
+  text-align: center;
+  text-decoration: none;
+
+  color: var(--fg-2);
+  background: transparent;
+
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+
+  transition:
+    color var(--transition-fast),
+    background var(--transition-fast),
+    border-color var(--transition-fast);
 }
-.btn:hover { color: var(--fg); border-color: var(--fg-3); background: var(--bg-2); }
-.btn.primary { color: var(--bg); background: var(--metro-fg); border-color: var(--metro-fg); font-weight: 500; }
-.btn.primary:hover { color: var(--bg); filter: brightness(1.08); }
 
-.cta { border-top: 1px solid var(--line); padding-top: 1.75rem; }
-.cta p { margin-bottom: 1rem; }
+.btn:hover {
+  color: var(--fg);
+  background: var(--bg-2);
+  border-color: var(--fg-3);
+}
 
-/* ---------------------------------------------------------------- footer */
+.btn.primary {
+  color: var(--bg);
+  background: var(--metro-fg);
+  border-color: var(--metro-fg);
+}
+
+.btn.primary:hover {
+  filter: brightness(1.07);
+}
+
+.cta {
+  padding-top: 1.8rem;
+
+  border-top: 1px solid var(--line);
+}
+
+.cta p {
+  margin-bottom: 1.1rem;
+}
+
+
+/* ==========================================================================
+   20. FOOTER
+   ========================================================================== */
+
 .sitefoot {
-  border-top: 1px solid var(--line); padding: 1.6rem 0 3rem;
-  font-family: var(--mono); font-size: 0.78rem; color: var(--fg-3);
-}
-.footrow { display: flex; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-.footrow a { color: var(--fg-3); }
+  padding: 1.6rem 0 2.8rem;
 
-/* ---------------------------------------------------------------- motion */
-@keyframes rise { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  border-top: 1px solid var(--line);
+
+  font-family: var(--mono);
+  font-size: 0.74rem;
+
+  color: var(--fg-3);
+}
+
+.footrow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  gap: 0.7rem 1.5rem;
+}
+
+.footrow a {
+  color: var(--fg-2);
+  text-decoration-color: var(--line);
+}
+
+.footrow a:hover {
+  color: var(--fg);
+}
+
+
+/* ==========================================================================
+   21. ANIMATION
+   ========================================================================== */
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* ==========================================================================
+   22. TABLET AND SMALL DESKTOP
+   ========================================================================== */
+
+@media (max-width: 960px) {
+
+  :root {
+    --gutter: 1.5rem;
+  }
+
+  .cols,
+  .intro-row {
+    gap: 2.2rem;
+  }
+
+  .research-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .research-card:last-child {
+    grid-column: 1 / -1;
+  }
+
+  .cv-columns {
+    gap: 2rem;
+  }
+
+  .cv-columns .plain li {
+    grid-template-columns: 76px minmax(0, 1fr);
+  }
+
+  .ctrls {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* ==========================================================================
+   23. MOBILE LAYOUT
+   ========================================================================== */
+
+@media (max-width: 850px) {
+
+  :root {
+    --gutter: 1.25rem;
+  }
+
+  body {
+    font-size: 16px;
+  }
+
+  /* Navigation */
+
+  .bar {
+    min-height: 0;
+
+    padding-top: 0.8rem;
+    padding-bottom: 0.8rem;
+
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .mark {
+    font-size: 0.81rem;
+  }
+
+  .navlinks {
+    order: 3;
+
+    width: 100%;
+    margin-left: 0;
+
+    justify-content: flex-start;
+    flex-wrap: wrap;
+
+    gap: 0.6rem 1.25rem;
+
+    font-size: 0.77rem;
+  }
+
+  .theme-btn {
+    margin-left: auto;
+  }
+
+  /* Page layout */
+
+  main {
+    padding-bottom: 3.2rem;
+  }
+
+  section,
+  article {
+    margin-bottom: 3rem;
+  }
+
+  .page-intro {
+    padding: 2.6rem 0 2.5rem;
+  }
+
+  .page-intro h1 {
+    font-size: clamp(1.65rem, 5.5vw, 2.1rem);
+  }
+
+  .lede {
+    font-size: 1.02rem;
+  }
+
+  .cols,
+  .cv-columns {
+    grid-template-columns: 1fr;
+    gap: 2.4rem;
+  }
+
+  /* Homepage portrait */
+
+  .intro-row {
+    grid-template-columns: 1fr;
+    gap: 1.6rem;
+
+    padding: 2.6rem 0 2.4rem;
+  }
+
+  .portrait {
+    width: 150px;
+  }
+
+  /* Featured research */
+
+  .research-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .research-card:last-child {
+    grid-column: auto;
+  }
+
+  .research-card {
+    padding: 1.25rem;
+  }
+
+  /* Scientific research sections */
+
+  .research-project {
+    margin-bottom: 3rem;
+  }
+
+  .research-project .project-lead {
+    font-size: 1rem;
+  }
+
+  .protocol-comparison {
+    grid-template-columns: 1fr;
+    gap: 1.4rem;
+  }
+
+  .method-plate {
+    padding: 1.2rem;
+  }
+
+  .research-figure > a {
+    padding: 0.6rem;
+  }
+
+  /* Interactive model */
+
+  .explorer {
+    padding: 1.25rem;
+  }
+
+  .readout {
+    grid-template-columns: 1fr;
+  }
+
+  .stat {
+    padding: 0.8rem 1rem;
+  }
+
+  /* Skills */
+
+  .skillgrid {
+    grid-template-columns: 1fr;
+  }
+
+  .skillcard {
+    padding: 1.2rem 1.25rem;
+  }
+
+  /* Timeline */
+
+  ul.news li {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+
+  /* CV */
+
+  .cv-columns .plain li {
+    grid-template-columns: 88px minmax(0, 1fr);
+  }
+
+  .cv-actions {
+    align-items: flex-start;
+    flex-direction: column;
+
+    gap: 0.9rem;
+  }
+}
+
+
+/* ==========================================================================
+   24. SMALL PHONES
+   ========================================================================== */
+
+@media (max-width: 480px) {
+
+  :root {
+    --gutter: 1rem;
+  }
+
+  .bar {
+    gap: 0.65rem;
+  }
+
+  .mark {
+    font-size: 0.76rem;
+  }
+
+  .navlinks {
+    gap: 0.5rem 0.95rem;
+    font-size: 0.73rem;
+  }
+
+  .page-intro {
+    padding-top: 2.2rem;
+  }
+
+  .intro-row {
+    padding-top: 2.2rem;
+  }
+
+  .portrait {
+    width: 130px;
+  }
+
+  .research-nav {
+    gap: 0.45rem;
+  }
+
+  .research-nav a {
+    font-size: 0.7rem;
+  }
+
+  .project-content h3 {
+    font-size: 1rem;
+  }
+
+  .explorer {
+    padding: 1rem;
+  }
+
+  .ctrl {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .ctrl label {
+    width: 100%;
+  }
+
+  .ctrl input[type='range'] {
+    flex: 1;
+  }
+
+  /* Publication entries */
+
+  .pubs > li {
+    padding-left: 2.35rem;
+  }
+
+  .pubs > li::before {
+    font-size: 0.7rem;
+  }
+
+  .ptitle {
+    font-size: 0.95rem;
+  }
+
+  .pauth {
+    font-size: 0.9rem;
+  }
+
+  .pub-description {
+    font-size: 0.85rem;
+  }
+
+  .filters {
+    gap: 0.4rem;
+  }
+
+  .chip {
+    font-size: 0.7rem;
+    padding: 0.35rem 0.55rem;
+  }
+
+  /* CV entries */
+
+  ul.plain li,
+  .cv-columns .plain li {
+    grid-template-columns: 1fr;
+    gap: 0.2rem;
+  }
+
+  .when {
+    font-size: 0.73rem;
+  }
+
+  .footrow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+
+/* ==========================================================================
+   25. REDUCED MOTION
+   ========================================================================== */
 
 @media (prefers-reduced-motion: reduce) {
-  html { scroll-behavior: auto; }
-  * { animation: none !important; transition: none !important; }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
-/* ---------------------------------------------------------------- responsive */
-@media (max-width: 860px) {
-  :root { --gutter: 1.25rem; }
-  body { font-size: 16px; }
-  .bar { height: auto; padding: 0.9rem 0; flex-wrap: wrap; gap: 0.75rem; }
-  .navlinks { margin-left: 0; width: 100%; order: 3; gap: 1.1rem; flex-wrap: wrap; }
-  .theme-btn { margin-left: auto; }
-  .page-intro { padding: 2.5rem 0 2.5rem; }
-  .cols { grid-template-columns: 1fr; gap: 2.5rem; }
-  .intro-row {
-    grid-template-columns: 1fr !important;
-    gap: 1.5rem !important;
-    padding: 2.5rem 0 !important;
+
+/* ==========================================================================
+   26. PRINT STYLES
+   ========================================================================== */
+
+@media print {
+
+  html,
+  body {
+    color: #111;
+    background: #fff;
   }
-  .portrait { width: 132px !important; }
-  .plate a { padding: 0.5rem; }
-  .thrust-text { columns: 1 !important; }
-  .skillgrid { grid-template-columns: 1fr; }
-  .readout { grid-template-columns: 1fr; }
-  .explorer { padding: 1.25rem; }
-  ul.news li { grid-template-columns: 1fr; gap: 0.2rem; }
-  ul.plain li { grid-template-columns: 66px 1fr; gap: 0.75rem; }
-  section, article { margin-bottom: 3rem; }
+
+  body {
+    font-size: 11pt;
+  }
+
+  .topbar,
+  .theme-btn,
+  .filters,
+  .research-nav,
+  .skip {
+    display: none !important;
+  }
+
+  .wrap {
+    max-width: none;
+    padding: 0;
+  }
+
+  main {
+    padding-bottom: 0;
+  }
+
+  .page-intro {
+    padding-top: 0;
+  }
+
+  a {
+    color: #111;
+  }
+
+  .research-card,
+  .skillcard,
+  .method-plate,
+  .explorer {
+    break-inside: avoid;
+  }
+
+  .pubs > li {
+    break-inside: avoid;
+  }
+
+  .sitefoot {
+    margin-top: 2rem;
+  }
+
+  /* Print the complete publication record. */
+  .pubs > li[hidden] {
+    display: list-item !important;
+    counter-increment: publication;
+  }
 }
