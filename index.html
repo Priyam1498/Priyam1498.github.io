@@ -1,198 +1,753 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Priyam Srivastava &mdash; About</title>
-<meta name="description" content="Priyam Srivastava, PhD student researching quantum algorithms, quantum sensing, and reinforcement learning for quantum networks at the University of Pittsburgh.">
-<meta name="author" content="Priyam Srivastava">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Priyam Srivastava &mdash; About">
-<meta property="og:description" content="Priyam Srivastava, PhD student researching quantum algorithms, quantum sensing, and reinforcement learning for quantum networks at the University of Pittsburgh.">
-<meta property="og:url" content="https://priyam1498.github.io/index.html">
-<meta property="og:image" content="https://priyam1498.github.io/assets/og-card.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-<style>
-  /* Square portrait with softly rounded corners. */
-  .portrait {
-    display: block;
-    margin: 0;
-    width: 200px;
-    max-width: 100%;
-    aspect-ratio: 1;
-    height: auto;
-    object-fit: cover;
-    object-position: center;
-    border-radius: 12px;
-    border: 1px solid var(--line);
-    animation: rise 0.5s ease-out 0.1s both;
-  }
-</style>
+  <title>Priyam Srivastava — Quantum Information Research</title>
+
+  <meta name="description"
+        content="Priyam Srivastava is a PhD researcher at the University of Pittsburgh working on quantum algorithms, quantum sensing and metrology, and reinforcement learning for quantum networks.">
+
+  <meta name="author" content="Priyam Srivastava">
+
+  <link rel="canonical"
+        href="https://priyam1498.github.io/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title"
+        content="Priyam Srivastava — Quantum Information Research">
+  <meta property="og:description"
+        content="Research in quantum algorithms, quantum sensing and metrology, and quantum networking at the University of Pittsburgh.">
+  <meta property="og:url"
+        content="https://priyam1498.github.io/">
+  <meta property="og:image"
+        content="https://priyam1498.github.io/assets/og-card.png">
+
+  <meta name="twitter:card"
+        content="summary_large_image">
+
+  <!-- Assets -->
+  <link rel="icon"
+        href="assets/favicon.svg"
+        type="image/svg+xml">
+
+  <!-- Fonts -->
+  <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+  <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ============================================================
+       Homepage-specific additions.
+       Shared visual styles remain in styles.css.
+       ============================================================ */
+
+    /* Portrait */
+    .portrait {
+      display: block;
+      margin: 0;
+      width: 200px;
+      max-width: 100%;
+      aspect-ratio: 1;
+      height: auto;
+      object-fit: cover;
+      object-position: center;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      animation: rise 0.5s ease-out 0.1s both;
+    }
+
+    /* Featured research */
+    .featured-research {
+      margin-top: 2.4rem;
+      margin-bottom: 2.6rem;
+    }
+
+    .research-intro {
+      margin: 0 0 1.3rem;
+      max-width: 72ch;
+      line-height: 1.7;
+    }
+
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .research-card {
+      display: flex;
+      flex-direction: column;
+      padding: 1.15rem;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      min-width: 0;
+    }
+
+    .research-card .card-label {
+      margin: 0 0 0.75rem;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.72rem;
+      letter-spacing: 0.05em;
+      opacity: 0.7;
+    }
+
+    .research-card h3 {
+      margin: 0 0 0.75rem;
+      font-size: 1rem;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+
+    .research-card .card-description {
+      margin: 0 0 1rem;
+      font-size: 0.91rem;
+      line-height: 1.65;
+    }
+
+    .research-card .card-result {
+      margin: 0 0 1rem;
+      font-size: 0.88rem;
+      line-height: 1.6;
+    }
+
+    .research-card .card-links {
+      margin-top: auto;
+      padding-top: 0.8rem;
+      border-top: 1px solid var(--line);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem 1rem;
+      font-size: 0.83rem;
+    }
+
+    .research-more {
+      margin-top: 1rem;
+      font-size: 0.9rem;
+    }
+
+    /* Compact research interests */
+    .interest-text {
+      line-height: 1.75;
+    }
+
+    /* Responsive research cards */
+    @media (max-width: 850px) {
+      .research-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .research-card {
+        padding: 1.15rem;
+      }
+
+      .featured-research {
+        margin-top: 2rem;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .portrait {
+        animation: none;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
 <a class="skip" href="#main">Skip to content</a>
 
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
+
 <header class="topbar">
   <div class="wrap bar">
+
     <a class="mark" href="index.html">
       <span class="mark-glyph" aria-hidden="true"></span>
       <span class="mark-name">Priyam Srivastava</span>
     </a>
+
     <nav class="navlinks" aria-label="Pages">
-      <a href="index.html" class="on" aria-current="page">about</a>
+      <a href="index.html"
+         class="on"
+         aria-current="page">about</a>
+
       <a href="research.html">research</a>
+
       <a href="publications.html">publications</a>
+
       <a href="cv.html">cv</a>
     </nav>
-    <button id="theme-toggle" class="theme-btn" type="button" aria-pressed="true">
+
+    <button
+      id="theme-toggle"
+      class="theme-btn"
+      type="button"
+      aria-pressed="true"
+      aria-label="Toggle color theme"
+    >
       <span class="theme-label">dark</span>
     </button>
+
   </div>
 </header>
 
 <main id="main" class="wrap">
 
+  <!-- ==========================================================
+       INTRODUCTION
+       ========================================================== -->
+
   <div class="intro-row">
+
     <div class="page-intro">
+
       <p class="eyebrow">About</p>
-      <h1>Quantum algorithms for sensing and network control</h1>
+
+      <h1>
+        Quantum algorithms for sensing
+        and network control
+      </h1>
+
       <p class="lede">
-        I am a third-year PhD student in the Department of Informatics and
-        Networked Systems at the University of Pittsburgh, advised by
-        <a href="https://sites.google.com/view/kausesh/" target="_blank" rel="noopener">Dr. Kaushik P. Seshadreesan</a>.
-        I develop variational methods for quantum sensing and classical
-        reinforcement-learning policies for link-layer control in quantum networks.
+        I am a third-year PhD student in the
+        Department of Informatics and Networked Systems
+        at the University of Pittsburgh, advised by
+        <a
+          href="https://sites.google.com/view/kausesh/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Dr. Kaushik P. Seshadreesan</a>.
       </p>
+
+      <p class="lede">
+        My research focuses on variational quantum algorithms
+        for quantum sensing and multiparameter estimation,
+        and reinforcement-learning-based control of
+        quantum networks. I am interested in how physical
+        interactions, restricted control resources, and
+        realistic noise and memory constraints influence
+        the performance of quantum-information protocols.
+      </p>
+
     </div>
+
     <img
       class="portrait"
       src="assets/portrait.jpg"
       width="200"
       height="200"
-      alt="Priyam Srivastava"
+      alt="Portrait of Priyam Srivastava"
+      fetchpriority="high"
     >
+
   </div>
 
-  <section class="cols">
+  <!-- ==========================================================
+       FEATURED RESEARCH
+       ========================================================== -->
+
+  <section class="featured-research"
+           aria-labelledby="featured-heading">
+
+    <h2 class="sechead" id="featured-heading">
+      Selected research
+    </h2>
+
+    <p class="research-intro">
+      My work combines quantum-information theory,
+      physical modeling, numerical simulation, and
+      classical optimization. The projects below
+      address questions in quantum metrology and
+      entanglement distribution.
+    </p>
+
+    <div class="research-grid">
+
+      <!-- Project 1 -->
+      <article class="research-card">
+
+        <p class="card-label">01 / QUANTUM SENSING</p>
+
+        <h3>
+          Variational probe and measurement optimization
+        </h3>
+
+        <p class="card-description">
+          Designing quantum probe states and readout
+          circuits for structured phase estimation
+          with dipolar-interacting spin systems,
+          under finite-depth and restricted-control
+          constraints.
+        </p>
+
+        <p class="card-result">
+          Comparing sequential and joint optimization
+          through classical and quantum Fisher
+          information, including the contribution
+          of measurement design to attainable
+          sensitivity.
+        </p>
+
+        <div class="card-links">
+          <a href="https://arxiv.org/abs/2507.22043"
+             target="_blank"
+             rel="noopener noreferrer">
+            Earlier preprint
+          </a>
+
+          <a href="research.html">
+            Research details
+          </a>
+        </div>
+
+      </article>
+
+      <!-- Project 2 -->
+      <article class="research-card">
+
+        <p class="card-label">02 / QUANTUM METROLOGY</p>
+
+        <h3>
+          Joint magnetometry and gradiometry
+        </h3>
+
+        <p class="card-description">
+          Investigating simultaneous estimation of
+          magnetic-field offsets and spatial gradients
+          using variational quantum probes on
+          dipolar spin chains.
+        </p>
+
+        <p class="card-result">
+          A five-spin, three-layer configuration
+          achieved a 4.2-fold improvement over
+          the standard-quantum-limit determinant
+          benchmark in the studied model.
+        </p>
+
+        <div class="card-links">
+          <a href="https://arxiv.org/abs/2605.03906"
+             target="_blank"
+             rel="noopener noreferrer">
+            Preprint
+          </a>
+
+          <a href="research.html">
+            Research details
+          </a>
+        </div>
+
+      </article>
+
+      <!-- Project 3 -->
+      <article class="research-card">
+
+        <p class="card-label">03 / QUANTUM NETWORKING</p>
+
+        <h3>
+          Reinforcement learning for quantum-network control
+        </h3>
+
+        <p class="card-description">
+          Developing reinforcement-learning policies
+          for link-level quantum-memory management
+          and studying sequential versus synchronized
+          entanglement swapping under finite
+          memory coherence.
+        </p>
+
+        <p class="card-result">
+          Characterizing how memory coherence
+          and link heterogeneity affect
+          entanglement distribution and
+          secret-key-rate performance.
+        </p>
+
+        <div class="card-links">
+          <a
+            href="https://doi.org/10.1145/3839338.3857253"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            ACM paper
+          </a>
+
+          <a href="research.html">
+            Research details
+          </a>
+        </div>
+
+      </article>
+
+    </div>
+
+    <p class="research-more">
+      <a href="research.html">
+        More about my research
+      </a>
+      &nbsp;&middot;&nbsp;
+      <a href="publications.html">
+        Publications and preprints
+      </a>
+    </p>
+
+  </section>
+
+  <!-- ==========================================================
+       BACKGROUND AND SIDEBAR
+       ========================================================== -->
+
+  <section class="cols" aria-label="Background and profile">
+
     <div class="prose">
-      <h2 class="sechead">What I work on</h2>
+
+      <h2 class="sechead">Research interests</h2>
+
+      <p class="interest-text">
+        My broader interests include quantum algorithms,
+        quantum sensing and metrology, multiparameter
+        quantum estimation, quantum simulation,
+        distributed quantum sensing, quantum networking,
+        and learning-based methods for quantum systems.
+      </p>
+
       <p>
-        I study how interaction and control constraints affect quantum sensing,
-        and how finite memory coherence affects quantum-network performance.
-        In sensing, I use numerical simulation and classical optimization to
-        design probe states and readout circuits for dipolar-interacting spins.
-        In networking, I train link-layer control policies and compare
-        entanglement-swapping protocols under memory decoherence. My work combines
-        Python-based simulations, variational quantum algorithms, reinforcement
-        learning, and parameter sweeps on the Pitt CRC computing cluster.
+        I approach these problems primarily through
+        analytical modeling and computational research.
+        My work involves Python-based scientific
+        simulations, variational optimization,
+        reinforcement learning, and high-performance
+        computing.
       </p>
 
       <h2 class="sechead">Before Pittsburgh</h2>
+
       <p>
-        I completed an integrated BS-MS in physics at IISER Bhopal. My thesis with
-        <a href="https://sites.google.com/iiserb.ac.in/rslab/people/rohan-singh" target="_blank" rel="noopener">Dr. Rohan Singh</a>
-        examined two-dimensional coherent spectroscopy with chirped and unchirped
-        pulses. I solved optical Bloch equations numerically and gained experience
-        with an ultrafast spectroscopy setup. I also worked with
-        <a href="https://sites.google.com/view/ankurraina/" target="_blank" rel="noopener">Dr. Ankur Raina</a>
-        on a measurement-based surface-code encoder. An earlier internship with
-        <a href="https://profile.iiita.ac.in/srijit/" target="_blank" rel="noopener">Dr. Srijit Bhattacharjee</a>
-        at IIIT Allahabad introduced me to quantum information through entanglement
-        entropy in coupled harmonic oscillators.
+        I completed an integrated BS-MS degree in physics
+        at the Indian Institute of Science Education and
+        Research (IISER) Bhopal.
+      </p>
+
+      <p>
+        My master's thesis, supervised by
+        <a
+          href="https://sites.google.com/iiserb.ac.in/rslab/people/rohan-singh"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Dr. Rohan Singh</a>,
+        investigated two-dimensional coherent spectroscopy
+        with chirped and unchirped pulses. I numerically
+        solved optical Bloch equations and gained
+        bench-side experience with ultrafast
+        spectroscopy.
+      </p>
+
+      <p>
+        I subsequently worked with
+        <a
+          href="https://sites.google.com/view/ankurraina/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Dr. Ankur Raina</a>
+        on a measurement-based quantum computing
+        approach to surface-code encoding.
+        Earlier, during a summer research internship
+        with
+        <a
+          href="https://profile.iiita.ac.in/srijit/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >Dr. Srijit Bhattacharjee</a>
+        at IIIT Allahabad, I studied entanglement
+        entropy in coupled harmonic-oscillator systems.
       </p>
 
       <h2 class="sechead">Away from the terminal</h2>
+
       <p>
-        Fiction and non-fiction in roughly equal measure, anime that takes its
-        premises seriously, and treks whenever the calendar allows.
+        Fiction and non-fiction in roughly equal measure,
+        anime that takes its premises seriously,
+        and treks whenever the calendar allows.
       </p>
+
     </div>
 
-    <aside class="side">
+    <!-- ========================================================
+         SIDEBAR
+         ======================================================== -->
+
+    <aside class="side" aria-label="Academic profile">
+
       <p class="sublabel">At a glance</p>
+
       <dl class="facts">
-        <dt>Position</dt><dd>PhD student, 3rd year</dd>
-        <dt>Program</dt><dd>Information Sciences (Telecom)</dd>
-        <dt>Department</dt><dd>Informatics and Networked Systems</dd>
+
+        <dt>Position</dt>
+        <dd>PhD student, 3rd year</dd>
+
+        <dt>Program</dt>
+        <dd>Information Science (Telecommunications)</dd>
+
+        <dt>Department</dt>
+        <dd>Informatics and Networked Systems</dd>
+
         <dt>Group</dt>
-        <dd><a href="https://sites.google.com/pitt.edu/quin/home" target="_blank" rel="noopener">Quantum Information and Networking</a></dd>
+        <dd>
+          <a
+            href="https://sites.google.com/pitt.edu/quin/home"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Quantum Information and Networking</a>
+        </dd>
+
         <dt>Advisor</dt>
-        <dd><a href="https://sites.google.com/view/kausesh/" target="_blank" rel="noopener">Dr. Kaushik P. Seshadreesan</a></dd>
+        <dd>
+          <a
+            href="https://sites.google.com/view/kausesh/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Dr. Kaushik P. Seshadreesan</a>
+        </dd>
+
         <dt>Funding</dt>
-        <dd><a href="https://www.pqi.org/" target="_blank" rel="noopener">PQI</a> Fellowship, 2026-27</dd>
-        <dt>Based in</dt><dd>Pittsburgh, PA</dd>
+        <dd>
+          <a
+            href="https://www.pqi.org/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >PQI</a>
+          Graduate Fellowship, 2026–2027
+        </dd>
+
+        <dt>Based in</dt>
+        <dd>Pittsburgh, Pennsylvania</dd>
+
       </dl>
 
       <p class="sublabel">Education</p>
+
       <ul class="plain">
+
         <li>
-          <span class="when">2024-</span>
-          <span class="what">PhD, Information Sciences, University of Pittsburgh.</span>
+          <span class="when">2024–</span>
+          <span class="what">
+            PhD, Information Science,
+            University of Pittsburgh.
+          </span>
         </li>
+
         <li>
-          <span class="when">2017-22</span>
-          <span class="what">BS-MS Physics, IISER Bhopal.</span>
+          <span class="when">2017–22</span>
+          <span class="what">
+            BS-MS Physics,
+            IISER Bhopal.
+          </span>
         </li>
+
       </ul>
 
       <p class="sublabel">Elsewhere</p>
+
       <ul class="linklist">
-        <li><a href="assets/CV_Priyam_Srivastava.pdf">CV (pdf)</a></li>
-        <li><a href="https://scholar.google.com/citations?user=X4i_SsYAAAAJ" target="_blank" rel="noopener">Google Scholar</a></li>
-        <li><a href="https://github.com/Priyam1498" target="_blank" rel="noopener">GitHub</a></li>
-        <li><a href="https://www.linkedin.com/in/priyam-srivastava-0104/" target="_blank" rel="noopener">LinkedIn</a></li>
-        <li><a href="mailto:PRS216@pitt.edu">PRS216@pitt.edu</a></li>
+
+        <li>
+          <a href="assets/CV_Priyam_Srivastava.pdf">
+            Academic CV (PDF)
+          </a>
+        </li>
+
+        <li>
+          <a
+            href="https://scholar.google.com/citations?user=X4i_SsYAAAAJ"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Google Scholar</a>
+        </li>
+
+        <li>
+          <a
+            href="https://github.com/Priyam1498"
+            target="_blank"
+            rel="noopener noreferrer"
+          >GitHub</a>
+        </li>
+
+        <li>
+          <a
+            href="https://www.linkedin.com/in/priyam-srivastava-0104/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >LinkedIn</a>
+        </li>
+
+        <li>
+          <a href="mailto:PRS216@pitt.edu">
+            PRS216@pitt.edu
+          </a>
+        </li>
+
       </ul>
+
     </aside>
+
   </section>
 
-  <section>
-    <h2 class="sechead">Recent</h2>
+  <!-- ==========================================================
+       RECENT NEWS
+       ========================================================== -->
+
+  <section aria-labelledby="recent-heading">
+
+    <h2 class="sechead" id="recent-heading">
+      Recent
+    </h2>
+
     <ul class="news">
+
+      <li>
+        <span class="when">2026 &middot; 11</span>
+        <span class="what">
+          Presented
+          <a
+            href="https://doi.org/10.1145/3839338.3857253"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Sequential vs. Synchronized Entanglement
+          Swapping: QKD Secret-Key Rate under Optimized
+          Link-Layer Control</a>
+          at ACM PQQS 2026, San Jose, California.
+        </span>
+      </li>
+
       <li>
         <span class="when">2026 &middot; 09</span>
-        <span class="what">Presenting a technical paper at IEEE Quantum Week (QCE) 2026, QTEM track, Toronto. Also serving as a student volunteer.</span>
+        <span class="what">
+          Presented
+          <a
+            href="https://arxiv.org/abs/2605.03906"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Variational Joint Magnetometry and
+          Gradiometry on Dipolar Spin Chains</a>
+          at IEEE Quantum Week (QCE 2026),
+          QTEM track, Toronto.
+          Also served as a student volunteer.
+        </span>
       </li>
+
       <li>
         <span class="when">2026 &middot; 08</span>
-        <span class="what">Awarded a PQI Fellowship for Fall 2026 and Spring 2027, through the School of Computing and Information.</span>
+        <span class="what">
+          Awarded the Pittsburgh Quantum Institute
+          Graduate Fellowship for the 2026–2027
+          academic year through the School of
+          Computing and Information.
+        </span>
       </li>
+
       <li>
         <span class="when">2026 &middot; 07</span>
-        <span class="what">Coauthored <a href="https://arxiv.org/abs/2607.00365">When AI Meets Quantum Information</a>, submitted to <em>Progress in Quantum Electronics</em>; wrote the AI for quantum networking section.</span>
+        <span class="what">
+          Coauthored
+          <a
+            href="https://arxiv.org/abs/2607.00365"
+            target="_blank"
+            rel="noopener noreferrer"
+          ><em>When AI Meets Quantum Information:
+          A Comprehensive Review</em></a>,
+          contributing the section on AI for
+          quantum networking.
+        </span>
       </li>
+
       <li>
         <span class="when">2026 &middot; 06</span>
-        <span class="what">Attended QNumerics 2026, Numerical Methods in Quantum Information Science, UMass Amherst.</span>
+        <span class="what">
+          Attended QNumerics 2026,
+          Numerical Methods in Quantum
+          Information Science,
+          at UMass Amherst.
+        </span>
       </li>
+
       <li>
         <span class="when">2026 &middot; 05</span>
-        <span class="what">Two preprints out: joint magnetometry and gradiometry, and RL for entanglement swapping.</span>
+        <span class="what">
+          Released preprints on
+          <a
+            href="https://arxiv.org/abs/2605.03906"
+            target="_blank"
+            rel="noopener noreferrer"
+          >joint magnetometry and gradiometry</a>
+          and
+          <a
+            href="https://arxiv.org/abs/2605.04047"
+            target="_blank"
+            rel="noopener noreferrer"
+          >quantum-network control and
+          entanglement swapping</a>.
+        </span>
       </li>
+
       <li>
         <span class="when">2026 &middot; 03</span>
-        <span class="what">Contributed talk at FQIT 2026, IIIT Allahabad.</span>
+        <span class="what">
+          Gave a contributed talk on variational
+          probe and measurement optimization
+          at FQIT 2026, IIIT Allahabad.
+        </span>
       </li>
+
     </ul>
+
   </section>
 
 </main>
 
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+
 <footer class="sitefoot">
+
   <div class="wrap footrow">
-    <span>Priyam Srivastava &middot; Pittsburgh, PA</span>
-    <span><a href="mailto:PRS216@pitt.edu">PRS216@pitt.edu</a></span>
-    <span>Updated September 2026</span>
+
+    <span>
+      Priyam Srivastava &middot; Pittsburgh, PA
+    </span>
+
+    <span>
+      <a href="mailto:PRS216@pitt.edu">
+        PRS216@pitt.edu
+      </a>
+    </span>
+
+    <span>
+      Updated November 2026
+    </span>
+
   </div>
+
 </footer>
 
 <script src="site.js"></script>
+
 </body>
 </html>
