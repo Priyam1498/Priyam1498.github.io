@@ -1,671 +1,1153 @@
 
-/* ================================================================
-   Priyam Srivastava — Academic Website
-   Shared JavaScript
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-   Features:
-   1. Persistent dark/light theme
-   2. Topic filtering for publications
-   3. Interactive GHZ-dephasing illustration
+  <title>Curriculum Vitae — Priyam Srivastava</title>
 
-   Every feature is independently guarded so this file can be
-   included on all pages.
+  <meta name="description"
+        content="Academic CV of Priyam Srivastava, PhD researcher at the University of Pittsburgh. Education, research expertise, technical skills, fellowships, conference presentations, teaching, and academic service.">
 
-   Updated: November 2026
-   ================================================================ */
+  <meta name="author" content="Priyam Srivastava">
 
-(function () {
-  'use strict';
+  <link rel="canonical"
+        href="https://priyam1498.github.io/cv.html">
 
-  /* ==============================================================
-     1. THEME MANAGEMENT
-     ============================================================== */
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title"
+        content="Curriculum Vitae — Priyam Srivastava">
+  <meta property="og:description"
+        content="Education, technical expertise, research fellowships, conference presentations, teaching, and academic service in quantum information science.">
+  <meta property="og:url"
+        content="https://priyam1498.github.io/cv.html">
+  <meta property="og:image"
+        content="https://priyam1498.github.io/assets/og-card.png">
 
-  var root = document.documentElement;
-  var themeButton = document.getElementById('theme-toggle');
+  <meta name="twitter:card"
+        content="summary_large_image">
 
-  var STORAGE_KEY = 'theme';
+  <!-- Assets -->
+  <link rel="icon"
+        href="assets/favicon.svg"
+        type="image/svg+xml">
 
-  function readTheme() {
-    try {
-      return window.localStorage.getItem(STORAGE_KEY);
-    } catch (error) {
-      return null;
-    }
-  }
+  <!-- Fonts -->
+  <link rel="preconnect"
+        href="https://fonts.googleapis.com">
 
-  function saveTheme(theme) {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, theme);
-    } catch (error) {
-      // Theme switching still works without persistent storage.
-    }
-  }
+  <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
 
-  var systemTheme = window.matchMedia
-    ? window.matchMedia('(prefers-color-scheme: dark)')
-    : null;
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
 
-  function preferredTheme() {
-    return systemTheme && systemTheme.matches
-      ? 'dark'
-      : 'light';
-  }
+  <link rel="stylesheet" href="styles.css">
 
-  function applyTheme(theme) {
-    var mode = theme === 'light' ? 'light' : 'dark';
+  <style>
+    /* ============================================================
+       CV PAGE
+       Supplements shared styles.css.
+       ============================================================ */
 
-    root.setAttribute('data-theme', mode);
-
-    // Inform native form controls of the selected scheme.
-    root.style.colorScheme = mode;
-
-    if (!themeButton) {
-      return;
+    .cv-intro {
+      max-width: 80ch;
     }
 
-    var label = themeButton.querySelector('.theme-label');
-
-    if (label) {
-      label.textContent = mode;
+    .cv-intro .lede {
+      max-width: 76ch;
     }
 
-    themeButton.setAttribute(
-      'aria-pressed',
-      String(mode === 'dark')
-    );
-
-    themeButton.setAttribute(
-      'aria-label',
-      mode === 'dark'
-        ? 'Switch to light theme'
-        : 'Switch to dark theme'
-    );
-
-    themeButton.setAttribute(
-      'title',
-      mode === 'dark'
-        ? 'Switch to light theme'
-        : 'Switch to dark theme'
-    );
-  }
-
-  // Use the saved setting, otherwise follow the operating system.
-  var savedTheme = readTheme();
-
-  if (savedTheme === 'dark' || savedTheme === 'light') {
-    applyTheme(savedTheme);
-  } else {
-    applyTheme(preferredTheme());
-  }
-
-  // An explicit user selection overrides the system preference.
-  if (themeButton) {
-    themeButton.addEventListener('click', function () {
-      var current = root.getAttribute('data-theme');
-
-      var next = current === 'dark'
-        ? 'light'
-        : 'dark';
-
-      applyTheme(next);
-      saveTheme(next);
-    });
-  }
-
-  // Follow OS changes only when no preference was saved.
-  if (systemTheme) {
-    var handleSystemThemeChange = function () {
-      var stored = readTheme();
-
-      if (stored !== 'dark' && stored !== 'light') {
-        applyTheme(preferredTheme());
-      }
-    };
-
-    if (typeof systemTheme.addEventListener === 'function') {
-      systemTheme.addEventListener(
-        'change',
-        handleSystemThemeChange
-      );
-    } else if (typeof systemTheme.addListener === 'function') {
-      // Compatibility with older browsers.
-      systemTheme.addListener(handleSystemThemeChange);
-    }
-  }
-
-  /* ==============================================================
-     2. PUBLICATION FILTERING
-     ============================================================== */
-
-  var filterButtons = document.querySelectorAll(
-    '.chip[data-filter]'
-  );
-
-  var publicationItems = document.querySelectorAll(
-    '.pubs li[data-thread]'
-  );
-
-  var filterCount = document.getElementById('filtercount');
-
-  var topicLabels = {
-    all: 'all topics',
-    sensing: 'sensing and metrology',
-    networks: 'quantum networking',
-    codes: 'quantum codes',
-    review: 'reviews'
-  };
-
-  if (filterButtons.length && publicationItems.length) {
-
-    function applyPublicationFilter(topic) {
-      var selected = Object.prototype.hasOwnProperty.call(
-        topicLabels,
-        topic
-      ) ? topic : 'all';
-
-      var visibleCount = 0;
-
-      Array.prototype.forEach.call(
-        publicationItems,
-        function (item) {
-          var itemTopics = (
-            item.getAttribute('data-thread') || ''
-          ).trim().split(/\s+/);
-
-          var matches =
-            selected === 'all' ||
-            itemTopics.indexOf(selected) !== -1;
-
-          item.hidden = !matches;
-
-          // Explicit display handling avoids stylesheet rules
-          // accidentally overriding the hidden attribute.
-          item.style.display = matches ? '' : 'none';
-
-          if (matches) {
-            visibleCount += 1;
-          }
-        }
-      );
-
-      Array.prototype.forEach.call(
-        filterButtons,
-        function (button) {
-          var active =
-            button.getAttribute('data-filter') === selected;
-
-          button.classList.toggle('on', active);
-
-          button.setAttribute(
-            'aria-pressed',
-            String(active)
-          );
-        }
-      );
-
-      if (filterCount) {
-        var noun = visibleCount === 1
-          ? 'publication or manuscript'
-          : 'publications and manuscripts';
-
-        if (selected === 'all') {
-          filterCount.textContent =
-            'Showing all ' +
-            visibleCount +
-            ' ' +
-            noun +
-            '.';
-        } else {
-          filterCount.textContent =
-            'Showing ' +
-            visibleCount +
-            ' ' +
-            noun +
-            ' in ' +
-            topicLabels[selected] +
-            '.';
-        }
-      }
+    /* Introductory CV download link */
+    .cv-actions {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.8rem 1.4rem;
+      margin-top: 1.5rem;
     }
 
-    Array.prototype.forEach.call(
-      filterButtons,
-      function (button) {
-        button.addEventListener('click', function () {
-          applyPublicationFilter(
-            button.getAttribute('data-filter')
-          );
-        });
-      }
-    );
-
-    applyPublicationFilter('all');
-  }
-
-  /* ==============================================================
-     3. GHZ SENSITIVITY UNDER DEPHASING
-     ============================================================== */
-
-  var qubitSlider = document.getElementById('nq');
-  var dephasingSlider = document.getElementById('gm');
-  var plot = document.getElementById('plot');
-
-  if (qubitSlider && dephasingSlider && plot) {
-
-    /* ------------------------------------------------------------
-       Mathematical model
-
-       Independent, pure dephasing:
-         single-qubit coherence = exp(-d)
-
-       Product probe:
-         F_prod = N exp(-2d)
-         delta_prod = exp(d) / sqrt(N)
-
-       GHZ probe:
-         F_GHZ = N^2 exp(-2Nd)
-         delta_GHZ = exp(Nd) / N
-
-       Advantage ratio:
-         delta_prod / delta_GHZ
-           = sqrt(N) exp(-(N-1)d)
-
-       GHZ has a smaller local uncertainty bound if:
-         d < ln(N) / [2(N-1)]
-
-       Assumptions:
-       - Fixed interrogation time
-       - Independent identical pure dephasing
-       - Ideal preparation and measurement
-       - One normalized independent repetition
-       - Local quantum Cramer-Rao bounds
-       - No optimization over interrogation time
-
-       This is an educational model, not a result
-       from the author's variational sensing papers.
-       ------------------------------------------------------------ */
-
-    function productQFI(n, d) {
-      return n * Math.exp(-2 * d);
+    .cv-actions .secondary-link {
+      font-size: 0.88rem;
     }
 
-    function ghzQFI(n, d) {
-      return n * n * Math.exp(-2 * n * d);
+    /* Research expertise summary */
+    .expertise-intro {
+      max-width: 82ch;
+      line-height: 1.75;
+      margin-bottom: 1.2rem;
     }
 
-    function productUncertainty(n, d) {
-      return 1 / Math.sqrt(productQFI(n, d));
+    /* Skills grid */
+    .skillgrid {
+      margin-top: 1rem;
     }
 
-    function ghzUncertainty(n, d) {
-      return 1 / Math.sqrt(ghzQFI(n, d));
+    .skillcard {
+      min-width: 0;
     }
 
-    function uncertaintyRatio(n, d) {
-      return Math.sqrt(n) * Math.exp(-(n - 1) * d);
+    .skillcard .sklabel {
+      font-weight: 600;
+      line-height: 1.5;
     }
 
-    /* ------------------------------------------------------------
-       Plot configuration
-
-       SVG viewBox: 660 x 270
-       X-axis: number of qubits
-       Y-axis: logarithmic phase uncertainty
-
-       The chosen Y range accommodates all values
-       for N=2...14 and d=0...0.3.
-       ------------------------------------------------------------ */
-
-    var SVG_NS = 'http://www.w3.org/2000/svg';
-
-    var X0 = 56;
-    var X1 = 630;
-
-    var Y0 = 26;
-    var Y1 = 228;
-
-    var NMIN = 2;
-    var NMAX = 14;
-
-    var YMIN = 0.02;
-    var YMAX = 6;
-
-    function xOf(n) {
-      return X0 +
-        ((n - NMIN) / (NMAX - NMIN)) *
-        (X1 - X0);
+    .skillcard .skitems {
+      line-height: 1.75;
     }
 
-    function yOf(value) {
-      var safe = Math.max(YMIN, Math.min(YMAX, value));
-
-      var scaled =
-        (Math.log(safe) - Math.log(YMIN)) /
-        (Math.log(YMAX) - Math.log(YMIN));
-
-      return Y1 - scaled * (Y1 - Y0);
+    /* Academic entries */
+    .cv-columns {
+      align-items: start;
     }
 
-    function element(id) {
-      return document.getElementById(id);
+    .cv-columns .plain {
+      margin-bottom: 1.7rem;
     }
 
-    function setText(id, text) {
-      var node = element(id);
-
-      if (node) {
-        node.textContent = text;
-      }
+    .cv-columns .plain li {
+      margin-bottom: 1rem;
     }
 
-    function svgElement(name, attributes, content) {
-      var node = document.createElementNS(
-        SVG_NS,
-        name
-      );
+    .cv-columns .what {
+      line-height: 1.7;
+    }
 
-      Object.keys(attributes || {}).forEach(
-        function (key) {
-          node.setAttribute(key, attributes[key]);
-        }
-      );
+    .cv-columns .when {
+      white-space: nowrap;
+    }
 
-      if (content !== undefined) {
-        node.textContent = content;
+    .cv-columns .sechead:not(:first-child) {
+      margin-top: 1.8rem;
+    }
+
+    .cv-entry-title {
+      font-weight: 600;
+    }
+
+    .cv-entry-detail {
+      display: block;
+      margin-top: 0.25rem;
+    }
+
+    /* Download section */
+    .cv-download {
+      margin-top: 2.5rem;
+    }
+
+    .cv-download .prose {
+      max-width: 76ch;
+      line-height: 1.75;
+    }
+
+    .cv-note {
+      margin-top: 0.9rem;
+      font-size: 0.85rem;
+      line-height: 1.65;
+    }
+
+    @media (max-width: 700px) {
+      .cv-actions {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.85rem;
       }
 
-      return node;
-    }
-
-    /* ------------------------------------------------------------
-       Build axes and logarithmic grid
-       ------------------------------------------------------------ */
-
-    var grid = element('grid');
-
-    function buildGrid() {
-      if (!grid) {
-        return;
-      }
-
-      // Clear previously generated axis elements.
-      while (grid.firstChild) {
-        grid.removeChild(grid.firstChild);
-      }
-
-      var yTicks = [0.03, 0.1, 0.3, 1, 3, 6];
-
-      yTicks.forEach(function (value) {
-        var y = yOf(value);
-
-        grid.appendChild(
-          svgElement('line', {
-            class: 'gl',
-            x1: X0,
-            y1: y,
-            x2: X1,
-            y2: y
-          })
-        );
-
-        grid.appendChild(
-          svgElement(
-            'text',
-            {
-              class: 'lbl',
-              x: X0 - 8,
-              y: y + 4,
-              'text-anchor': 'end'
-            },
-            String(value)
-          )
-        );
-      });
-
-      // Vertical axis label.
-      grid.appendChild(
-        svgElement(
-          'text',
-          {
-            class: 'lbl',
-            x: 14,
-            y: 128,
-            transform: 'rotate(-90 14 128)',
-            'text-anchor': 'middle'
-          },
-          'phase uncertainty'
-        )
-      );
-
-      // Sparse qubit-number tick labels.
-      [2, 4, 6, 8, 10, 12, 14].forEach(
-        function (n) {
-          grid.appendChild(
-            svgElement(
-              'text',
-              {
-                class: 'lbl',
-                x: xOf(n),
-                y: Y1 + 17,
-                'text-anchor': 'middle'
-              },
-              String(n)
-            )
-          );
-        }
-      );
-    }
-
-    buildGrid();
-
-    /* ------------------------------------------------------------
-       Utility functions
-       ------------------------------------------------------------ */
-
-    function validQubitCount(value) {
-      var n = Number.parseInt(value, 10);
-
-      if (!Number.isFinite(n)) {
-        return 8;
-      }
-
-      return Math.max(NMIN, Math.min(NMAX, n));
-    }
-
-    function validDephasing(value) {
-      var d = Number.parseFloat(value);
-
-      if (!Number.isFinite(d)) {
-        return 0;
-      }
-
-      return Math.max(0, Math.min(0.3, d));
-    }
-
-    function plotPoints(model, d) {
-      var points = [];
-
-      for (var n = NMIN; n <= NMAX; n += 1) {
-        points.push(
-          xOf(n).toFixed(2) +
-          ',' +
-          yOf(model(n, d)).toFixed(2)
-        );
-      }
-
-      return points.join(' ');
-    }
-
-    function setPolyline(id, points) {
-      var node = element(id);
-
-      if (node) {
-        node.setAttribute('points', points);
+      .cv-columns .plain {
+        margin-bottom: 1.4rem;
       }
     }
+  </style>
+</head>
 
-    function setPoint(id, n, value) {
-      var node = element(id);
+<body>
 
-      if (!node) {
-        return;
-      }
+<a class="skip" href="#main">
+  Skip to content
+</a>
 
-      node.setAttribute('cx', xOf(n));
-      node.setAttribute('cy', yOf(value));
-    }
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
 
-    function clampLabelY(y) {
-      return Math.max(Y0 + 10, Math.min(Y1 - 8, y));
-    }
+<header class="topbar">
+  <div class="wrap bar">
 
-    function setCurveLabel(id, x, y) {
-      var node = element(id);
+    <a class="mark" href="index.html">
+      <span class="mark-glyph" aria-hidden="true"></span>
+      <span class="mark-name">Priyam Srivastava</span>
+    </a>
 
-      if (!node) {
-        return;
-      }
+    <nav class="navlinks" aria-label="Pages">
 
-      node.setAttribute('x', x);
-      node.setAttribute('y', clampLabelY(y));
-      node.setAttribute('text-anchor', 'end');
-    }
+      <a href="index.html">about</a>
 
-    /* ------------------------------------------------------------
-       Main rendering function
-       ------------------------------------------------------------ */
+      <a href="research.html">research</a>
 
-    function drawExplorer() {
-      var n = validQubitCount(qubitSlider.value);
-      var d = validDephasing(dephasingSlider.value);
+      <a href="publications.html">publications</a>
 
-      // Keep controls and output labels synchronized.
-      setText('nqOut', String(n));
-      setText('gmOut', d.toFixed(2));
+      <a href="cv.html"
+         class="on"
+         aria-current="page">cv</a>
 
-      /* Curves */
-      setPolyline(
-        'lProd',
-        plotPoints(productUncertainty, d)
-      );
+    </nav>
 
-      setPolyline(
-        'lGhz',
-        plotPoints(ghzUncertainty, d)
-      );
+    <button
+      id="theme-toggle"
+      class="theme-btn"
+      type="button"
+      aria-pressed="true"
+      aria-label="Toggle color theme"
+    >
+      <span class="theme-label">dark</span>
+    </button>
 
-      /* Selected point values */
-      var productValue = productUncertainty(n, d);
-      var ghzValue = ghzUncertainty(n, d);
+  </div>
+</header>
 
-      setPoint('pProd', n, productValue);
-      setPoint('pGhz', n, ghzValue);
+<main id="main" class="wrap">
 
-      /* Curve labels */
-      var finalProduct = productUncertainty(NMAX, d);
-      var finalGHZ = ghzUncertainty(NMAX, d);
+  <!-- ==========================================================
+       INTRODUCTION
+       ========================================================== -->
 
-      var prodLabelY = yOf(finalProduct) - 10;
-      var ghzLabelY = yOf(finalGHZ) - 10;
+  <div class="page-intro cv-intro">
 
-      // Avoid overlapping curve labels.
-      if (Math.abs(prodLabelY - ghzLabelY) < 17) {
-        if (prodLabelY <= ghzLabelY) {
-          prodLabelY -= 9;
-          ghzLabelY += 9;
-        } else {
-          prodLabelY += 9;
-          ghzLabelY -= 9;
-        }
-      }
+    <p class="eyebrow">
+      Curriculum Vitae
+    </p>
 
-      setCurveLabel(
-        'tProd',
-        X1 - 8,
-        prodLabelY
-      );
+    <h1>
+      Academic background and experience
+    </h1>
 
-      setCurveLabel(
-        'tGhz',
-        X1 - 8,
-        ghzLabelY
-      );
+    <p class="lede">
+      I am a PhD researcher in quantum information
+      science with a background in physics and
+      scientific computing. My work focuses on
+      variational quantum algorithms for sensing
+      and metrology, and reinforcement learning
+      for quantum-network control.
+    </p>
 
-      /* Numerical readout */
-      setText(
-        'mProd',
-        productValue.toFixed(3)
-      );
+    <div class="cv-actions">
 
-      setText(
-        'mGhz',
-        ghzValue.toFixed(3)
-      );
+      <a
+        class="btn primary"
+        href="assets/CV_Priyam_Srivastava.pdf"
+        type="application/pdf"
+        download="Priyam_Srivastava_Academic_CV.pdf"
+      >
+        Download academic CV (PDF)
+      </a>
 
-      var advantage = uncertaintyRatio(n, d);
+      <a
+        class="secondary-link"
+        href="publications.html"
+      >
+        View publications
+      </a>
 
-      setText(
-        'mAdv',
-        advantage.toFixed(2) + 'x'
-      );
+      <a
+        class="secondary-link"
+        href="research.html"
+      >
+        Research projects
+      </a>
 
-      /* Interpretation */
-      var interpretation;
+    </div>
 
-      if (Math.abs(advantage - 1) < 0.000001) {
-        interpretation = 'equal uncertainty bounds';
-      } else if (advantage > 1) {
-        interpretation = 'lower GHZ uncertainty bound';
-      } else {
-        interpretation = 'lower product-state uncertainty bound';
-      }
+  </div>
 
-      var advantageNode = element('mAdv');
+  <!-- ==========================================================
+       EDUCATION
+       ========================================================== -->
 
-      if (advantageNode) {
-        advantageNode.setAttribute(
-          'aria-label',
-          'Product-to-GHZ uncertainty ratio: ' +
-          advantage.toFixed(3) +
-          '. ' +
-          interpretation +
-          '.'
-        );
-      }
+  <section aria-labelledby="education-heading">
 
-      /* Accessible plot description */
-      plot.setAttribute(
-        'aria-label',
-        'Local phase uncertainty versus number of qubits. ' +
-        'Selected N equals ' + n +
-        ', integrated dephasing equals ' + d.toFixed(2) +
-        '. Product uncertainty is ' +
-        productValue.toFixed(3) +
-        ', GHZ uncertainty is ' +
-        ghzValue.toFixed(3) +
-        '. The product-to-GHZ ratio is ' +
-        advantage.toFixed(2) +
-        '.'
-      );
-    }
+    <h2 class="sechead" id="education-heading">
+      Education
+    </h2>
 
-    /* ------------------------------------------------------------
-       Input listeners
-       ------------------------------------------------------------ */
+    <ul class="plain">
 
-    qubitSlider.addEventListener(
-      'input',
-      drawExplorer
-    );
+      <li>
 
-    dephasingSlider.addEventListener(
-      'input',
-      drawExplorer
-    );
+        <span class="when">2024–</span>
 
-    // Initialize the plot.
-    drawExplorer();
-  }
+        <span class="what">
 
-})();
+          <span class="cv-entry-title">
+            PhD in Information Science
+            (Telecommunications Track)
+          </span>
+
+          <span class="cv-entry-detail">
+            University of Pittsburgh,
+            School of Computing and Information,
+            Department of Informatics and
+            Networked Systems.
+          </span>
+
+          <span class="cv-entry-detail">
+            Advisor:
+            <a
+              href="https://sites.google.com/view/kausesh/"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Dr. Kaushik P. Seshadreesan</a>.
+          </span>
+
+          <span class="cv-entry-detail">
+            Expected completion: 2028.
+          </span>
+
+        </span>
+
+      </li>
+
+      <li>
+
+        <span class="when">2017–22</span>
+
+        <span class="what">
+
+          <span class="cv-entry-title">
+            BS-MS Dual Degree in Physics
+          </span>
+
+          <span class="cv-entry-detail">
+            Indian Institute of Science Education
+            and Research (IISER) Bhopal, India.
+          </span>
+
+          <span class="cv-entry-detail">
+            Master's thesis:
+            <em>2-Dimensional Coherent Spectroscopy
+            with Chirped and Unchirped Pulses</em>.
+          </span>
+
+          <span class="cv-entry-detail">
+            Advisor:
+            <a
+              href="https://sites.google.com/iiserb.ac.in/rslab/people/rohan-singh"
+              target="_blank"
+              rel="noopener noreferrer"
+            >Dr. Rohan Singh</a>.
+          </span>
+
+        </span>
+
+      </li>
+
+    </ul>
+
+  </section>
+
+  <!-- ==========================================================
+       RESEARCH EXPERTISE
+       ========================================================== -->
+
+  <section aria-labelledby="expertise-heading">
+
+    <h2 class="sechead" id="expertise-heading">
+      Research expertise
+    </h2>
+
+    <p class="expertise-intro">
+      My research combines quantum-information
+      methods, physical modeling, numerical
+      simulation, and optimization.
+      I work primarily on quantum sensing,
+      multiparameter estimation, and
+      quantum-network control, with broader
+      interests in quantum algorithms,
+      quantum simulation, and distributed
+      quantum sensing.
+    </p>
+
+    <div class="skillgrid">
+
+      <!-- Quantum sensing -->
+      <div class="skillcard">
+
+        <p class="sklabel">
+          Quantum sensing and metrology
+        </p>
+
+        <p class="skitems">
+          Variational probe preparation
+          &middot;
+          quantum measurement optimization
+          &middot;
+          classical and quantum Fisher information
+          &middot;
+          quantum Fisher information matrices
+          &middot;
+          multiparameter estimation
+          &middot;
+          structured phase estimation
+        </p>
+
+      </div>
+
+      <!-- Quantum algorithms -->
+      <div class="skillcard">
+
+        <p class="sklabel">
+          Quantum algorithms and simulation
+        </p>
+
+        <p class="skitems">
+          Variational quantum algorithms
+          &middot;
+          parameterized quantum circuits
+          &middot;
+          quantum-system simulation
+          &middot;
+          dipolar spin systems
+          &middot;
+          PennyLane
+          &middot;
+          Qiskit
+          &middot;
+          AWS Braket
+        </p>
+
+      </div>
+
+      <!-- Networking -->
+      <div class="skillcard">
+
+        <p class="sklabel">
+          Quantum networking
+        </p>
+
+        <p class="skitems">
+          Entanglement distribution
+          &middot;
+          entanglement swapping
+          &middot;
+          entanglement purification
+          &middot;
+          quantum-memory decoherence
+          &middot;
+          Werner-state modeling
+          &middot;
+          six-state quantum key distribution
+          &middot;
+          secret-key-rate evaluation
+        </p>
+
+      </div>
+
+      <!-- Quantum codes -->
+      <div class="skillcard">
+
+        <p class="sklabel">
+          Quantum information methods
+        </p>
+
+        <p class="skitems">
+          Stabilizer formalism
+          &middot;
+          surface-code encoding
+          &middot;
+          measurement-based quantum computation
+          &middot;
+          quantum-state and circuit modeling
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ==========================================================
+       TECHNICAL SKILLS
+       ========================================================== -->
+
+  <section aria-labelledby="skills-heading">
+
+    <h2 class="sechead" id="skills-heading">
+      Technical skills
+    </h2>
+
+    <div class="skillgrid">
+
+      <!-- Programming -->
+      <div class="skillcard">
+
+        <p class="sklabel">
+          Programming and scientific computing
+        </p>
+
+        <p class="skitems">
+          Python
+          &middot;
+          NumPy
+          &middot;
+          SciPy
+          &middot;
+          JAX
+          &middot;
+          C
+          &middot;
+          MATLAB
+          &middot;
+          Mathematica
+        </p>
+
+      </div>
+
+      <!-- ML and optimization -->
+      <div class="skillcard">
+
+        <p class="sklabel">
+          Optimization and machine learning
+        </p>
+
+        <p class="skitems">
+          PyTorch
+          &middot;
+          Gymnasium
+          &middot;
+          CMA-ES
+          &middot;
+          derivative-free optimization
+          &middot;
+          REINFORCE
+          &middot;
+          policy-gradient methods
+        </p>
+
+      </div>
+
+      <!-- Infrastructure -->
+      <div class="skillcard">
+
+        <p class="sklabel">
+          Computing infrastructure
+        </p>
+
+        <p class="skitems">
+          High-performance computing
+          &middot;
+          Pitt CRC
+          &middot;
+          SLURM batch and array jobs
+          &middot;
+          Linux/bash
+          &middot;
+          Git
+        </p>
+
+      </div>
+
+      <!-- Physical contexts -->
+      <div class="skillcard">
+
+        <p class="sklabel">
+          Physical systems and research contexts
+        </p>
+
+        <p class="skitems">
+          Dipolar spin systems
+          &middot;
+          NV centers in diamond
+          &middot;
+          ultrafast coherent spectroscopy
+          &middot;
+          nonlinear optical response
+        </p>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- ==========================================================
+       ACADEMIC RECORD — TWO COLUMNS
+       ========================================================== -->
+
+  <section class="cols cv-columns"
+           aria-label="Fellowships and academic record">
+
+    <!-- ========================================================
+         LEFT COLUMN
+         ======================================================== -->
+
+    <div>
+
+      <!-- Fellowships -->
+
+      <h2 class="sechead">
+        Fellowships
+      </h2>
+
+      <ul class="plain">
+
+        <li>
+
+          <span class="when">2026–27</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Pittsburgh Quantum Institute
+              Graduate Fellowship
+            </span>
+
+            <span class="cv-entry-detail">
+              Awarded through the University of
+              Pittsburgh School of Computing
+              and Information.
+              Stipend and tuition scholarship
+              for Fall 2026 and Spring 2027.
+            </span>
+
+            <span class="cv-entry-detail">
+              <a
+                href="https://www.pqi.org/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Pittsburgh Quantum Institute
+              </a>
+            </span>
+
+          </span>
+
+        </li>
+
+      </ul>
+
+      <!-- Funded collaborations -->
+
+      <h2 class="sechead">
+        Funded research collaborations
+      </h2>
+
+      <ul class="plain">
+
+        <li>
+
+          <span class="when">2026</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              PQI Community Collaboration Award Project
+            </span>
+
+            <span class="cv-entry-detail">
+              <em>Dynamic Programming &amp;
+              Reinforcement Learning for Quantum
+              Network Control (DyReQNet-Ctrl)</em>.
+            </span>
+
+            <span class="cv-entry-detail">
+              Significant contributor.
+              PI: Dr. Kaushik P. Seshadreesan;
+              co-PIs: Profs. Prashant Krishnamurthy,
+              Alan Scheller-Wolf, and Sridhar Tayur.
+            </span>
+
+          </span>
+
+        </li>
+
+        <li>
+
+          <span class="when">2024</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              PQI Community Collaboration Award Project
+            </span>
+
+            <span class="cv-entry-detail">
+              <em>NV-Center-Based Quantum Sensing
+              for Biomedical Ultrasound Imaging</em>.
+            </span>
+
+            <span class="cv-entry-detail">
+              Contributor.
+              PI: Prof. Junyu Liu;
+              co-PIs: Profs. Kaushik P. Seshadreesan,
+              Gurudev Dutt, and Kang Kim.
+            </span>
+
+          </span>
+
+        </li>
+
+      </ul>
+
+      <!-- Talks -->
+
+      <h2 class="sechead">
+        Conference talks and presentations
+      </h2>
+
+      <ul class="plain">
+
+        <li>
+
+          <span class="when">Nov 2026</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Technical oral presentation
+            </span>
+
+            <span class="cv-entry-detail">
+              <a
+                href="https://doi.org/10.1145/3839338.3857253"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Sequential vs. Synchronized
+                Entanglement Swapping:
+                QKD Secret-Key Rate under
+                Optimized Link-Layer Control
+              </a>.
+            </span>
+
+            <span class="cv-entry-detail">
+              ACM PQQS 2026,
+              San Jose, California, USA.
+              November 4, 2026.
+            </span>
+
+          </span>
+
+        </li>
+
+        <li>
+
+          <span class="when">Sep 2026</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Technical oral presentation
+            </span>
+
+            <span class="cv-entry-detail">
+              <a
+                href="https://arxiv.org/abs/2605.03906"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Variational Joint Magnetometry
+                and Gradiometry on
+                Dipolar Spin Chains
+              </a>.
+            </span>
+
+            <span class="cv-entry-detail">
+              IEEE Quantum Week (QCE 2026),
+              QTEM track,
+              Toronto, Canada.
+              September 18, 2026.
+            </span>
+
+          </span>
+
+        </li>
+
+        <li>
+
+          <span class="when">Mar 2026</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Contributed talk
+            </span>
+
+            <span class="cv-entry-detail">
+              <em>
+                Variational Probe and Measurement
+                Optimization for Structured
+                Phase Estimation
+              </em>.
+            </span>
+
+            <span class="cv-entry-detail">
+              Workshop on Frontiers in Quantum
+              Information &amp; Technologies
+              (FQIT 2026),
+              IIIT Allahabad, India.
+            </span>
+
+          </span>
+
+        </li>
+
+        <li>
+
+          <span class="when">2025</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Poster presentation
+            </span>
+
+            <span class="cv-entry-detail">
+              <a
+                href="https://ieeexplore.ieee.org/abstract/document/11250086"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Variational Quantum Sensing
+                for Structured Linear
+                Estimation Function
+              </a>.
+            </span>
+
+            <span class="cv-entry-detail">
+              IEEE Quantum Week (QCE 2025).
+            </span>
+
+          </span>
+
+        </li>
+
+      </ul>
+
+    </div>
+
+    <!-- ========================================================
+         RIGHT COLUMN
+         ======================================================== -->
+
+    <div>
+
+      <!-- Teaching -->
+
+      <h2 class="sechead">
+        Teaching experience
+      </h2>
+
+      <ul class="plain">
+
+        <li>
+
+          <span class="when">Spring 2026</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Recitation instructor and grader
+            </span>
+
+            <span class="cv-entry-detail">
+              CS 1613:
+              <em>Modern Quantum Computing</em>.
+            </span>
+
+            <span class="cv-entry-detail">
+              University of Pittsburgh.
+            </span>
+
+          </span>
+
+        </li>
+
+        <li>
+
+          <span class="when">Spring 2026</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Laboratory teaching assistant
+            </span>
+
+            <span class="cv-entry-detail">
+              CS 0011:
+              <em>Introduction to Computing
+              for Scientists</em>.
+            </span>
+
+            <span class="cv-entry-detail">
+              University of Pittsburgh.
+            </span>
+
+          </span>
+
+        </li>
+
+        <li>
+
+          <span class="when">2025–26</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Teaching assistant
+            </span>
+
+            <span class="cv-entry-detail">
+              CS 1900:
+              <em>Internship</em>,
+              and CS 1980:
+              <em>Team Project</em>.
+            </span>
+
+            <span class="cv-entry-detail">
+              University of Pittsburgh.
+            </span>
+
+          </span>
+
+        </li>
+
+      </ul>
+
+      <!-- Academic service -->
+
+      <h2 class="sechead">
+        Academic service
+      </h2>
+
+      <ul class="plain">
+
+        <li>
+
+          <span class="when">2025</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Peer reviewer
+            </span>
+
+            <span class="cv-entry-detail">
+              <em>npj Quantum Information</em>,
+              Nature Portfolio.
+            </span>
+
+          </span>
+
+        </li>
+
+        <li>
+
+          <span class="when">2025–26</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              Student volunteer
+            </span>
+
+            <span class="cv-entry-detail">
+              IEEE International Conference
+              on Quantum Computing and
+              Engineering (QCE),
+              2025 and 2026.
+            </span>
+
+          </span>
+
+        </li>
+
+      </ul>
+
+      <!-- Schools -->
+
+      <h2 class="sechead">
+        Research schools and training
+      </h2>
+
+      <ul class="plain">
+
+        <li>
+
+          <span class="when">Jun 2026</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              QNumerics 2026
+            </span>
+
+            <span class="cv-entry-detail">
+              Numerical Methods in
+              Quantum Information Science,
+              University of Massachusetts Amherst.
+            </span>
+
+          </span>
+
+        </li>
+
+        <li>
+
+          <span class="when">Jun 2024</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              STAQ Summer School
+            </span>
+
+            <span class="cv-entry-detail">
+              Quantum Information Theory
+              and Computation,
+              Duke University.
+            </span>
+
+          </span>
+
+        </li>
+
+      </ul>
+
+      <!-- Certifications -->
+
+      <h2 class="sechead">
+        Certifications
+      </h2>
+
+      <ul class="plain">
+
+        <li>
+
+          <span class="when">2024–25</span>
+
+          <span class="what">
+
+            <span class="cv-entry-title">
+              IBM Quantum Learning
+            </span>
+
+            <span class="cv-entry-detail">
+              <em>Variational Algorithm Design</em>
+              and
+              <em>Basics of Quantum Information</em>
+              digital badges.
+            </span>
+
+          </span>
+
+        </li>
+
+      </ul>
+
+      <!-- Languages -->
+
+      <h2 class="sechead">
+        Languages
+      </h2>
+
+      <ul class="plain">
+
+        <li>
+          <span class="when">English</span>
+          <span class="what">Fluent</span>
+        </li>
+
+        <li>
+          <span class="when">Hindi</span>
+          <span class="what">Native</span>
+        </li>
+
+      </ul>
+
+    </div>
+
+  </section>
+
+  <!-- ==========================================================
+       DOWNLOAD ACADEMIC CV
+       ========================================================== -->
+
+  <section class="cta cv-download"
+           aria-labelledby="download-heading">
+
+    <h2 class="sechead" id="download-heading">
+      Complete academic CV
+    </h2>
+
+    <p class="prose">
+      The downloadable academic CV contains my
+      complete publication and manuscript record,
+      research experience, quantitative findings,
+      fellowship and collaboration details,
+      conference presentations, teaching,
+      and academic service.
+    </p>
+
+    <p>
+      <a
+        class="btn primary"
+        href="assets/CV_Priyam_Srivastava.pdf"
+        type="application/pdf"
+        download="Priyam_Srivastava_Academic_CV.pdf"
+      >
+        Download CV (PDF)
+      </a>
+    </p>
+
+    <p class="cv-note">
+      For research papers and preprints,
+      see the
+      <a href="publications.html">
+        publications page
+      </a>.
+      For project descriptions and scientific
+      results, see the
+      <a href="research.html">
+        research page
+      </a>.
+    </p>
+
+  </section>
+
+</main>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+
+<footer class="sitefoot">
+
+  <div class="wrap footrow">
+
+    <span>
+      Priyam Srivastava &middot; Pittsburgh, PA
+    </span>
+
+    <span>
+      <a href="mailto:PRS216@pitt.edu">
+        PRS216@pitt.edu
+      </a>
+    </span>
+
+    <span>
+      Updated November 2026
+    </span>
+
+  </div>
+
+</footer>
+
+<script src="site.js"></script>
+
+</body>
+</html>
