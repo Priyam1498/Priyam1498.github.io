@@ -1,124 +1,737 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Publications &mdash; Priyam Srivastava</title>
-<meta name="description" content="Publications and preprints of Priyam Srivastava in quantum sensing, quantum metrology, quantum networks, and quantum error correction.">
-<meta name="author" content="Priyam Srivastava">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Publications &mdash; Priyam Srivastava">
-<meta property="og:description" content="Publications and preprints of Priyam Srivastava in quantum sensing, quantum metrology, quantum networks, and quantum error correction.">
-<meta property="og:url" content="https://priyam1498.github.io/publications.html">
-<meta property="og:image" content="https://priyam1498.github.io/assets/og-card.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Publications — Priyam Srivastava</title>
+
+  <meta name="description"
+        content="Publications, conference papers, journal manuscripts, and preprints by Priyam Srivastava in quantum sensing, metrology, networking, and quantum information.">
+
+  <meta name="author" content="Priyam Srivastava">
+
+  <link rel="canonical"
+        href="https://priyam1498.github.io/publications.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title"
+        content="Publications — Priyam Srivastava">
+  <meta property="og:description"
+        content="Research publications and preprints in quantum sensing, quantum metrology, quantum networking, and quantum information.">
+  <meta property="og:url"
+        content="https://priyam1498.github.io/publications.html">
+  <meta property="og:image"
+        content="https://priyam1498.github.io/assets/og-card.png">
+
+  <meta name="twitter:card"
+        content="summary_large_image">
+
+  <link rel="icon"
+        href="assets/favicon.svg"
+        type="image/svg+xml">
+
+  <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+  <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ============================================================
+       PUBLICATIONS PAGE
+       Retains existing publication and filter classes.
+       ============================================================ */
+
+    .pub-intro {
+      max-width: 78ch;
+    }
+
+    .pub-intro .lede {
+      max-width: 75ch;
+    }
+
+    .pub-note {
+      max-width: 80ch;
+      margin-top: 1rem;
+      margin-bottom: 1.8rem;
+      font-size: 0.88rem;
+      line-height: 1.7;
+    }
+
+    .pub-section-title {
+      margin-top: 2rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .pubs {
+      margin-top: 0.8rem;
+    }
+
+    .pubs > li {
+      padding-top: 0.45rem;
+      padding-bottom: 1.2rem;
+    }
+
+    .pubs .ptitle {
+      font-weight: 600;
+      line-height: 1.55;
+      margin-bottom: 0.45rem;
+    }
+
+    .pubs .pauth {
+      line-height: 1.65;
+      margin-bottom: 0.4rem;
+    }
+
+    .pubs .pmeta {
+      line-height: 1.65;
+      margin-bottom: 0.45rem;
+    }
+
+    .pubs .plinks {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem 1.2rem;
+      line-height: 1.6;
+    }
+
+    .pubs .plinks a {
+      white-space: normal;
+      overflow-wrap: anywhere;
+    }
+
+    .pubs .me {
+      font-weight: 600;
+    }
+
+    .pub-description {
+      font-size: 0.89rem;
+      line-height: 1.65;
+      margin-top: 0.45rem;
+      margin-bottom: 0.65rem;
+    }
+
+    .pub-legend {
+      max-width: 82ch;
+      margin-top: 1.7rem;
+      font-size: 0.87rem;
+      line-height: 1.75;
+    }
+
+    /* Publication-group labels are deliberately subdued. */
+    .pub-group-label {
+      margin: 2rem 0 0.6rem;
+      padding-bottom: 0.4rem;
+      border-bottom: 1px solid var(--line);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.025em;
+    }
+
+    .pub-group-label:first-of-type {
+      margin-top: 1.4rem;
+    }
+
+    .filter-help {
+      margin-top: 0.7rem;
+      margin-bottom: 0.4rem;
+      font-size: 0.85rem;
+    }
+
+    .chip:focus-visible {
+      outline: 2px solid currentColor;
+      outline-offset: 3px;
+    }
+
+    @media (max-width: 700px) {
+      .pubs .ptitle {
+        line-height: 1.5;
+      }
+
+      .pubs .plinks {
+        gap: 0.35rem 0.9rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main">
+  Skip to content
+</a>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
 
 <header class="topbar">
   <div class="wrap bar">
+
     <a class="mark" href="index.html">
       <span class="mark-glyph" aria-hidden="true"></span>
       <span class="mark-name">Priyam Srivastava</span>
     </a>
+
     <nav class="navlinks" aria-label="Pages">
+
       <a href="index.html">about</a>
+
       <a href="research.html">research</a>
-      <a href="publications.html" class="on">publications</a>
+
+      <a href="publications.html"
+         class="on"
+         aria-current="page">publications</a>
+
       <a href="cv.html">cv</a>
+
     </nav>
-    <button id="theme-toggle" class="theme-btn" type="button" aria-pressed="true">
+
+    <button
+      id="theme-toggle"
+      class="theme-btn"
+      type="button"
+      aria-pressed="true"
+      aria-label="Toggle color theme"
+    >
       <span class="theme-label">dark</span>
     </button>
+
   </div>
 </header>
 
 <main id="main" class="wrap">
 
-  <div class="page-intro">
-    <p class="eyebrow">Publications</p>
-    <h1>Papers and preprints</h1>
-    <p class="lede">Seven papers across variational sensing, quantum network control, error correction, and two review articles. Filter by topic below.</p>
+  <!-- ==========================================================
+       INTRODUCTION
+       ========================================================== -->
+
+  <div class="page-intro pub-intro">
+
+    <p class="eyebrow">
+      Publications
+    </p>
+
+    <h1>
+      Papers and preprints
+    </h1>
+
+    <p class="lede">
+      My publications and manuscripts span
+      variational quantum sensing,
+      multiparameter quantum metrology,
+      quantum-network control,
+      measurement-based quantum computation,
+      and collaborative reviews
+      in quantum information science.
+    </p>
+
   </div>
 
-  <div class="filters" role="group" aria-label="Filter by topic">
-    <button class="chip on" data-filter="all">all</button>
-    <button class="chip" data-filter="sensing">sensing and metrology</button>
-    <button class="chip" data-filter="networks">networks</button>
-    <button class="chip" data-filter="codes">codes</button>
-    <button class="chip" data-filter="review">reviews</button>
-  </div>
-  <p class="sechint" id="filtercount"></p>
-
-  <ol class="pubs">
-    <li data-thread="sensing">
-      <p class="ptitle">Variational Joint Magnetometry and Gradiometry on Dipolar Spin Chains</p>
-      <p class="pauth"><span class="me">P. Srivastava</span>, X. Jin, J. Liu, G. Dutt, T. Purdy, K. Kim, K. P. Seshadreesan</p>
-      <p class="pmeta"><span class="badge ok">accepted</span> IEEE Quantum Week (QCE) 2026, QTEM track, oral presentation</p>
-      <p class="plinks"><a href="https://arxiv.org/abs/2605.03906" target="_blank" rel="noopener">arXiv:2605.03906</a></p>
-    </li>
-    <li data-thread="sensing">
-      <p class="ptitle">Variational Quantum Sensing for Structured Linear Estimation Function</p>
-      <p class="pauth"><span class="me">P. Srivastava</span>, V. Kumar, G. Dutt, K. P. Seshadreesan</p>
-      <p class="pmeta"><span class="badge ok">published</span> IEEE Quantum Week (QCE) 2025, poster track</p>
-      <p class="plinks"><a href="https://ieeexplore.ieee.org/abstract/document/11250086" target="_blank" rel="noopener">IEEE Xplore 11250086</a></p>
-    </li>
-    <li data-thread="review">
-      <p class="ptitle">Four Generations of Quantum Biomedical Sensors</p>
-      <p class="pauth">X. Jin<sup>*</sup>, <span class="me">P. Srivastava</span><sup>*</sup>, R. Wang, et al., incl. K. P. Seshadreesan, J. Liu</p>
-      <p class="pmeta"><span class="badge ">submitted</span> Nature Biomedical Engineering, 2026</p>
-      <p class="plinks"><a href="https://arxiv.org/abs/2603.29944" target="_blank" rel="noopener">arXiv:2603.29944</a></p>
-    </li>
-    <li data-thread="review">
-      <p class="ptitle">When AI Meets Quantum Information: A Comprehensive Review</p>
-      <p class="pauth">M. Chen, Y. Gan, X. Jin, et al., incl. <span class="me">P. Srivastava</span>, K. P. Seshadreesan, J. Liu</p>
-      <p class="pmeta"><span class="badge ">submitted</span> Progress in Quantum Electronics, 2026</p>
-      <p class="plinks"><a href="https://arxiv.org/abs/2607.00365" target="_blank" rel="noopener">arXiv:2607.00365</a></p>
-    </li>
-    <li data-thread="sensing">
-      <p class="ptitle">Variational Probe and Measurement Optimization for Structured Phase Estimation</p>
-      <p class="pauth"><span class="me">P. Srivastava</span>, V. Kumar, G. Dutt, K. P. Seshadreesan</p>
-      <p class="pmeta"><span class="badge wip">in preparation</span> for Quantum Science and Technology</p>
-      <p class="plinks"><a href="https://arxiv.org/abs/2507.22043" target="_blank" rel="noopener">arXiv:2507.22043</a></p>
-    </li>
-    <li data-thread="networks">
-      <p class="ptitle">Sequential vs. Simultaneous Entanglement Swapping under Optimal Link-Layer Control</p>
-      <p class="pauth"><span class="me">P. Srivastava</span>, A. R. Sabavat, S. Jain, et al., incl. K. P. Seshadreesan</p>
-      <p class="pmeta"><span class="badge wip">in preparation</span> for ACM PQQS 2026</p>
-      <p class="plinks"><a href="https://arxiv.org/abs/2605.04047" target="_blank" rel="noopener">arXiv:2605.04047</a></p>
-    </li>
-    <li data-thread="codes">
-      <p class="ptitle">Encoder Circuit for a Surface Code using a Measurement-Based Quantum Computing Model</p>
-      <p class="pauth"><span class="me">P. Srivastava</span>, V. Katyal, A. Raina</p>
-      <p class="pmeta"><span class="badge ">preprint</span> 2023</p>
-      <p class="plinks"><a href="https://arxiv.org/abs/2306.10267" target="_blank" rel="noopener">arXiv:2306.10267</a></p>
-    </li>
-  </ol>
-
-  <p class="prose small">
-    Author order as published. <sup>*</sup> denotes equal contribution. Ordered by
-    venue status rather than date. The complete list is on
-    <a href="https://scholar.google.com/citations?user=X4i_SsYAAAAJ" target="_blank" rel="noopener">Google Scholar</a>.
+  <p class="pub-note">
+    This page includes peer-reviewed conference
+    contributions, submitted journal manuscripts,
+    public preprints, and ongoing work.
+    Publication status is indicated for each entry.
   </p>
 
+  <!-- ==========================================================
+       FILTERS
+       ========================================================== -->
+
+  <div
+    class="filters"
+    role="group"
+    aria-label="Filter publications by research topic"
+  >
+
+    <button
+      class="chip on"
+      type="button"
+      data-filter="all"
+      aria-pressed="true"
+    >
+      all
+    </button>
+
+    <button
+      class="chip"
+      type="button"
+      data-filter="sensing"
+      aria-pressed="false"
+    >
+      sensing and metrology
+    </button>
+
+    <button
+      class="chip"
+      type="button"
+      data-filter="networks"
+      aria-pressed="false"
+    >
+      networks
+    </button>
+
+    <button
+      class="chip"
+      type="button"
+      data-filter="codes"
+      aria-pressed="false"
+    >
+      quantum codes
+    </button>
+
+    <button
+      class="chip"
+      type="button"
+      data-filter="review"
+      aria-pressed="false"
+    >
+      reviews
+    </button>
+
+  </div>
+
+  <p class="sechint filter-help"
+     id="filtercount"
+     aria-live="polite">
+    Showing all 7 publications and manuscripts.
+  </p>
+
+  <!-- ==========================================================
+       PUBLICATION LIST
+       ========================================================== -->
+
+  <ol class="pubs">
+
+    <!-- ========================================================
+         1. ACM PQQS 2026
+         ======================================================== -->
+
+    <li data-thread="networks">
+
+      <p class="ptitle">
+        Sequential vs. Synchronized Entanglement
+        Swapping: QKD Secret-Key Rate under
+        Optimized Link-Layer Control
+      </p>
+
+      <p class="pauth">
+        <span class="me">P. Srivastava</span>,
+        A. R. Sabavat,
+        S. Jain,
+        A. Scheller-Wolf,
+        S. Tayur,
+        D. Tipper,
+        P. Krishnamurthy,
+        A. Babay,
+        K. P. Seshadreesan
+      </p>
+
+      <p class="pmeta">
+        <span class="badge ok">published</span>
+        ACM PQQS 2026,
+        conference paper and oral presentation.
+      </p>
+
+      <p class="pub-description">
+        Reinforcement-learning-based link control
+        and a comparison of sequential and
+        synchronized entanglement swapping
+        for quantum key distribution under
+        finite quantum-memory coherence.
+      </p>
+
+      <p class="plinks">
+
+        <a
+          href="https://doi.org/10.1145/3839338.3857253"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ACM Digital Library / DOI
+        </a>
+
+        <a
+          href="https://arxiv.org/abs/2605.04047"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          arXiv:2605.04047
+        </a>
+
+      </p>
+
+    </li>
+
+    <!-- ========================================================
+         2. IEEE QCE 2026
+         ======================================================== -->
+
+    <li data-thread="sensing">
+
+      <p class="ptitle">
+        Variational Joint Magnetometry and
+        Gradiometry on Dipolar Spin Chains
+      </p>
+
+      <p class="pauth">
+        <span class="me">P. Srivastava</span>,
+        X. Jin,
+        J. Liu,
+        G. Dutt,
+        T. Purdy,
+        K. Kim,
+        K. P. Seshadreesan
+      </p>
+
+      <p class="pmeta">
+        <span class="badge ok">accepted</span>
+        IEEE International Conference on Quantum
+        Computing and Engineering (QCE 2026),
+        QTEM track, technical oral presentation.
+      </p>
+
+      <p class="pub-description">
+        Variational probe optimization for
+        simultaneous estimation of magnetic-field
+        offsets and spatial gradients in
+        dipolar-interacting spin chains.
+      </p>
+
+      <p class="plinks">
+
+        <a
+          href="https://arxiv.org/abs/2605.03906"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          arXiv:2605.03906
+        </a>
+
+      </p>
+
+    </li>
+
+    <!-- ========================================================
+         3. IEEE QCE 2025
+         ======================================================== -->
+
+    <li data-thread="sensing">
+
+      <p class="ptitle">
+        Variational Quantum Sensing for
+        Structured Linear Estimation Function
+      </p>
+
+      <p class="pauth">
+        <span class="me">P. Srivastava</span>,
+        V. Kumar,
+        G. Dutt,
+        K. P. Seshadreesan
+      </p>
+
+      <p class="pmeta">
+        <span class="badge ok">published</span>
+        IEEE International Conference on Quantum
+        Computing and Engineering (QCE 2025),
+        poster-track proceedings contribution.
+      </p>
+
+      <p class="pub-description">
+        Variational quantum sensing for
+        structured linear functions of
+        locally encoded phases using
+        dipolar-interacting sensor systems.
+      </p>
+
+      <p class="plinks">
+
+        <a
+          href="https://ieeexplore.ieee.org/abstract/document/11250086"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          IEEE Xplore: 11250086
+        </a>
+
+      </p>
+
+    </li>
+
+    <!-- ========================================================
+         4. QUANTUM BIOMEDICAL SENSORS
+         ======================================================== -->
+
+    <li data-thread="review">
+
+      <p class="ptitle">
+        Four Generations of Quantum
+        Biomedical Sensors
+      </p>
+
+      <p class="pauth">
+        X. Jin<sup>*</sup>,
+        <span class="me">P. Srivastava</span><sup>*</sup>,
+        R. Wang,
+        et al.
+        (including K. P. Seshadreesan
+        and J. Liu)
+      </p>
+
+      <p class="pmeta">
+        <span class="badge">submitted</span>
+        Journal manuscript submitted to
+        <em>Nature Biomedical Engineering</em>,
+        2026.
+      </p>
+
+      <p class="pub-description">
+        A collaborative review developing
+        a four-generation framework for
+        quantum technologies in
+        biomedical sensing.
+      </p>
+
+      <p class="plinks">
+
+        <a
+          href="https://arxiv.org/abs/2603.29944"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          arXiv:2603.29944
+        </a>
+
+      </p>
+
+    </li>
+
+    <!-- ========================================================
+         5. AI AND QUANTUM INFORMATION
+         ======================================================== -->
+
+    <li data-thread="review">
+
+      <p class="ptitle">
+        When AI Meets Quantum Information:
+        A Comprehensive Review
+      </p>
+
+      <p class="pauth">
+        M. Chen,
+        Y. Gan,
+        X. Jin,
+        et al.
+        (including
+        <span class="me">P. Srivastava</span>,
+        K. P. Seshadreesan,
+        and J. Liu)
+      </p>
+
+      <p class="pmeta">
+        <span class="badge">submitted</span>
+        Journal manuscript submitted to
+        <em>Progress in Quantum Electronics</em>,
+        2026.
+      </p>
+
+      <p class="pub-description">
+        A collaborative review of the connections
+        between artificial intelligence and
+        quantum information science.
+        My contribution focuses on AI
+        for quantum networking.
+      </p>
+
+      <p class="plinks">
+
+        <a
+          href="https://arxiv.org/abs/2607.00365"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          arXiv:2607.00365
+        </a>
+
+      </p>
+
+    </li>
+
+    <!-- ========================================================
+         6. STRUCTURED PHASE ESTIMATION JOURNAL WORK
+         ======================================================== -->
+
+    <li data-thread="sensing">
+
+      <p class="ptitle">
+        Structured Phase Estimation with
+        Dipolar-Interacting Systems:
+        Sequential and Joint Variational
+        Probe–Readout Optimization
+      </p>
+
+      <p class="pauth">
+        <span class="me">P. Srivastava</span>,
+        V. Kumar,
+        G. Dutt,
+        K. P. Seshadreesan
+      </p>
+
+      <p class="pmeta">
+        <span class="badge wip">in preparation</span>
+        Journal manuscript extending the
+        IEEE QCE 2025 work.
+      </p>
+
+      <p class="pub-description">
+        A study of sequential and joint
+        optimization of quantum probe
+        preparation and measurement circuits,
+        investigating the relationship between
+        quantum Fisher information,
+        classical Fisher information,
+        and restricted readout resources.
+      </p>
+
+      <p class="plinks">
+
+        <a
+          href="https://arxiv.org/abs/2507.22043"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Earlier preprint: arXiv:2507.22043
+        </a>
+
+      </p>
+
+    </li>
+
+    <!-- ========================================================
+         7. MBQC SURFACE CODE
+         ======================================================== -->
+
+    <li data-thread="codes">
+
+      <p class="ptitle">
+        Encoder Circuit for a Surface Code
+        using a Measurement-Based
+        Quantum Computing Model
+      </p>
+
+      <p class="pauth">
+        <span class="me">P. Srivastava</span>,
+        V. Katyal,
+        A. Raina
+      </p>
+
+      <p class="pmeta">
+        <span class="badge">preprint</span>
+        arXiv, 2023.
+      </p>
+
+      <p class="pub-description">
+        Development of a surface-code
+        encoder using measurement-based
+        quantum computation, investigated
+        through quantum-circuit simulation.
+      </p>
+
+      <p class="plinks">
+
+        <a
+          href="https://arxiv.org/abs/2306.10267"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          arXiv:2306.10267
+        </a>
+
+      </p>
+
+    </li>
+
+  </ol>
+
+  <!-- ==========================================================
+       PUBLICATION NOTES
+       ========================================================== -->
+
+  <div class="pub-legend">
+
+    <p>
+      <strong>Notes:</strong>
+      Author order follows the corresponding
+      publication or manuscript.
+      My name is shown in bold.
+      <sup>*</sup> denotes equal contribution.
+      The list is ordered by publication
+      status and research record,
+      rather than strictly by posting date.
+    </p>
+
+    <p>
+      The structured phase-estimation journal
+      manuscript extends the QCE 2025 work.
+      Its linked arXiv entry is an earlier
+      version of the research, not the
+      completed journal manuscript.
+    </p>
+
+    <p>
+      For citation records and updates,
+      see my
+      <a
+        href="https://scholar.google.com/citations?user=X4i_SsYAAAAJ"
+        target="_blank"
+        rel="noopener noreferrer"
+      >Google Scholar profile</a>.
+    </p>
+
+  </div>
 
 </main>
 
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+
 <footer class="sitefoot">
+
   <div class="wrap footrow">
-    <span>Priyam Srivastava &middot; Pittsburgh, PA</span>
-    <span><a href="mailto:PRS216@pitt.edu">PRS216@pitt.edu</a></span>
-    <span>Updated August 2026</span>
+
+    <span>
+      Priyam Srivastava &middot; Pittsburgh, PA
+    </span>
+
+    <span>
+      <a href="mailto:PRS216@pitt.edu">
+        PRS216@pitt.edu
+      </a>
+    </span>
+
+    <span>
+      Updated November 2026
+    </span>
+
   </div>
+
 </footer>
 
 <script src="site.js"></script>
+
 </body>
 </html>
