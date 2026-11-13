@@ -1,220 +1,671 @@
-/* Shared behaviour for all pages. Every block is guarded, so one file is safe
-   to include everywhere. */
+
+/* ================================================================
+   Priyam Srivastava — Academic Website
+   Shared JavaScript
+
+   Features:
+   1. Persistent dark/light theme
+   2. Topic filtering for publications
+   3. Interactive GHZ-dephasing illustration
+
+   Every feature is independently guarded so this file can be
+   included on all pages.
+
+   Updated: November 2026
+   ================================================================ */
 
 (function () {
   'use strict';
 
-  /* ---------------------------------------------------------- theme toggle */
+  /* ==============================================================
+     1. THEME MANAGEMENT
+     ============================================================== */
+
   var root = document.documentElement;
-  var btn = document.getElementById('theme-toggle');
+  var themeButton = document.getElementById('theme-toggle');
+
+  var STORAGE_KEY = 'theme';
 
   function readTheme() {
     try {
-      return localStorage.getItem('theme');
-    } catch (e) {
+      return window.localStorage.getItem(STORAGE_KEY);
+    } catch (error) {
       return null;
     }
   }
 
-  function applyTheme(mode) {
+  function saveTheme(theme) {
+    try {
+      window.localStorage.setItem(STORAGE_KEY, theme);
+    } catch (error) {
+      // Theme switching still works without persistent storage.
+    }
+  }
+
+  var systemTheme = window.matchMedia
+    ? window.matchMedia('(prefers-color-scheme: dark)')
+    : null;
+
+  function preferredTheme() {
+    return systemTheme && systemTheme.matches
+      ? 'dark'
+      : 'light';
+  }
+
+  function applyTheme(theme) {
+    var mode = theme === 'light' ? 'light' : 'dark';
+
     root.setAttribute('data-theme', mode);
 
-    if (!btn) return;
+    // Inform native form controls of the selected scheme.
+    root.style.colorScheme = mode;
 
-    var label = btn.querySelector('.theme-label');
-    if (label) label.textContent = mode;
+    if (!themeButton) {
+      return;
+    }
 
-    btn.setAttribute('aria-pressed', mode === 'dark' ? 'true' : 'false');
+    var label = themeButton.querySelector('.theme-label');
+
+    if (label) {
+      label.textContent = mode;
+    }
+
+    themeButton.setAttribute(
+      'aria-pressed',
+      String(mode === 'dark')
+    );
+
+    themeButton.setAttribute(
+      'aria-label',
+      mode === 'dark'
+        ? 'Switch to light theme'
+        : 'Switch to dark theme'
+    );
+
+    themeButton.setAttribute(
+      'title',
+      mode === 'dark'
+        ? 'Switch to light theme'
+        : 'Switch to dark theme'
+    );
   }
 
-  var saved = readTheme();
+  // Use the saved setting, otherwise follow the operating system.
+  var savedTheme = readTheme();
 
-  if (saved === 'light' || saved === 'dark') {
-    applyTheme(saved);
-  } else if (
-    window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: light)').matches
-  ) {
-    applyTheme('light');
+  if (savedTheme === 'dark' || savedTheme === 'light') {
+    applyTheme(savedTheme);
   } else {
-    applyTheme('dark');
+    applyTheme(preferredTheme());
   }
 
-  if (btn) {
-    btn.addEventListener('click', function () {
-      var next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  // An explicit user selection overrides the system preference.
+  if (themeButton) {
+    themeButton.addEventListener('click', function () {
+      var current = root.getAttribute('data-theme');
+
+      var next = current === 'dark'
+        ? 'light'
+        : 'dark';
 
       applyTheme(next);
-
-      try {
-        localStorage.setItem('theme', next);
-      } catch (e) {}
+      saveTheme(next);
     });
   }
 
-  /* ------------------------------------------------------ publication filter */
-  var chips = document.querySelectorAll('.chip[data-filter]');
-  var pubItems = document.querySelectorAll('.pubs li[data-thread]');
-  var countOut = document.getElementById('filtercount');
+  // Follow OS changes only when no preference was saved.
+  if (systemTheme) {
+    var handleSystemThemeChange = function () {
+      var stored = readTheme();
 
-  if (chips.length && pubItems.length) {
-    var applyFilter = function (key) {
-      var shown = 0;
-
-      Array.prototype.forEach.call(pubItems, function (li) {
-        var match = key === 'all' || li.getAttribute('data-thread') === key;
-        li.hidden = !match;
-        if (match) shown++;
-      });
-
-      Array.prototype.forEach.call(chips, function (c) {
-        c.classList.toggle('on', c.getAttribute('data-filter') === key);
-      });
-
-      if (countOut) {
-        countOut.textContent =
-          shown +
-          (shown === 1 ? ' paper' : ' papers') +
-          (key === 'all' ? '' : ' in ' + key);
+      if (stored !== 'dark' && stored !== 'light') {
+        applyTheme(preferredTheme());
       }
     };
 
-    Array.prototype.forEach.call(chips, function (c) {
-      c.addEventListener('click', function () {
-        applyFilter(c.getAttribute('data-filter'));
-      });
-    });
-
-    applyFilter('all');
+    if (typeof systemTheme.addEventListener === 'function') {
+      systemTheme.addEventListener(
+        'change',
+        handleSystemThemeChange
+      );
+    } else if (typeof systemTheme.addListener === 'function') {
+      // Compatibility with older browsers.
+      systemTheme.addListener(handleSystemThemeChange);
+    }
   }
 
-  /* --------------------------------------------------- precision explorer */
-  var nq = document.getElementById('nq');
-  var gm = document.getElementById('gm');
+  /* ==============================================================
+     2. PUBLICATION FILTERING
+     ============================================================== */
+
+  var filterButtons = document.querySelectorAll(
+    '.chip[data-filter]'
+  );
+
+  var publicationItems = document.querySelectorAll(
+    '.pubs li[data-thread]'
+  );
+
+  var filterCount = document.getElementById('filtercount');
+
+  var topicLabels = {
+    all: 'all topics',
+    sensing: 'sensing and metrology',
+    networks: 'quantum networking',
+    codes: 'quantum codes',
+    review: 'reviews'
+  };
+
+  if (filterButtons.length && publicationItems.length) {
+
+    function applyPublicationFilter(topic) {
+      var selected = Object.prototype.hasOwnProperty.call(
+        topicLabels,
+        topic
+      ) ? topic : 'all';
+
+      var visibleCount = 0;
+
+      Array.prototype.forEach.call(
+        publicationItems,
+        function (item) {
+          var itemTopics = (
+            item.getAttribute('data-thread') || ''
+          ).trim().split(/\s+/);
+
+          var matches =
+            selected === 'all' ||
+            itemTopics.indexOf(selected) !== -1;
+
+          item.hidden = !matches;
+
+          // Explicit display handling avoids stylesheet rules
+          // accidentally overriding the hidden attribute.
+          item.style.display = matches ? '' : 'none';
+
+          if (matches) {
+            visibleCount += 1;
+          }
+        }
+      );
+
+      Array.prototype.forEach.call(
+        filterButtons,
+        function (button) {
+          var active =
+            button.getAttribute('data-filter') === selected;
+
+          button.classList.toggle('on', active);
+
+          button.setAttribute(
+            'aria-pressed',
+            String(active)
+          );
+        }
+      );
+
+      if (filterCount) {
+        var noun = visibleCount === 1
+          ? 'publication or manuscript'
+          : 'publications and manuscripts';
+
+        if (selected === 'all') {
+          filterCount.textContent =
+            'Showing all ' +
+            visibleCount +
+            ' ' +
+            noun +
+            '.';
+        } else {
+          filterCount.textContent =
+            'Showing ' +
+            visibleCount +
+            ' ' +
+            noun +
+            ' in ' +
+            topicLabels[selected] +
+            '.';
+        }
+      }
+    }
+
+    Array.prototype.forEach.call(
+      filterButtons,
+      function (button) {
+        button.addEventListener('click', function () {
+          applyPublicationFilter(
+            button.getAttribute('data-filter')
+          );
+        });
+      }
+    );
+
+    applyPublicationFilter('all');
+  }
+
+  /* ==============================================================
+     3. GHZ SENSITIVITY UNDER DEPHASING
+     ============================================================== */
+
+  var qubitSlider = document.getElementById('nq');
+  var dephasingSlider = document.getElementById('gm');
   var plot = document.getElementById('plot');
 
-  if (nq && gm && plot) {
+  if (qubitSlider && dephasingSlider && plot) {
+
+    /* ------------------------------------------------------------
+       Mathematical model
+
+       Independent, pure dephasing:
+         single-qubit coherence = exp(-d)
+
+       Product probe:
+         F_prod = N exp(-2d)
+         delta_prod = exp(d) / sqrt(N)
+
+       GHZ probe:
+         F_GHZ = N^2 exp(-2Nd)
+         delta_GHZ = exp(Nd) / N
+
+       Advantage ratio:
+         delta_prod / delta_GHZ
+           = sqrt(N) exp(-(N-1)d)
+
+       GHZ has a smaller local uncertainty bound if:
+         d < ln(N) / [2(N-1)]
+
+       Assumptions:
+       - Fixed interrogation time
+       - Independent identical pure dephasing
+       - Ideal preparation and measurement
+       - One normalized independent repetition
+       - Local quantum Cramer-Rao bounds
+       - No optimization over interrogation time
+
+       This is an educational model, not a result
+       from the author's variational sensing papers.
+       ------------------------------------------------------------ */
+
+    function productQFI(n, d) {
+      return n * Math.exp(-2 * d);
+    }
+
+    function ghzQFI(n, d) {
+      return n * n * Math.exp(-2 * n * d);
+    }
+
+    function productUncertainty(n, d) {
+      return 1 / Math.sqrt(productQFI(n, d));
+    }
+
+    function ghzUncertainty(n, d) {
+      return 1 / Math.sqrt(ghzQFI(n, d));
+    }
+
+    function uncertaintyRatio(n, d) {
+      return Math.sqrt(n) * Math.exp(-(n - 1) * d);
+    }
+
+    /* ------------------------------------------------------------
+       Plot configuration
+
+       SVG viewBox: 660 x 270
+       X-axis: number of qubits
+       Y-axis: logarithmic phase uncertainty
+
+       The chosen Y range accommodates all values
+       for N=2...14 and d=0...0.3.
+       ------------------------------------------------------------ */
+
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+
     var X0 = 56;
     var X1 = 630;
+
     var Y0 = 26;
     var Y1 = 228;
 
     var NMIN = 2;
     var NMAX = 14;
+
     var YMIN = 0.02;
     var YMAX = 6;
 
-    var xOf = function (n) {
-      return X0 + (n - NMIN) / (NMAX - NMIN) * (X1 - X0);
-    };
+    function xOf(n) {
+      return X0 +
+        ((n - NMIN) / (NMAX - NMIN)) *
+        (X1 - X0);
+    }
 
-    var yOf = function (v) {
-      var t =
-        (Math.log(v) - Math.log(YMIN)) /
+    function yOf(value) {
+      var safe = Math.max(YMIN, Math.min(YMAX, value));
+
+      var scaled =
+        (Math.log(safe) - Math.log(YMIN)) /
         (Math.log(YMAX) - Math.log(YMIN));
 
-      return Y1 - Math.max(0, Math.min(1, t)) * (Y1 - Y0);
-    };
+      return Y1 - scaled * (Y1 - Y0);
+    }
 
-    /* Fixed-time, locally optimal phase-uncertainty bounds, normalized to
-       one repetition. g is dimensionless integrated dephasing d = Gamma*t,
-       defined so that each qubit retains coherence exp(-d). Preparation and
-       readout are ideal; interrogation time is not optimized. */
-
-    var prod = function (n, g) {
-      return Math.exp(g) / Math.sqrt(n);
-    };
-
-    var ghz = function (n, g) {
-      return Math.exp(n * g) / n;
-    };
-
-    var grid = document.getElementById('grid');
-    var gh = '';
-
-    [0.03, 0.1, 0.3, 1, 3, 6].forEach(function (t) {
-      gh +=
-        '<line class="gl" x1="' + X0 +
-        '" y1="' + yOf(t) +
-        '" x2="' + X1 +
-        '" y2="' + yOf(t) +
-        '"></line>';
-
-      gh +=
-        '<text class="lbl" x="' + (X0 - 8) +
-        '" y="' + (yOf(t) + 4) +
-        '" text-anchor="end">' + t +
-        '</text>';
-    });
-
-    gh +=
-      '<text class="lbl" x="14" y="128" ' +
-      'transform="rotate(-90 14 128)" text-anchor="middle">' +
-      'phase uncertainty</text>';
-
-    grid.innerHTML = gh;
-
-    var el = function (id) {
+    function element(id) {
       return document.getElementById(id);
-    };
+    }
 
-    var draw = function () {
-      var n = parseInt(nq.value, 10);
-      var g = parseFloat(gm.value);
+    function setText(id, text) {
+      var node = element(id);
 
-      el('nqOut').textContent = n;
-      el('gmOut').textContent = g.toFixed(2);
+      if (node) {
+        node.textContent = text;
+      }
+    }
 
-      var pp = [];
-      var pg = [];
+    function svgElement(name, attributes, content) {
+      var node = document.createElementNS(
+        SVG_NS,
+        name
+      );
 
-      for (var k = NMIN; k <= NMAX; k += 1) {
-        pp.push(
-          xOf(k).toFixed(1) + ',' + yOf(prod(k, g)).toFixed(1)
+      Object.keys(attributes || {}).forEach(
+        function (key) {
+          node.setAttribute(key, attributes[key]);
+        }
+      );
+
+      if (content !== undefined) {
+        node.textContent = content;
+      }
+
+      return node;
+    }
+
+    /* ------------------------------------------------------------
+       Build axes and logarithmic grid
+       ------------------------------------------------------------ */
+
+    var grid = element('grid');
+
+    function buildGrid() {
+      if (!grid) {
+        return;
+      }
+
+      // Clear previously generated axis elements.
+      while (grid.firstChild) {
+        grid.removeChild(grid.firstChild);
+      }
+
+      var yTicks = [0.03, 0.1, 0.3, 1, 3, 6];
+
+      yTicks.forEach(function (value) {
+        var y = yOf(value);
+
+        grid.appendChild(
+          svgElement('line', {
+            class: 'gl',
+            x1: X0,
+            y1: y,
+            x2: X1,
+            y2: y
+          })
         );
-        pg.push(
-          xOf(k).toFixed(1) + ',' + yOf(ghz(k, g)).toFixed(1)
+
+        grid.appendChild(
+          svgElement(
+            'text',
+            {
+              class: 'lbl',
+              x: X0 - 8,
+              y: y + 4,
+              'text-anchor': 'end'
+            },
+            String(value)
+          )
+        );
+      });
+
+      // Vertical axis label.
+      grid.appendChild(
+        svgElement(
+          'text',
+          {
+            class: 'lbl',
+            x: 14,
+            y: 128,
+            transform: 'rotate(-90 14 128)',
+            'text-anchor': 'middle'
+          },
+          'phase uncertainty'
+        )
+      );
+
+      // Sparse qubit-number tick labels.
+      [2, 4, 6, 8, 10, 12, 14].forEach(
+        function (n) {
+          grid.appendChild(
+            svgElement(
+              'text',
+              {
+                class: 'lbl',
+                x: xOf(n),
+                y: Y1 + 17,
+                'text-anchor': 'middle'
+              },
+              String(n)
+            )
+          );
+        }
+      );
+    }
+
+    buildGrid();
+
+    /* ------------------------------------------------------------
+       Utility functions
+       ------------------------------------------------------------ */
+
+    function validQubitCount(value) {
+      var n = Number.parseInt(value, 10);
+
+      if (!Number.isFinite(n)) {
+        return 8;
+      }
+
+      return Math.max(NMIN, Math.min(NMAX, n));
+    }
+
+    function validDephasing(value) {
+      var d = Number.parseFloat(value);
+
+      if (!Number.isFinite(d)) {
+        return 0;
+      }
+
+      return Math.max(0, Math.min(0.3, d));
+    }
+
+    function plotPoints(model, d) {
+      var points = [];
+
+      for (var n = NMIN; n <= NMAX; n += 1) {
+        points.push(
+          xOf(n).toFixed(2) +
+          ',' +
+          yOf(model(n, d)).toFixed(2)
         );
       }
 
-      el('lProd').setAttribute('points', pp.join(' '));
-      el('lGhz').setAttribute('points', pg.join(' '));
+      return points.join(' ');
+    }
 
-      var vp = prod(n, g);
-      var vg = ghz(n, g);
+    function setPolyline(id, points) {
+      var node = element(id);
 
-      el('pProd').setAttribute('cx', xOf(n));
-      el('pProd').setAttribute('cy', yOf(vp));
-      el('pGhz').setAttribute('cx', xOf(n));
-      el('pGhz').setAttribute('cy', yOf(vg));
+      if (node) {
+        node.setAttribute('points', points);
+      }
+    }
 
-      el('tProd').setAttribute('x', xOf(NMAX) - 54);
-      el('tProd').setAttribute('y', yOf(prod(NMAX, g)) - 9);
-      el('tGhz').setAttribute('x', xOf(NMAX) - 32);
-      el('tGhz').setAttribute('y', yOf(ghz(NMAX, g)) - 9);
+    function setPoint(id, n, value) {
+      var node = element(id);
 
-      el('mProd').textContent = vp.toFixed(3);
-      el('mGhz').textContent = vg.toFixed(3);
+      if (!node) {
+        return;
+      }
 
-      var adv = vp / vg;
+      node.setAttribute('cx', xOf(n));
+      node.setAttribute('cy', yOf(value));
+    }
 
-      el('mAdv').textContent = adv.toFixed(2) + 'x';
-      el('mAdv').setAttribute(
-        'aria-label',
-        'Product to GHZ uncertainty ratio: ' +
-        adv.toFixed(2) +
-        (
-          adv > 1
-            ? ', favors GHZ'
-            : adv < 1
-              ? ', favors product'
-              : ', equal uncertainties'
-        )
+    function clampLabelY(y) {
+      return Math.max(Y0 + 10, Math.min(Y1 - 8, y));
+    }
+
+    function setCurveLabel(id, x, y) {
+      var node = element(id);
+
+      if (!node) {
+        return;
+      }
+
+      node.setAttribute('x', x);
+      node.setAttribute('y', clampLabelY(y));
+      node.setAttribute('text-anchor', 'end');
+    }
+
+    /* ------------------------------------------------------------
+       Main rendering function
+       ------------------------------------------------------------ */
+
+    function drawExplorer() {
+      var n = validQubitCount(qubitSlider.value);
+      var d = validDephasing(dephasingSlider.value);
+
+      // Keep controls and output labels synchronized.
+      setText('nqOut', String(n));
+      setText('gmOut', d.toFixed(2));
+
+      /* Curves */
+      setPolyline(
+        'lProd',
+        plotPoints(productUncertainty, d)
       );
-    };
 
-    nq.addEventListener('input', draw);
-    gm.addEventListener('input', draw);
-    draw();
+      setPolyline(
+        'lGhz',
+        plotPoints(ghzUncertainty, d)
+      );
+
+      /* Selected point values */
+      var productValue = productUncertainty(n, d);
+      var ghzValue = ghzUncertainty(n, d);
+
+      setPoint('pProd', n, productValue);
+      setPoint('pGhz', n, ghzValue);
+
+      /* Curve labels */
+      var finalProduct = productUncertainty(NMAX, d);
+      var finalGHZ = ghzUncertainty(NMAX, d);
+
+      var prodLabelY = yOf(finalProduct) - 10;
+      var ghzLabelY = yOf(finalGHZ) - 10;
+
+      // Avoid overlapping curve labels.
+      if (Math.abs(prodLabelY - ghzLabelY) < 17) {
+        if (prodLabelY <= ghzLabelY) {
+          prodLabelY -= 9;
+          ghzLabelY += 9;
+        } else {
+          prodLabelY += 9;
+          ghzLabelY -= 9;
+        }
+      }
+
+      setCurveLabel(
+        'tProd',
+        X1 - 8,
+        prodLabelY
+      );
+
+      setCurveLabel(
+        'tGhz',
+        X1 - 8,
+        ghzLabelY
+      );
+
+      /* Numerical readout */
+      setText(
+        'mProd',
+        productValue.toFixed(3)
+      );
+
+      setText(
+        'mGhz',
+        ghzValue.toFixed(3)
+      );
+
+      var advantage = uncertaintyRatio(n, d);
+
+      setText(
+        'mAdv',
+        advantage.toFixed(2) + 'x'
+      );
+
+      /* Interpretation */
+      var interpretation;
+
+      if (Math.abs(advantage - 1) < 0.000001) {
+        interpretation = 'equal uncertainty bounds';
+      } else if (advantage > 1) {
+        interpretation = 'lower GHZ uncertainty bound';
+      } else {
+        interpretation = 'lower product-state uncertainty bound';
+      }
+
+      var advantageNode = element('mAdv');
+
+      if (advantageNode) {
+        advantageNode.setAttribute(
+          'aria-label',
+          'Product-to-GHZ uncertainty ratio: ' +
+          advantage.toFixed(3) +
+          '. ' +
+          interpretation +
+          '.'
+        );
+      }
+
+      /* Accessible plot description */
+      plot.setAttribute(
+        'aria-label',
+        'Local phase uncertainty versus number of qubits. ' +
+        'Selected N equals ' + n +
+        ', integrated dephasing equals ' + d.toFixed(2) +
+        '. Product uncertainty is ' +
+        productValue.toFixed(3) +
+        ', GHZ uncertainty is ' +
+        ghzValue.toFixed(3) +
+        '. The product-to-GHZ ratio is ' +
+        advantage.toFixed(2) +
+        '.'
+      );
+    }
+
+    /* ------------------------------------------------------------
+       Input listeners
+       ------------------------------------------------------------ */
+
+    qubitSlider.addEventListener(
+      'input',
+      drawExplorer
+    );
+
+    dephasingSlider.addEventListener(
+      'input',
+      drawExplorer
+    );
+
+    // Initialize the plot.
+    drawExplorer();
   }
+
 })();
