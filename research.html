@@ -1,268 +1,1425 @@
+
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Research &mdash; Priyam Srivastava</title>
-<meta name="description" content="Variational quantum sensing and metrology, and reinforcement learning for entanglement distribution in quantum networks.">
-<meta name="author" content="Priyam Srivastava">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Research &mdash; Priyam Srivastava">
-<meta property="og:description" content="Variational quantum sensing and metrology, and reinforcement learning for entanglement distribution in quantum networks.">
-<meta property="og:url" content="https://priyam1498.github.io/research.html">
-<meta property="og:image" content="https://priyam1498.github.io/assets/og-card.png">
-<meta name="twitter:card" content="summary_large_image">
-<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Research — Priyam Srivastava</title>
+
+  <meta name="description"
+        content="Research by Priyam Srivastava in variational quantum sensing, multiparameter quantum metrology, and reinforcement learning for quantum-network control.">
+
+  <meta name="author" content="Priyam Srivastava">
+
+  <link rel="canonical"
+        href="https://priyam1498.github.io/research.html">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title"
+        content="Research — Priyam Srivastava">
+  <meta property="og:description"
+        content="Variational quantum sensing, multiparameter estimation, and reinforcement learning for quantum-network control.">
+  <meta property="og:url"
+        content="https://priyam1498.github.io/research.html">
+  <meta property="og:image"
+        content="https://priyam1498.github.io/assets/og-card.png">
+
+  <meta name="twitter:card"
+        content="summary_large_image">
+
+  <link rel="icon"
+        href="assets/favicon.svg"
+        type="image/svg+xml">
+
+  <link rel="preconnect"
+        href="https://fonts.googleapis.com">
+  <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="stylesheet" href="styles.css">
+
+  <style>
+    /* ============================================================
+       RESEARCH PAGE
+       Extends existing styles without replacing them.
+       ============================================================ */
+
+    .research-intro {
+      max-width: 80ch;
+    }
+
+    .research-overview {
+      margin-top: 1.5rem;
+      margin-bottom: 2.2rem;
+      max-width: 80ch;
+      line-height: 1.75;
+    }
+
+    .research-nav {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 1.4rem;
+    }
+
+    .research-nav a {
+      display: inline-block;
+      padding: 0.55rem 0.8rem;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      font-size: 0.82rem;
+      text-decoration: none;
+    }
+
+    .research-nav a:hover {
+      border-color: currentColor;
+    }
+
+    .research-project {
+      margin-top: 2.2rem;
+      margin-bottom: 2.6rem;
+    }
+
+    .research-project h2 {
+      line-height: 1.35;
+    }
+
+    .research-project h3 {
+      margin-top: 1.5rem;
+      margin-bottom: 0.7rem;
+      font-size: 1.03rem;
+      font-weight: 600;
+    }
+
+    .research-project .project-lead {
+      max-width: 82ch;
+      line-height: 1.75;
+      margin-bottom: 1.3rem;
+    }
+
+    .project-content {
+      max-width: 82ch;
+      line-height: 1.75;
+    }
+
+    .project-content p {
+      margin-bottom: 1rem;
+    }
+
+    .project-content ul {
+      padding-left: 1.35rem;
+      margin-top: 0.8rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .project-content li {
+      margin-bottom: 0.65rem;
+    }
+
+    .project-finding {
+      border-left: 2px solid var(--line);
+      padding-left: 1rem;
+      margin: 1.4rem 0;
+      max-width: 82ch;
+    }
+
+    .project-finding p {
+      margin: 0 0 0.6rem;
+      line-height: 1.7;
+    }
+
+    .finding-label {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 0.74rem;
+      letter-spacing: 0.035em;
+      opacity: 0.72;
+    }
+
+    .research-project .refs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 1.4rem;
+      margin-top: 1.4rem;
+      font-size: 0.88rem;
+    }
+
+    .research-note {
+      max-width: 82ch;
+      font-size: 0.88rem;
+      line-height: 1.65;
+      opacity: 0.85;
+    }
+
+    .method-plate {
+      margin-top: 1.5rem;
+    }
+
+    .method-plate .prose {
+      max-width: none;
+    }
+
+    .method-plate h3 {
+      margin-top: 0;
+    }
+
+    .method-plate p {
+      line-height: 1.65;
+    }
+
+    .method-plate figcaption {
+      max-width: 82ch;
+      line-height: 1.65;
+    }
+
+    /* Compact comparison within a research plate */
+    .protocol-comparison {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.2rem;
+      margin-top: 1rem;
+    }
+
+    .protocol-comparison h4 {
+      margin: 0 0 0.5rem;
+      font-size: 0.93rem;
+    }
+
+    .protocol-comparison p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+
+    /* Figures */
+    .research-figure {
+      margin-top: 1.6rem;
+    }
+
+    .research-figure img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    .research-figure figcaption {
+      max-width: 82ch;
+      line-height: 1.65;
+    }
+
+    /* Interactive illustration */
+    .explorer-intro {
+      max-width: 82ch;
+      line-height: 1.75;
+    }
+
+    /* Earlier research */
+    .earlier-research {
+      margin-top: 2rem;
+    }
+
+    .earlier-research .plain {
+      max-width: 85ch;
+    }
+
+    /* Anchor positioning */
+    .research-project,
+    .explorer,
+    .earlier-research {
+      scroll-margin-top: 5rem;
+    }
+
+    @media (max-width: 720px) {
+      .protocol-comparison {
+        grid-template-columns: 1fr;
+      }
+
+      .research-nav {
+        gap: 0.5rem;
+      }
+
+      .research-project {
+        margin-bottom: 2rem;
+      }
+    }
+  </style>
 </head>
+
 <body>
 
-<a class="skip" href="#main">Skip to content</a>
+<a class="skip" href="#main">
+  Skip to content
+</a>
+
+<!-- ============================================================
+     NAVIGATION
+     ============================================================ -->
 
 <header class="topbar">
   <div class="wrap bar">
+
     <a class="mark" href="index.html">
       <span class="mark-glyph" aria-hidden="true"></span>
       <span class="mark-name">Priyam Srivastava</span>
     </a>
+
     <nav class="navlinks" aria-label="Pages">
+
       <a href="index.html">about</a>
-      <a href="research.html" class="on">research</a>
+
+      <a href="research.html"
+         class="on"
+         aria-current="page">research</a>
+
       <a href="publications.html">publications</a>
+
       <a href="cv.html">cv</a>
+
     </nav>
-    <button id="theme-toggle" class="theme-btn" type="button" aria-pressed="true">
+
+    <button
+      id="theme-toggle"
+      class="theme-btn"
+      type="button"
+      aria-pressed="true"
+      aria-label="Toggle color theme"
+    >
       <span class="theme-label">dark</span>
     </button>
+
   </div>
 </header>
 
 <main id="main" class="wrap">
 
-  <div class="page-intro intro-wide" style="max-width:none;">
+  <!-- ==========================================================
+       INTRODUCTION
+       ========================================================== -->
+
+  <div class="page-intro intro-wide research-intro">
+
     <p class="eyebrow">Research</p>
-    <h1>Quantum sensing and quantum-network control</h1>
-    <p class="lede" style="max-width:none;">
-      I use variational optimization to design quantum sensing circuits and
-      classical reinforcement learning to control entanglement generation.
-      Numerical simulation connects these methods to limited control and finite
-      memory coherence.
+
+    <h1>
+      Quantum sensing, estimation,
+      and network control
+    </h1>
+
+    <p class="lede">
+      My research investigates how quantum-information
+      protocols can be designed and optimized under
+      constraints imposed by physical interactions,
+      available control operations, measurement design,
+      and finite quantum-memory coherence.
     </p>
+
   </div>
 
-  <article class="thrust t-metro">
-    <div class="thrust-body" style="max-width:none;">
-      <p class="tag">variational quantum sensing</p>
-      <h2>Variational probe and readout design</h2>
+  <div class="research-overview">
 
-      <div class="thrust-text" style="columns:18em 2;column-gap:3.5rem;orphans:2;widows:2;">
-        <p>
-          I model dipolar-interacting spin systems in PennyLane and JAX and use
-          CMA-ES to optimize probe-preparation and readout circuits. For structured
-          single-parameter phase estimation, I compare sequential and joint
-          optimization using the same finite-depth encoder and shared two-angle
-          product readout. Quantum and classical Fisher information distinguish
-          the information in the probe from the information extracted by the
-          measurement.
-        </p>
-        <p>
-          For joint magnetic-field and gradient estimation on dipolar spin chains,
-          I optimize the determinant of the classical Fisher-information matrix.
-          In this model, a GHZ probe has a rank-one quantum Fisher-information
-          matrix and cannot identify both parameters independently. At five spins
-          and three circuit layers, variational performance reaches 92% of the
-          best-found quantum Fisher-information determinant benchmark and
-          4.2 times the standard-quantum-limit determinant.
-        </p>
-      </div>
-
-      <p class="refs">
-        <a href="https://arxiv.org/abs/2507.22043">arXiv:2507.22043</a>
-        <a href="https://arxiv.org/abs/2605.03906">arXiv:2605.03906</a>
-        <a href="https://ieeexplore.ieee.org/abstract/document/11250086">QCE 2025</a>
-      </p>
-    </div>
-
-    <figure class="plate">
-      <div class="prose" style="max-width:none;">
-        <h3>Two training protocols</h3>
-        <p>
-          <strong>Sequential:</strong> select the probe using a fixed Ramsey
-          readout, then freeze the probe and optimize the readout.
-        </p>
-        <p>
-          <strong>Joint:</strong> optimize probe-preparation and readout parameters
-          together.
-        </p>
-      </div>
-      <figcaption style="max-width:none;">
-        The deployed encoder and readout resources are matched. The comparison
-        tests how including the readout during probe selection affects sensing
-        performance. These are numerical studies; the optimized settings have not
-        been demonstrated here on a physical device.
-      </figcaption>
-    </figure>
-  </article>
-
-  <section class="explorer">
-    <h2 class="sechead">Illustration: GHZ sensitivity under dephasing</h2>
-    <p class="prose" style="max-width:none;">
-      At fixed interrogation time, independent dephasing suppresses GHZ coherence
-      more strongly as the number of qubits increases. This idealized comparison
-      shows when that loss outweighs the noiseless sensitivity advantage. It is
-      separate from the variational sensing results above.
+    <p>
+      I work primarily on two interconnected areas:
+      <strong>quantum sensing and metrology</strong>,
+      where I study variational probe preparation
+      and measurement strategies, and
+      <strong>quantum networking</strong>,
+      where I investigate learning-based link control
+      and entanglement distribution.
     </p>
 
+    <p>
+      My approach combines analytical modeling,
+      quantum-information methods, numerical simulation,
+      and optimization. I am particularly interested
+      in identifying which physical or operational
+      constraints determine achievable performance,
+      and how optimization can help reveal those limits.
+    </p>
+
+    <nav class="research-nav"
+         aria-label="Research projects">
+
+      <a href="#structured-sensing">
+        Structured sensing
+      </a>
+
+      <a href="#multiparameter">
+        Multiparameter metrology
+      </a>
+
+      <a href="#networking">
+        Quantum networking
+      </a>
+
+      <a href="#illustration">
+        Interactive illustration
+      </a>
+
+    </nav>
+
+  </div>
+
+  <!-- ==========================================================
+       PROJECT 1: STRUCTURED QUANTUM SENSING
+       ========================================================== -->
+
+  <article
+    id="structured-sensing"
+    class="thrust t-metro research-project"
+  >
+
+    <div class="thrust-body"
+         style="max-width:none;">
+
+      <p class="tag">
+        Variational quantum sensing
+      </p>
+
+      <h2>
+        Structured phase estimation:
+        variational probe and readout design
+      </h2>
+
+      <p class="project-lead">
+        Quantum-enhanced sensing depends not only
+        on how much information a probe state can
+        encode, but also on whether the available
+        measurement operations can extract that
+        information. I investigate this distinction
+        in dipolar-interacting spin systems with
+        restricted, finite-depth control.
+      </p>
+
+      <div class="project-content">
+
+        <h3>Research question</h3>
+
+        <p>
+          How does including the measurement circuit
+          during variational probe optimization affect
+          the achievable precision of structured
+          single-parameter quantum sensing?
+        </p>
+
+        <h3>Approach</h3>
+
+        <p>
+          I model systems of 2–8 dipolar-interacting
+          spin-1/2 particles using PennyLane and JAX.
+          Parameterized circuits prepare the sensing
+          probe through alternating interaction
+          dynamics and collective control rotations.
+          CMA-ES is used for numerical optimization.
+        </p>
+
+        <p>
+          For structured phase estimation, the
+          parameter is encoded through prescribed
+          spatial profiles across the spins.
+          The sensing performance is evaluated using
+          classical Fisher information (CFI),
+          which depends on the measurement
+          probabilities, and quantum Fisher
+          information (QFI), which characterizes
+          the local information available in
+          the quantum state.
+        </p>
+
+        <p>
+          I compare two optimization strategies
+          using matched encoder and readout
+          circuit resources.
+        </p>
+
+      </div>
+
+      <!-- Training-protocol comparison -->
+
+      <figure class="plate method-plate">
+
+        <div class="prose">
+
+          <h3>Sequential versus joint optimization</h3>
+
+          <div class="protocol-comparison">
+
+            <div>
+              <h4>Sequential optimization</h4>
+              <p>
+                Optimize the probe using a fixed
+                Ramsey-readout baseline, then
+                hold the probe fixed and optimize
+                the readout parameters.
+              </p>
+            </div>
+
+            <div>
+              <h4>Joint optimization</h4>
+              <p>
+                Optimize probe-preparation and
+                readout parameters together,
+                using the measured CFI
+                as the objective.
+              </p>
+            </div>
+
+          </div>
+
+        </div>
+
+        <figcaption>
+          Both protocols use the same deployed
+          circuit resources. The comparison isolates
+          the effect of including the readout
+          during probe selection rather than
+          attributing an advantage to additional
+          circuit depth.
+        </figcaption>
+
+      </figure>
+
+      <div class="project-content">
+
+        <h3>Main findings</h3>
+
+        <ul>
+
+          <li>
+            Joint probe–readout optimization
+            improved CFI by
+            <strong>14.9%</strong>
+            relative to sequential optimization
+            for uniform encoding with
+            eight spins and three circuit layers.
+          </li>
+
+          <li>
+            Fixed-probe readout re-optimization
+            and direct-QFI optimization help
+            distinguish limitations of probe
+            preparation from limitations
+            of measurement extraction.
+          </li>
+
+          <li>
+            Comparisons with Ramsey-based
+            measurements and simpler
+            measurement choices clarify
+            when optimized probes require
+            additional readout control.
+          </li>
+
+        </ul>
+
+      </div>
+
+      <div class="project-finding">
+
+        <p class="finding-label">
+          Scientific perspective
+        </p>
+
+        <p>
+          A probe with high QFI does not necessarily
+          yield equally high CFI under a restricted
+          measurement. Probe optimization and
+          measurement design must therefore be
+          assessed together when evaluating
+          implementable sensing protocols.
+        </p>
+
+      </div>
+
+      <p class="research-note">
+        These results come from numerical
+        simulations of the specified spin models.
+        The optimized circuits have not been
+        experimentally implemented in this work.
+        A journal manuscript extending the
+        QCE 2025 study is in preparation.
+      </p>
+
+      <p class="refs">
+
+        <a
+          href="https://arxiv.org/abs/2507.22043"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Earlier preprint
+        </a>
+
+        <a
+          href="https://ieeexplore.ieee.org/abstract/document/11250086"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          IEEE QCE 2025
+        </a>
+
+        <a href="publications.html">
+          Publications
+        </a>
+
+      </p>
+
+    </div>
+
+  </article>
+
+  <!-- ==========================================================
+       PROJECT 2: MULTIPARAMETER METROLOGY
+       ========================================================== -->
+
+  <article
+    id="multiparameter"
+    class="thrust t-metro research-project"
+  >
+
+    <div class="thrust-body"
+         style="max-width:none;">
+
+      <p class="tag">
+        Multiparameter quantum metrology
+      </p>
+
+      <h2>
+        Joint magnetometry and gradiometry
+        on dipolar spin chains
+      </h2>
+
+      <p class="project-lead">
+        Many sensing applications require
+        estimating multiple physical quantities
+        from the same quantum system. This introduces
+        questions beyond maximizing sensitivity
+        to a single parameter, including
+        identifiability and trade-offs between
+        different estimation directions.
+      </p>
+
+      <div class="project-content">
+
+        <h3>Research question</h3>
+
+        <p>
+          Can variationally prepared quantum
+          probes improve the simultaneous
+          estimation of a magnetic-field
+          offset and spatial gradient,
+          and how should their
+          joint sensitivity be quantified?
+        </p>
+
+        <h3>Approach</h3>
+
+        <p>
+          I study joint magnetometry and
+          gradiometry using dipolar-interacting
+          spin chains with variational
+          probe-preparation circuits.
+          The sensing parameters are a
+          uniform magnetic-field component
+          and a spatial field gradient.
+        </p>
+
+        <p>
+          Performance is characterized through
+          the Fisher-information matrix,
+          rather than a scalar sensitivity
+          for either parameter alone.
+          The determinant provides a measure
+          of joint local information volume
+          when the information matrix
+          is nonsingular.
+        </p>
+
+        <p>
+          A central theoretical observation
+          is that a conventional GHZ probe
+          produces a rank-one QFI matrix
+          for the two commuting sensing
+          generators in this model.
+          It is therefore insufficient for
+          independently identifying both
+          parameters locally.
+        </p>
+
+      </div>
+
+      <div class="project-finding">
+
+        <p class="finding-label">
+          Main result
+        </p>
+
+        <p>
+          For a five-spin system with three
+          variational circuit layers,
+          the optimized joint-estimation
+          performance reached approximately
+          <strong>92%</strong> of the studied
+          diagonal-encoder QFI determinant
+          benchmark, corresponding to about
+          <strong>4.2 times</strong> the
+          standard-quantum-limit determinant.
+        </p>
+
+      </div>
+
+      <div class="project-content">
+
+        <h3>Significance</h3>
+
+        <p>
+          This problem demonstrates why
+          sensitivity to an individual
+          parameter is not sufficient
+          for evaluating multiparameter
+          sensing. Highly entangled states
+          can be useful for one estimation
+          direction while failing to
+          distinguish multiple parameter
+          combinations.
+        </p>
+
+        <p>
+          Variational optimization provides
+          a numerical approach to exploring
+          probe structures that distribute
+          sensitivity across the parameters
+          of interest, subject to the
+          specified interaction and
+          circuit constraints.
+        </p>
+
+      </div>
+
+      <p class="research-note">
+        The result is specific to the studied
+        finite spin system and optimization
+        setting. The quoted benchmark does
+        not represent a demonstrated
+        universal optimum across all
+        possible probe preparations.
+      </p>
+
+      <p class="refs">
+
+        <a
+          href="https://arxiv.org/abs/2605.03906"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          arXiv:2605.03906
+        </a>
+
+        <a href="publications.html">
+          IEEE QCE 2026 · QTEM
+        </a>
+
+      </p>
+
+    </div>
+
+  </article>
+
+  <!-- ==========================================================
+       PROJECT 3: QUANTUM NETWORKING
+       ========================================================== -->
+
+  <article
+    id="networking"
+    class="thrust t-net research-project"
+  >
+
+    <div class="thrust-body"
+         style="max-width:none;">
+
+      <p class="tag">
+        Reinforcement learning and quantum networking
+      </p>
+
+      <h2>
+        Quantum-memory control and
+        entanglement-swapping strategies
+      </h2>
+
+      <p class="project-lead">
+        Long-distance quantum communication
+        relies on generating, storing, purifying,
+        and swapping entanglement across
+        intermediate nodes. The performance
+        of these operations depends on
+        stochastic link generation and
+        finite memory coherence.
+      </p>
+
+      <div class="project-content">
+
+        <h3>Research question</h3>
+
+        <p>
+          How do link-level quantum-memory
+          control and network-level
+          entanglement-swapping strategies
+          interact, and when does one
+          swapping protocol outperform
+          another under finite-coherence
+          constraints?
+        </p>
+
+        <h3>Approach</h3>
+
+        <p>
+          I developed a simulation framework
+          using Python, PyTorch, and Gymnasium
+          to investigate quantum repeater
+          chains. At the elementary-link
+          level, classical REINFORCE agents
+          learn policies for managing
+          entangled-pair resources.
+        </p>
+
+        <p>
+          The link controller selects among
+          waiting, discarding, purification,
+          and delivery decisions.
+          The resulting entangled pairs
+          are supplied to a network-level
+          simulator, where different
+          prescribed swapping strategies
+          can be evaluated.
+        </p>
+
+        <p>
+          In the ACM PQQS 2026 study,
+          the same link-control policy
+          is used for both swapping
+          strategies at each operating point.
+          Thus, the comparison concerns
+          the network protocol rather
+          than an RL agent learning
+          to choose between protocols.
+        </p>
+
+      </div>
+
+      <figure class="plate method-plate">
+
+        <div class="prose">
+
+          <h3>Two network-level strategies</h3>
+
+          <div class="protocol-comparison">
+
+            <div>
+
+              <h4>Sequential swapping</h4>
+
+              <p>
+                Entanglement is extended
+                progressively along the
+                chain. Previously established
+                segments may need to remain
+                in quantum memory while
+                subsequent links become ready.
+              </p>
+
+            </div>
+
+            <div>
+
+              <h4>Synchronized swapping</h4>
+
+              <p>
+                The protocol waits until
+                the required elementary
+                links are simultaneously
+                ready before performing
+                the end-to-end
+                swapping operation.
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+        <figcaption>
+          The strategies create different
+          requirements for storing entanglement
+          across link-generation cycles.
+          This difference becomes particularly
+          important when memory coherence
+          times are short.
+        </figcaption>
+
+      </figure>
+
+      <div class="project-content">
+
+        <h3>Main findings</h3>
+
+        <ul>
+
+          <li>
+            In the studied four-hop chain,
+            synchronized swapping remains
+            viable in short-memory regimes
+            where sequential swapping is
+            strongly suppressed.
+          </li>
+
+          <li>
+            Sequential swapping can provide
+            an advantage at sufficiently long
+            memory coherence times, reaching
+            <strong>19.1% higher secret-key rate</strong>
+            in a tested homogeneous
+            5 km-per-link configuration.
+          </li>
+
+          <li>
+            A fidelity-based analytical
+            condition characterizes the onset
+            of viable sequential swapping.
+            The ratio of memory coherence
+            time to link latency helps
+            organize the observed regimes.
+          </li>
+
+          <li>
+            Heterogeneous link lengths
+            introduce additional performance
+            effects associated with
+            bottleneck placement and
+            memory occupancy.
+          </li>
+
+          <li>
+            The link-level RL study also
+            identified an over-purification
+            failure mode that could prevent
+            successful training.
+          </li>
+
+        </ul>
+
+      </div>
+
+      <div class="project-finding">
+
+        <p class="finding-label">
+          Scientific perspective
+        </p>
+
+        <p>
+          A swapping strategy cannot be
+          evaluated independently of
+          link-level resource generation
+          and quantum-memory dynamics.
+          Protocol performance depends
+          on how these processes interact
+          across different operating regimes.
+        </p>
+
+      </div>
+
+      <p class="research-note">
+        This study uses simulated four-hop
+        repeater chains, Werner-state
+        noise modeling, and six-state
+        QKD secret-key-rate evaluation.
+        Its conclusions apply to the
+        modeled architectures and
+        operating assumptions, rather
+        than all possible quantum networks.
+      </p>
+
+      <p class="refs">
+
+        <a
+          href="https://doi.org/10.1145/3839338.3857253"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          ACM PQQS 2026 paper
+        </a>
+
+        <a
+          href="https://arxiv.org/abs/2605.04047"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          arXiv:2605.04047
+        </a>
+
+      </p>
+
+    </div>
+
+    <!-- Retain existing project figure -->
+    <figure class="plate research-figure">
+
+      <a
+        href="assets/fig-rl.png"
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <img
+          src="assets/fig-rl.png"
+          loading="lazy"
+          alt="Diagram of a quantum-network simulation with reinforcement-learning-based link management and network-level entanglement swapping."
+        >
+      </a>
+
+      <figcaption>
+        Link-layer controllers manage elementary
+        entanglement resources. Network-level
+        simulations then compare sequential
+        and synchronized swapping under
+        identical link-control policies,
+        isolating the effects of protocol
+        choice and memory coherence.
+      </figcaption>
+
+    </figure>
+
+  </article>
+
+  <!-- ==========================================================
+       COLLABORATIVE RESEARCH
+       ========================================================== -->
+
+  <section>
+
+    <h2 class="sechead">
+      Collaborative research and reviews
+    </h2>
+
+    <div class="project-content">
+
+      <p>
+        Alongside my primary research projects,
+        I contribute to collaborative work
+        connecting quantum information with
+        sensing applications and
+        machine-learning methods.
+      </p>
+
+      <h3>Quantum biomedical sensing</h3>
+
+      <p>
+        I am an equal-contribution coauthor of
+        <a
+          href="https://arxiv.org/abs/2603.29944"
+          target="_blank"
+          rel="noopener noreferrer"
+        ><em>Four Generations of Quantum
+        Biomedical Sensors</em></a>,
+        which develops a framework for
+        understanding the evolution of
+        quantum technologies in
+        biomedical sensing.
+      </p>
+
+      <h3>Artificial intelligence for quantum information</h3>
+
+      <p>
+        I authored the section on AI for
+        quantum networking in
+        <a
+          href="https://arxiv.org/abs/2607.00365"
+          target="_blank"
+          rel="noopener noreferrer"
+        ><em>When AI Meets Quantum Information:
+        A Comprehensive Review</em></a>,
+        examining the use of learning-based
+        methods in quantum-network
+        management and control.
+      </p>
+
+    </div>
+
+  </section>
+
+  <!-- ==========================================================
+       EDUCATIONAL INTERACTIVE ILLUSTRATION
+       ========================================================== -->
+
+  <section id="illustration" class="explorer">
+
+    <h2 class="sechead">
+      Illustration: GHZ sensitivity under dephasing
+    </h2>
+
+    <p class="explorer-intro">
+      Entanglement can improve quantum sensing
+      precision, but it can also increase
+      sensitivity to noise.
+      The following idealized model compares
+      product-state and GHZ-state probes
+      at fixed interrogation time under
+      independent dephasing.
+    </p>
+
+    <p class="explorer-intro">
+      This interactive illustration is
+      educational and is separate from
+      the variational sensing results
+      presented above.
+    </p>
+
+    <!-- Controls -->
     <div class="ctrls">
+
       <div class="ctrl">
-        <label for="nq">qubits N</label>
-        <input type="range" id="nq" min="2" max="14" step="1" value="8">
-        <output id="nqOut">8</output>
+
+        <label for="nq">
+          qubits N
+        </label>
+
+        <input
+          type="range"
+          id="nq"
+          min="2"
+          max="14"
+          step="1"
+          value="8"
+        >
+
+        <output id="nqOut" for="nq">
+          8
+        </output>
+
       </div>
+
       <div class="ctrl">
-        <label for="gm">integrated dephasing d = &Gamma;t</label>
-        <input type="range" id="gm" min="0" max="0.3" step="0.01" value="0">
-        <output id="gmOut">0.00</output>
+
+        <label for="gm">
+          integrated dephasing d = &Gamma;t
+        </label>
+
+        <input
+          type="range"
+          id="gm"
+          min="0"
+          max="0.3"
+          step="0.01"
+          value="0"
+        >
+
+        <output id="gmOut" for="gm">
+          0.00
+        </output>
+
       </div>
+
     </div>
 
-    <div class="readout">
+    <!-- Numerical readouts -->
+    <div class="readout" aria-live="off">
+
       <div class="stat">
-        <p class="skey">product uncertainty</p>
-        <p class="sval" id="mProd">0.354</p>
+
+        <p class="skey">
+          product uncertainty
+        </p>
+
+        <p class="sval" id="mProd">
+          0.354
+        </p>
+
       </div>
+
       <div class="stat">
-        <p class="skey">GHZ uncertainty</p>
-        <p class="sval" id="mGhz">0.125</p>
+
+        <p class="skey">
+          GHZ uncertainty
+        </p>
+
+        <p class="sval" id="mGhz">
+          0.125
+        </p>
+
       </div>
+
       <div class="stat">
-        <p class="skey">product / GHZ uncertainty</p>
-        <p class="sval" id="mAdv">2.83x</p>
+
+        <p class="skey">
+          product / GHZ uncertainty
+        </p>
+
+        <p class="sval" id="mAdv">
+          2.83x
+        </p>
+
       </div>
+
     </div>
 
-    <svg id="plot" viewBox="0 0 660 270" role="img"
-         aria-label="Phase uncertainty against qubit number for a product probe and a GHZ probe">
+    <!-- Existing JavaScript-driven plot -->
+    <svg
+      id="plot"
+      viewBox="0 0 660 270"
+      role="img"
+      aria-label="Local phase uncertainty as a function of the number of qubits for product-state and GHZ-state probes."
+    >
+
       <g id="grid"></g>
-      <polyline id="lProd" class="cv-prod" points=""></polyline>
-      <polyline id="lGhz" class="cv-ghz" points=""></polyline>
-      <circle id="pProd" class="pt-prod" r="4"></circle>
-      <circle id="pGhz" class="pt-ghz" r="4"></circle>
-      <text id="tProd" class="lbl">product</text>
-      <text id="tGhz" class="lbl hlt">GHZ</text>
-      <text x="340" y="262" class="lbl" text-anchor="middle">number of qubits</text>
+
+      <polyline
+        id="lProd"
+        class="cv-prod"
+        points=""
+      ></polyline>
+
+      <polyline
+        id="lGhz"
+        class="cv-ghz"
+        points=""
+      ></polyline>
+
+      <circle
+        id="pProd"
+        class="pt-prod"
+        r="4"
+      ></circle>
+
+      <circle
+        id="pGhz"
+        class="pt-ghz"
+        r="4"
+      ></circle>
+
+      <text
+        id="tProd"
+        class="lbl"
+      >product</text>
+
+      <text
+        id="tGhz"
+        class="lbl hlt"
+      >GHZ</text>
+
+      <text
+        x="340"
+        y="262"
+        class="lbl"
+        text-anchor="middle"
+      >number of qubits</text>
+
     </svg>
 
-    <p class="fignote" style="max-width:none;">
-      Model: each qubit retains coherence e<sup>&minus;d</sup>, with dimensionless
-      d = &Gamma;t. The locally optimal phase-uncertainty bounds are
-      e<sup>d</sup>/&radic;N for a product probe and e<sup>Nd</sup>/N for a GHZ probe,
-      normalized to one repetition. Interrogation time and repetition count are
-      fixed; preparation and readout are ideal. A ratio above 1 favors GHZ, and
-      below 1 favors the product probe. This does not compare protocols after
-      optimizing interrogation time or include error correction. Lines connect
-      integer qubit counts. These are model predictions, not experimental data or
-      results from my papers.
+    <p class="fignote"
+       style="max-width:none;">
+
+      <strong>Model assumptions:</strong>
+      Each qubit retains coherence
+      e<sup>&minus;d</sup>,
+      where d = &Gamma;t.
+      At fixed interrogation time,
+      the local phase-uncertainty bounds
+      are e<sup>d</sup>/&radic;N
+      for a product probe and
+      e<sup>Nd</sup>/N
+      for a GHZ probe, with one
+      normalized repetition.
+
+      Preparation and measurement are ideal,
+      and repetitions are assumed independent.
+      A product/GHZ uncertainty ratio above
+      one favors GHZ, whereas a ratio below
+      one favors the product probe.
+
+      The comparison does not optimize
+      interrogation time, account for
+      preparation overhead, or include
+      quantum error correction.
+      Lines connect integer qubit counts.
+      These are analytical model predictions,
+      not experimental measurements or
+      numerical results from my publications.
+
     </p>
+
   </section>
 
-  <article class="thrust t-net">
-    <div class="thrust-body" style="max-width:none;">
-      <p class="tag">reinforcement learning for network control</p>
-      <h2>Link-layer learning and entanglement-swapping protocols</h2>
+  <!-- ==========================================================
+       EARLIER RESEARCH
+       ========================================================== -->
 
-      <div class="thrust-text" style="columns:18em 2;column-gap:3.5rem;orphans:2;widows:2;">
-        <p>
-          I built a two-layer simulator in PyTorch and Gymnasium. Classical
-          REINFORCE policies control the elementary links, optimizing secret-key
-          rates and supplying entangled Werner pairs to link buffers. I then hold
-          those policies fixed and compare two prescribed network-layer protocols:
-          sequential entanglement swapping and simultaneous SWAP-ASAP. The
-          network-layer protocol is the comparison variable, rather than a learned
-          choice between the two protocols.
-        </p>
-        <p>
-          SLURM sweeps on Pitt CRC vary external memory coherence over four orders
-          of magnitude. In the fixed-size chain studied, sequential swapping is
-          strongly suppressed at short coherence times and approaches
-          simultaneous-swapping performance at long coherence times. The ratio of
-          external memory coherence time to per-link heralding latency organizes
-          these regimes.
-        </p>
-      </div>
+  <section class="earlier-research">
 
-      <p class="refs">
-        <a href="https://arxiv.org/abs/2605.04047">arXiv:2605.04047</a>
-      </p>
-    </div>
+    <h2 class="sechead">
+      Earlier research
+    </h2>
 
-    <figure class="plate">
-      <a href="assets/fig-rl.png" target="_blank" rel="noopener">
-        <img src="assets/fig-rl.png"
-             alt="Two-layer quantum-network simulation: fixed link-layer learning policies supply entangled pairs, and sequential and simultaneous entanglement-swapping protocols are compared.">
-      </a>
-      <figcaption style="max-width:none;">
-        Fixed link-layer policies supply entangled pairs to buffers. Separate
-        simulations compare sequential and simultaneous swapping, isolating the
-        effect of network-layer protocol and memory coherence.
-      </figcaption>
-    </figure>
-  </article>
-
-  <section>
-    <h2 class="sechead">AI for quantum networking</h2>
-    <p class="prose" style="max-width:none;">
-      I authored the AI for quantum networking section of
-      <a href="https://arxiv.org/abs/2607.00365">When AI Meets Quantum Information: A Comprehensive Review</a>,
-      submitted to <em>Progress in Quantum Electronics</em>. I am a contributing
-      coauthor of the full review.
-    </p>
-  </section>
-
-  <section>
-    <h2 class="sechead">Earlier projects</h2>
     <ul class="plain">
+
       <li>
-        <span class="when">2022-23</span>
-        <span class="what">
-          Encoder circuit for a surface code in the MBQC model, with Qiskit
-          simulations on AWS Braket. IISER Bhopal, advisor
-          <a href="https://sites.google.com/view/ankurraina/" target="_blank" rel="noopener">Dr. Ankur Raina</a>.
+
+        <span class="when">
+          2022–23
         </span>
+
+        <span class="what">
+
+          <strong>
+            Measurement-based quantum computation
+            and surface-code encoding.
+          </strong>
+
+          Developed an encoder circuit for
+          a surface code using the MBQC model,
+          with Qiskit simulations on AWS Braket.
+
+          IISER Bhopal; advisor
+          <a
+            href="https://sites.google.com/view/ankurraina/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Dr. Ankur Raina</a>.
+
+          <a
+            href="https://arxiv.org/abs/2306.10267"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Preprint</a>.
+
+        </span>
+
       </li>
+
       <li>
-        <span class="when">2021-22</span>
-        <span class="what">
-          MS thesis on 2D coherent spectroscopy with chirped and unchirped pulses,
-          solving the optical Bloch equations for two- and three-level systems.
-          Advisor
-          <a href="https://sites.google.com/iiserb.ac.in/rslab/people/rohan-singh" target="_blank" rel="noopener">Dr. Rohan Singh</a>.
+
+        <span class="when">
+          2021–22
         </span>
+
+        <span class="what">
+
+          <strong>
+            Ultrafast coherent spectroscopy.
+          </strong>
+
+          Master's thesis investigating
+          two-dimensional coherent spectroscopy
+          with chirped and unchirped pulses.
+          Numerically solved optical Bloch
+          equations for two- and three-level
+          systems.
+
+          IISER Bhopal; advisor
+          <a
+            href="https://sites.google.com/iiserb.ac.in/rslab/people/rohan-singh"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Dr. Rohan Singh</a>.
+
+        </span>
+
       </li>
+
       <li>
-        <span class="when">2019</span>
-        <span class="what">
-          Entanglement entropy in coupled harmonic oscillator systems.
-          IIIT Allahabad, advisor
-          <a href="https://profile.iiita.ac.in/srijit/" target="_blank" rel="noopener">Dr. Srijit Bhattacharjee</a>.
+
+        <span class="when">
+          2019
         </span>
+
+        <span class="what">
+
+          <strong>
+            Entanglement entropy.
+          </strong>
+
+          Summer research internship studying
+          entanglement entropy in coupled
+          harmonic-oscillator systems.
+
+          IIIT Allahabad; advisor
+          <a
+            href="https://profile.iiita.ac.in/srijit/"
+            target="_blank"
+            rel="noopener noreferrer"
+          >Dr. Srijit Bhattacharjee</a>.
+
+        </span>
+
       </li>
+
     </ul>
+
+  </section>
+
+  <!-- ==========================================================
+       RESEARCH DIRECTION
+       ========================================================== -->
+
+  <section>
+
+    <h2 class="sechead">
+      Research directions
+    </h2>
+
+    <p class="prose" style="max-width:82ch;">
+
+      I am interested in extending my work
+      on sensing and networked quantum systems
+      toward distributed quantum sensing,
+      including the interplay between
+      multiparameter estimation,
+      entanglement resources, local control,
+      and communication constraints.
+
+      My broader interests also include
+      quantum algorithms, quantum simulation,
+      quantum machine learning, and
+      optimization methods for
+      quantum-information processing.
+
+    </p>
+
   </section>
 
 </main>
 
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+
 <footer class="sitefoot">
+
   <div class="wrap footrow">
-    <span>Priyam Srivastava &middot; Pittsburgh, PA</span>
-    <span><a href="mailto:PRS216@pitt.edu">PRS216@pitt.edu</a></span>
-    <span>Updated September 2026</span>
+
+    <span>
+      Priyam Srivastava &middot; Pittsburgh, PA
+    </span>
+
+    <span>
+      <a href="mailto:PRS216@pitt.edu">
+        PRS216@pitt.edu
+      </a>
+    </span>
+
+    <span>
+      Updated November 2026
+    </span>
+
   </div>
+
 </footer>
 
 <script src="site.js"></script>
+
 </body>
 </html>
